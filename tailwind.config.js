@@ -8,7 +8,8 @@ export default {
     extend: {
       fontFamily: {
         outfit: ["Outfit", 'serif'],
-        poppins: ["Poppins", 'serif']
+        poppins: ["Poppins", 'serif'],
+        inter: ["Inter", 'serif']
       }
     },
   },
