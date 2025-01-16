@@ -18,11 +18,11 @@ const SelectNetwork: React.FC<PropsSelectNetwork> = ({
         setIsOpenNetworkTab(!isOpen)
     }
   return (
-    <div className="bg-black  absolute top-0 h-screen">
+    <div className="bg-black  absolute top-0  w-[375px] h-screen md:w-full">
       <div className="w-full flex justify-end">
         <IoMdClose className="text-white text-3xl" onClick={handdleCloseNewtworkBar}/>
       </div>
-      <div className="w-[375px] flex flex-col items-center bg-gray-600 h-full text-white">
+      <div className="w-[375px] md:w-full flex flex-col items-center bg-gray-600 h-full text-white">
         <h2 className="font-karla font-bold text-xl mt-6 mb-2">
           Select a network
         </h2>

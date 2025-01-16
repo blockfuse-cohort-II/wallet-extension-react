@@ -6,9 +6,9 @@ import SelectNetwork from "../../components/SelectNetwork";
 import { useState } from "react";
 
 const ViewBalance = () => {
- const [isOpenNetworkTap,setIsOpenNetworkTap]=useState(true)
+ const [isOpenNetworkTap,setIsOpenNetworkTap]=useState(false)
   return (
-    <div className="bg-white relative" >
+    <div className="bg-white relative w-[375px]" >
       <Header isOpen={isOpenNetworkTap} setIsOpenNetworkTab={setIsOpenNetworkTap}/>
       {/* view account section */}
 
