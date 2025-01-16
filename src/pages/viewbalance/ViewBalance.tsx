@@ -6,10 +6,13 @@ import SelectNetwork from "../../components/SelectNetwork";
 import { useState } from "react";
 
 const ViewBalance = () => {
- const [isOpenNetworkTap,setIsOpenNetworkTap]=useState(false)
+  const [isOpenNetworkTap, setIsOpenNetworkTap] = useState(false);
   return (
-    <div className="bg-white relative w-[375px]" >
-      <Header isOpen={isOpenNetworkTap} setIsOpenNetworkTab={setIsOpenNetworkTap}/>
+    <div className="bg-white relative w-[375px]">
+      <Header
+        isOpen={isOpenNetworkTap}
+        setIsOpenNetworkTab={setIsOpenNetworkTap}
+      />
       {/* view account section */}
 
       <div className="mt-3">
@@ -123,7 +126,10 @@ const ViewBalance = () => {
         </div>
       </div>
       {isOpenNetworkTap && (
-          <SelectNetwork isOpen={isOpenNetworkTap} setIsOpenNetworkTab={setIsOpenNetworkTap}/>
+        <SelectNetwork
+          isOpen={isOpenNetworkTap}
+          setIsOpenNetworkTab={setIsOpenNetworkTap}
+        />
       )}
     </div>
   );
