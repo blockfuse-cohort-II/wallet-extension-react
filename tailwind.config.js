@@ -9,7 +9,8 @@ export default {
       fontFamily: {
         outfit: ["Outfit", 'serif'],
         poppins: ["Poppins", 'serif'],
-        inter: ["Inter", 'serif']
+        inter: ["Inter", 'serif'],
+        karla: ["Karla", 'serif']
       }
     },
   },
