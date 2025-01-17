@@ -18,7 +18,7 @@ const CreatePassword = () => {
       {/* <Navbar /> */}
       <div className="w-full text-center flex flex-col items-center gap-32">
         <div className="flex flex-col gap-4">
-          <div className="flex">
+          <div className="flex ml-5">
             <img src={logo} alt="" style={{ width: "100px" }} />
             <h1 className="ml-[-30px] mt-2 text-gray-800 font-bold text-[60px] font-karla bg-gradient-to-r from-slate-800 to-gray-500  bg-clip-text text-transparent">
               atera

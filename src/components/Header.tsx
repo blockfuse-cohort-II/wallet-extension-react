@@ -63,29 +63,30 @@ const Header: React.FC<PropsSelectNetwork> = ({
     <div className="bg-[#FFFFFF] w-[375px] flex flex-row  items-center justify-between px-4 py-2 shadow-2xl h-16 md:w-full">
       {/* network sections */}
       <button
-        className="w-[110px] bg-gray-600 rounded-full px-4 py-1 flex flex-row items-center justify-between text-white"
+        className="w-[100px] bg-gray-500 rounded-full px-4 py-1 flex items-center justify-between text-white"
         onClick={HandleSelectNetwork}
       >
-        <span className="truncate">
+        <div className="truncate">
           {selectedNetwork && formatNetworkString(selectedNetwork)}
-        </span>
-
-        <IoIosArrowDown className="font-bold text-xl text-white ml-2" />
+        </div>
+        <IoIosArrowDown className="font-bold text-base text-white ml-2" />
       </button>
 
       {/* account section */}
-      <div className="">
+      <div className="mr-4">
         {/* account */}
         <div className="flex flex-row items-center ">
           <img src={AccountIcon} alt="homeicon" className="w-5 h-5 " />
-          <h2 className="font-bold mx-2 text-gray-700">Account 1 </h2>
+          <h2 className="font-bold mx-2 text-gray-700 text-sm">Account 1 </h2>
 
           <IoIosArrowDown className="font-bold text-xl text-gray-700" />
         </div>
 
         {/* address */}
         <div className="flex flex-row items-center ">
-          <h2 className="w-24 overflow-hidden text-gray-700">{address}</h2>
+          <h2 className="w-24 overflow-hidden text-gray-700 text-sm">
+            {address}
+          </h2>
           <button onClick={HandleCopy} className="ml-4 text-gray-700">
             {isCopied ? <LuCopyCheck /> : <BiCopy />}
           </button>
