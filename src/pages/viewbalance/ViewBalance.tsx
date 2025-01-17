@@ -55,11 +55,11 @@ const ViewBalance = () => {
           <div className="flex flex-row items-center justify-between w-[200px] mt-4">
             <div className="flex flex-row items-center">
               <IoIosSend />
-              <h2 className="font-karla text-xl font-bold ml-1">Send</h2>
+              <h2 className="font-karla text-base font-bold ml-1">Send</h2>
             </div>
             <div className="flex flex-row items-center">
               <PiHandDepositFill />
-              <h2 className="font-karla text-xl font-bold ml-1">Deposit</h2>
+              <h2 className="font-karla text-base font-bold ml-1">Deposit</h2>
             </div>
           </div>
         </div>

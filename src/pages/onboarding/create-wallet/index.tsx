@@ -85,3 +85,5 @@ const CreateWallet = () => {
 };
 
 export default CreateWallet;
+
+export default CreateWallet;

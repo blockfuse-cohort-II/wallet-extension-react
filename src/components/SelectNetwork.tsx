@@ -44,7 +44,7 @@ const SelectNetwork: React.FC<PropsSelectNetwork> = ({
         />
       </div>
       <div className="w-[375px] md:w-full flex flex-col items-center bg-gray-600 h-full text-white">
-        <h2 className="font-karla font-bold text-xl mt-6 mb-2">
+        <h2 className="font-karla font-bold text-[22px] mt-2 mb-2">
           Select a network
         </h2>
         {/* Search bar */}
@@ -99,7 +99,9 @@ const SelectNetwork: React.FC<PropsSelectNetwork> = ({
               <img src={EthIcon} alt="networkicon" className="w-5 h-4" />
               <h2 className="font-karla ml-4 font-bold">Ethereum Mainnet</h2>
             </div>
-            <button className="text-blue-600 font-bold text-xl">Add</button>
+            <button className="text-blue-600 font-bold text-sm hover:border-b-2 hover:border-blue-600">
+              Add
+            </button>
           </div>
         </div>
       </div>
