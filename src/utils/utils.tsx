@@ -37,6 +37,13 @@ export async function getBalance(
   return ethers.formatEther(balance);
 }
 
+export async function listAccounts(providerUrl: string) {
+  const provider = new ethers.JsonRpcProvider(providerUrl);
+  const res = await provider.listAccounts();
+  console.log(res);
+  return res;
+}
+
 export function persistSelectedNetwork(name: string) {
   localStorage.setItem("selectedNetwork", name);
 }
@@ -55,7 +62,7 @@ export interface NetworkConfig {
 const defaultNetworks: Record<string, NetworkConfig & { symbol: string }> = {
   mainnet: {
     name: "Ethereum Mainnet",
-    rpcUrl: "https://mainnet.infura.io/v3/${import.meta.env.VITE_INFURA_ID}",
+    rpcUrl: "https://mainnet.infura.io/v3/1cef973dff844ba09dea342050cd5967",
     chainId: 1,
     symbol: "\u039E",
   },
@@ -73,7 +80,7 @@ const defaultNetworks: Record<string, NetworkConfig & { symbol: string }> = {
   },
   sepolia: {
     name: "Sepolia Testnet",
-    rpcUrl: "https://sepolia.infura.io/v3/${import.meta.env.VITE_INFURA_ID}",
+    rpcUrl: "https://sepolia.infura.io/v3/1cef973dff844ba09dea342050cd5967",
     chainId: 11155111,
     symbol: "\u039E",
   },
@@ -98,24 +105,6 @@ export function getNetwork(name: string): NetworkConfig | undefined {
   return networks[name];
 }
 
-// const ENCRYPTION_KEY = import.meta.env.VITE_ENCRYPTION_KEY ?? "mySecretKey";
-// const ALGORITHM = "aes-256-gcm";
-
-// export const decryptValue = (encryptedValue: string): string => {
-//   const iv = Buffer.from(encryptedValue.slice(0, 32), "hex");
-//   const authTag = Buffer.from(encryptedValue.slice(32, 64), "hex");
-//   const encryptedText = encryptedValue.slice(64);
-//   const decipher = crypto.createDecipheriv(
-//     ALGORITHM,
-//     Buffer.from(ENCRYPTION_KEY),
-//     iv
-//   );
-//   decipher.setAuthTag(authTag);
-//   let decrypted = decipher.update(encryptedText, "hex", "utf8");
-//   decrypted += decipher.final("utf8");
-//   return decrypted;
-// };
-
 export const getDecryptedWalletAddress = (): string | null => {
   const encryptedWalletAddress = localStorage.getItem("encryptedWalletAddress");
   if (encryptedWalletAddress) {
@@ -124,18 +113,6 @@ export const getDecryptedWalletAddress = (): string | null => {
   return null;
 };
 
-// export const encryptValue = (value: string): string => {
-//   const iv = crypto.randomBytes(16);
-//   const cipher = crypto.createCipheriv(
-//     ALGORITHM,
-//     Buffer.from(ENCRYPTION_KEY),
-//     iv
-//   );
-//   let encrypted = cipher.update(value, "utf8", "hex");
-//   encrypted += cipher.final("hex");
-//   const authTag = cipher.getAuthTag();
-//   return iv.toString("hex") + authTag.toString("hex") + encrypted;
-// };
 
 export const persistEncryptedWalletAddress = (address: string) => {
   localStorage.setItem("encryptedWalletAddress", address);
