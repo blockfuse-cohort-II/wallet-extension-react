@@ -50,7 +50,7 @@ const CreatePassword = () => {
       </div>
 
       <div className="absolute mt-auto bottom-4">
-        Built with by ❤️ cohort two geeks
+        Built with ❤️  by cohort two geeks
       </div>
     </div>
   );

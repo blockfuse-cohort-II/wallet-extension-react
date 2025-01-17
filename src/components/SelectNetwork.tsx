@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { CiSearch } from "react-icons/ci";
-import { IoMdMore, IoMdClose } from "react-icons/io";
+import { IoMdMore, IoMdClose ,IoMdAdd } from "react-icons/io";
 import { getNetwork, networks, persistSelectedNetwork } from "../utils/utils";
 import EthIcon from "../../src/assets/ETH stroke icon.png";
 import { useNavigate } from "react-router-dom";
@@ -67,7 +67,7 @@ const SelectNetwork: React.FC<PropsSelectNetwork> = ({
             return (
               <button
                 key={network}
-                className="flex flex-row items-center justify-between hover:border h-16 hover:bg-gray-400 px-2 w-full"
+                className="flex flex-row items-center justify-between hover:border h-10 hover:bg-gray-400 px-2 w-full"
                 onClick={() => {
                   persistSelectedNetwork(network);
                   setIsOpenNetworkTab(false);
@@ -91,16 +91,36 @@ const SelectNetwork: React.FC<PropsSelectNetwork> = ({
           <h2 className="my-4 font-bold font-karla text-lg">
             Additional Network
           </h2>
-          <div className="flex flex-row items-center justify-between h-16 px-2">
+         {/* networks */}
+         <div>
+         <div className="flex flex-row items-center justify-between h-10 px-2">
             <div className="flex flex-row items-center">
               <img src={EthIcon} alt="networkicon" className="w-5 h-4" />
-              <h2 className="font-karla ml-4 font-bold">Ethereum Mainnet</h2>
+              <h2 className="font-karla ml-4 font-bold">OP Mainnet</h2>
             </div>
             <button className="text-blue-600 font-bold text-sm hover:border-b-2 hover:border-blue-600">
               Add
             </button>
           </div>
+          <div className="flex flex-row items-center justify-between h-10 px-2">
+            <div className="flex flex-row items-center">
+              <img src={EthIcon} alt="networkicon" className="w-5 h-4" />
+              <h2 className="font-karla ml-4 font-bold">Polygon Mainnet</h2>
+            </div>
+            <button className="text-blue-600 font-bold text-sm hover:border-b-2 hover:border-blue-600">
+              Add
+            </button>
+          </div>
+         </div>
         </div>
+
+
+        {/* custom network  */}
+
+        <button className="w-[80%] h-8 bg-white text-black rounded-full mt-3 flex flex-row items-center justify-center font-poppins">
+        <IoMdAdd className="text-2xl font-bold mr-3" />
+          Add custom Network
+        </button>
       </div>
     </div>
   );
