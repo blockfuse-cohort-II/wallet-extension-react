@@ -35,7 +35,7 @@ interface PropsSelectNetwork {
       <div className="bg-[#FFFFFF] w-[375px] flex flex-row  items-center justify-between px-4 py-2 shadow-2xl h-16 md:w-full">
         {/* network sections */}
         <div
-          className="w-20 bg-gray-600 rounded-full px-4 py-1 flex flex-row items-center justify-between"
+          className="w-20 bg-gray-300 rounded-full px-4 py-1 flex flex-row items-center justify-between"
           onClick={HandleSelectNetwork}
         >
           <img
@@ -43,7 +43,7 @@ interface PropsSelectNetwork {
             alt="icon"
             className=" w-4 h-4"
           />
-          <IoIosArrowDown className="font-bold text-xl text-white ml-2" />
+          <IoIosArrowDown className="font-bold text-base text-white ml-2" />
         </div>
   
         {/* account section */}
@@ -54,16 +54,16 @@ interface PropsSelectNetwork {
               src={AccountIcon}
 
               alt="homeicon"
-              className="w-5 h-5 "
+              className="w-5 h-5"
             />
-            <h2 className="font-bold mx-2 text-gray-700">Account 1 </h2>
+            <h2 className="font-bold mx-2 text-gray-700 text-sm">Account 1 </h2>
   
             <IoIosArrowDown className="font-bold text-xl text-gray-700" />
           </div>
   
           {/* address */}
           <div className="flex flex-row items-center ">
-            <h2 className="w-24 overflow-hidden text-gray-700">{address}</h2>
+            <h2 className="w-24 overflow-hidden text-gray-700 text-sm">{address}</h2>
             <button onClick={HandleCopy} className="ml-4 text-gray-700">
               {isCopied ? <LuCopyCheck /> : <BiCopy />}
             </button>

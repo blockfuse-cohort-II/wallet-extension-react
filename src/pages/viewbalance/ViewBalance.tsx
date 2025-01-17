@@ -24,7 +24,7 @@ const ViewBalance = () => {
               Your balance
             </p>
             <h2 className="font-karla font-extrabold text-gray-600 text-4xl my-2">
-              $404.18
+              $0.00
             </h2>
             <h3 className="font-karla font-bold text-lg leading-5">+12.44%</h3>
           </div>
@@ -34,42 +34,42 @@ const ViewBalance = () => {
             {/* send */}
             <div className="flex flex-row items-center">
               <IoIosSend />
-              <h2 className="font-karla text-xl font-bold ml-1">Send</h2>
+              <h2 className="font-karla text-base font-bold ml-1">Send</h2>
             </div>
 
             <div className="flex flex-row items-center">
               <PiHandDepositFill />
-              <h2 className="font-karla text-xl font-bold ml-1">Deposit</h2>
+              <h2 className="font-karla text-base font-bold ml-1">Deposit</h2>
             </div>
           </div>
         </div>
 
         {/* assets */}
         <div className="flex flex-col w-full px-2">
-          <h2 className="font-karla font-semibold">Assets</h2>
+          <h2 className="font-karla text-lg font-semibold">Assets</h2>
 
           {/* assets */}
           <div className="mt-4">
             <div className="flex flex-row justify-between items-center w-full  h-[77px] border-b-2 shadow-md px-2 mb-3">
               <div className="flex flex-row items-center">
                 {/* asset icon */}
-                <div className="w-10 h-10">
+                <div className="w-7 h-7">
                   <img
                     src={EthIcon}
                     alt="assetIcon"
-                    className="object-contain w-full h-full"
+                    className="object-contain w-full h-full "
                   />
                 </div>
                 {/* asset name and quantity */}
                 <div className="flex flex-col items-start ml-4">
-                  <h2 className="font-karla font-bold leading-6">Ethereum</h2>
-                  <p className="font-karla font-medium ">1.02 ETH</p>
+                  <h2 className="font-karla font-bold text-base leading-6">Ethereum</h2>
+                  <p className="font-karla font-medium text-sm ">1.02 ETH</p>
                 </div>
                 {/* asset price */}
               </div>
               <div className="flex flex-col items-end">
                 <h2 className="font-karla text-base font-bold leading-6">
-                  $404.18{" "}
+                  $0.00{" "}
                 </h2>
                 <p className="font-medium font-karla text-gray-500">+$24.50</p>
               </div>
@@ -77,7 +77,7 @@ const ViewBalance = () => {
             <div className="flex flex-row justify-between items-center w-full  h-[77px] border-b-2 shadow-md px-2 mb-3">
               <div className="flex flex-row items-center">
                 {/* asset icon */}
-                <div className="w-10 h-10">
+                <div className="w-7 h-7">
                   <img
                     src={EthIcon}
                     alt="assetIcon"
@@ -86,14 +86,14 @@ const ViewBalance = () => {
                 </div>
                 {/* asset name and quantity */}
                 <div className="flex flex-col items-start ml-4">
-                  <h2 className="font-karla font-bold leading-6">Ethereum</h2>
-                  <p className="font-karla font-medium ">1.02 ETH</p>
+                  <h2 className="font-karla font-bold text-base leading-6">Ethereum</h2>
+                  <p className="font-karla font-medium text-sm ">1.02 ETH</p>
                 </div>
                 {/* asset price */}
               </div>
               <div className="flex flex-col items-end">
                 <h2 className="font-karla text-base font-bold leading-6">
-                  $404.18{" "}
+                  $0.00{" "}
                 </h2>
                 <p className="font-medium font-karla text-gray-500">+$24.50</p>
               </div>
@@ -101,7 +101,7 @@ const ViewBalance = () => {
             <div className="flex flex-row justify-between items-center w-full  h-[77px] border-b-2 shadow-md px-2 mb-3">
               <div className="flex flex-row items-center">
                 {/* asset icon */}
-                <div className="w-10 h-10">
+                <div className="w-7 h-7">
                   <img
                     src={EthIcon}
                     alt="assetIcon"
@@ -110,14 +110,14 @@ const ViewBalance = () => {
                 </div>
                 {/* asset name and quantity */}
                 <div className="flex flex-col items-start ml-4">
-                  <h2 className="font-karla font-bold leading-6">Ethereum</h2>
-                  <p className="font-karla font-medium ">1.02 ETH</p>
+                  <h2 className="font-karla font-bold  text-base leading-6">Ethereum</h2>
+                  <p className="font-karla font-medium text-sm">1.02 ETH</p>
                 </div>
                 {/* asset price */}
               </div>
               <div className="flex flex-col items-end">
                 <h2 className="font-karla text-base font-bold leading-6">
-                  $404.18{" "}
+                  $0.00{" "}
                 </h2>
                 <p className="font-medium font-karla text-gray-500">+$24.50</p>
               </div>
