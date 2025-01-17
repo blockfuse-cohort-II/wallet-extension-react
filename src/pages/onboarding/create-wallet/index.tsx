@@ -40,7 +40,7 @@ const CreateWallet = () => {
     <div className="p-10">
       <div className="pt-20 text-center flex flex-col">
         <div>
-          <p className="text-justify justify-center text-[#dfa51f] bg-[#FEC84B]/20 border border-[#f5c453] m-auto full p-5 mb-5">
+          <p className="text-justify justify-center text-[#FEC84B] bg-[#FEC84B]/20 border border-[#f5c453] m-auto full p-5 mb-5">
             {type === "create"
               ? "Once you generate the seed phrase, save it securely and once you have saved it, you can proceed to wallet."
               : "Please enter your seed phrase to recover your wallet."}
@@ -74,10 +74,10 @@ const CreateWallet = () => {
         <button
           onClick={handleContinue}
           disabled={!walletAddress}
-          className={`text-slate-800 border border-slate-800 bg-white px-4 py-2 rounded font-bold w-full mt-10 text-sm
+          className={`text-slate-800 border border-slate-800 bg-white px-4 py-2 rounded font-bold w-full mt-10
             ${!walletAddress && "opacity-50 cursor-not-allowed"}`}
         >
-          I have copied, continue to Wallet
+          Continue to Wallet
         </button>
       </div>
     </div>

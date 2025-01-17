@@ -6,9 +6,10 @@ import { useEffect } from "react";
 const CreatePassword = () => {
   const navigate = useNavigate();
   useEffect(() => {
-    const walletAddress = getDecryptedWalletAddress();
+    const walletAddress = getDecryptedWalletAddress(); 
 
     if (walletAddress) {
+
       navigate(`/view-balance?address=${walletAddress}`);
     }
   }, [navigate]);
@@ -29,12 +30,17 @@ const CreatePassword = () => {
           </p>
         </div>
         <div className="w-full flex flex-col gap-2.5 mt-2">
-          <Link to="/create-wallet?type=create">
+              <Link 
+              to="/create-wallet?type=create"
+              >
             <button className="bg-slate-800 text-white px-4 py-3 rounded font-bold w-full">
               Create a Wallet
             </button>
           </Link>
-          <Link to="/create-wallet?type=create">
+          <Link 
+              to="/create-wallet?type=create"
+          
+          >
             <button className=" border border-slate-800  text-slate-800 px-4 py-3 rounded font-bold w-full">
               {" "}
               Import an existing wallet

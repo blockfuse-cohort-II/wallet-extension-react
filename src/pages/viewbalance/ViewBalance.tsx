@@ -31,7 +31,7 @@ const ViewBalance = () => {
       networks[currentNetwork].rpcUrl
     )
       .then((balance) => {
-        setBalance(balance);
+        setBalance(parseFloat(balance).toFixed(4));
         setAssets([]);
       })
       .finally(() => setLoading(false));
@@ -78,6 +78,7 @@ const ViewBalance = () => {
         {/* Assets Section */}
         <div className="flex flex-col w-full px-2">
           <h2 className="font-karla font-semibold">Assets</h2>
+
           <div className="mt-4">
             {assets.length > 0 ? (
               assets.map(
