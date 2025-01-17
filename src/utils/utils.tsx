@@ -1,5 +1,4 @@
 import { ethers, TransactionResponse } from "ethers";
-import crypto from "crypto";
 
 export function generateSeedPhrase(): string {
   const wallet = ethers.Wallet.createRandom();
@@ -99,41 +98,45 @@ export function getNetwork(name: string): NetworkConfig | undefined {
   return networks[name];
 }
 
-const ENCRYPTION_KEY = import.meta.env.VITE_ENCRYPTION_KEY ?? "mySecretKey";
-const ALGORITHM = "aes-256-gcm";
+// const ENCRYPTION_KEY = import.meta.env.VITE_ENCRYPTION_KEY ?? "mySecretKey";
+// const ALGORITHM = "aes-256-gcm";
 
-export const decryptValue = (encryptedValue: string): string => {
-  const iv = Buffer.from(encryptedValue.slice(0, 32), "hex");
-  const authTag = Buffer.from(encryptedValue.slice(32, 64), "hex");
-  const encryptedText = encryptedValue.slice(64);
-  const decipher = crypto.createDecipheriv(
-    ALGORITHM,
-    Buffer.from(ENCRYPTION_KEY),
-    iv
-  );
-  decipher.setAuthTag(authTag);
-  let decrypted = decipher.update(encryptedText, "hex", "utf8");
-  decrypted += decipher.final("utf8");
-  return decrypted;
-};
+// export const decryptValue = (encryptedValue: string): string => {
+//   const iv = Buffer.from(encryptedValue.slice(0, 32), "hex");
+//   const authTag = Buffer.from(encryptedValue.slice(32, 64), "hex");
+//   const encryptedText = encryptedValue.slice(64);
+//   const decipher = crypto.createDecipheriv(
+//     ALGORITHM,
+//     Buffer.from(ENCRYPTION_KEY),
+//     iv
+//   );
+//   decipher.setAuthTag(authTag);
+//   let decrypted = decipher.update(encryptedText, "hex", "utf8");
+//   decrypted += decipher.final("utf8");
+//   return decrypted;
+// };
 
 export const getDecryptedWalletAddress = (): string | null => {
   const encryptedWalletAddress = localStorage.getItem("encryptedWalletAddress");
   if (encryptedWalletAddress) {
-    return decryptValue(encryptedWalletAddress);
+    return encryptedWalletAddress;
   }
   return null;
 };
 
-export const encryptValue = (value: string): string => {
-  const iv = crypto.randomBytes(16);
-  const cipher = crypto.createCipheriv(
-    ALGORITHM,
-    Buffer.from(ENCRYPTION_KEY),
-    iv
-  );
-  let encrypted = cipher.update(value, "utf8", "hex");
-  encrypted += cipher.final("hex");
-  const authTag = cipher.getAuthTag();
-  return iv.toString("hex") + authTag.toString("hex") + encrypted;
+// export const encryptValue = (value: string): string => {
+//   const iv = crypto.randomBytes(16);
+//   const cipher = crypto.createCipheriv(
+//     ALGORITHM,
+//     Buffer.from(ENCRYPTION_KEY),
+//     iv
+//   );
+//   let encrypted = cipher.update(value, "utf8", "hex");
+//   encrypted += cipher.final("hex");
+//   const authTag = cipher.getAuthTag();
+//   return iv.toString("hex") + authTag.toString("hex") + encrypted;
+// };
+
+export const persistEncryptedWalletAddress = (address: string) => {
+  localStorage.setItem("encryptedWalletAddress", address);
 };

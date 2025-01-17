@@ -5,13 +5,13 @@ import { PiHandDepositFill } from "react-icons/pi";
 import SelectNetwork from "../../components/SelectNetwork";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { getBalance, getSelectedNetwork, networks } from "../../utils/utils";
+import { getBalance, getDecryptedWalletAddress, getSelectedNetwork, networks } from "../../utils/utils";
 
 const ViewBalance = () => {
   const [searchParams] = useSearchParams();
-  const address = searchParams.get("address") ?? "";
+  const address = searchParams.get("address") ?? getDecryptedWalletAddress() ?? "";
   const [isOpenNetworkTap, setIsOpenNetworkTap] = useState(false);
-  const [balance, setBalance] = useState("");
+  const [balance, setBalance] = useState("0.00");
   const [loading, setLoading] = useState(false);
   const [assets, setAssets] = useState([]);
   const currentNetwork = getSelectedNetwork() as keyof typeof networks;

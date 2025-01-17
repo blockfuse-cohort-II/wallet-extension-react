@@ -1,7 +1,7 @@
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useState } from "react";
 import {
-  encryptValue,
+  persistEncryptedWalletAddress,
   generateSeedPhrase,
   getAddressFromSeedPhrase,
 } from "../../../utils/utils";
@@ -31,8 +31,7 @@ const CreateWallet = () => {
 
   const handleContinue = () => {
     if (walletAddress) {
-      const encryptedWalletAddress = encryptValue(walletAddress);
-      localStorage.setItem("encryptedWalletAddress", encryptedWalletAddress);
+      persistEncryptedWalletAddress(walletAddress);
       navigate(`/view-balance?address=${walletAddress}`);
     }
   };
