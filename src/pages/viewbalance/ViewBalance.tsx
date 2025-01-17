@@ -31,7 +31,7 @@ const ViewBalance = () => {
       networks[currentNetwork].rpcUrl
     )
       .then((balance) => {
-        setBalance(parseFloat(balance).toFixed(2));
+        setBalance(parseFloat(balance).toFixed(4));
         setAssets([]);
       })
       .finally(() => setLoading(false));
