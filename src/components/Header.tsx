@@ -4,9 +4,11 @@ import { BiCopy } from "react-icons/bi";
 import { LuCopyCheck } from "react-icons/lu";
 import { useState } from "react";
 import {
+  clearEncryptedWallletAddress,
   getNetwork,
   getSelectedNetwork,
 } from "../utils/utils";
+import { useNavigate } from "react-router-dom";
 
 interface PropsSelectNetwork {
   isOpen: boolean;
@@ -20,6 +22,9 @@ const Header: React.FC<PropsSelectNetwork> = ({
   address,
 }) => {
   const [isCopied, setIsCopied] = useState(false);
+  const [showMenu, setShowMenu] = useState(false);
+  const navigate = useNavigate();
+
   // open and closing navigation;
   const HandleSelectNetwork = () => {
     setIsOpenNetworkTab(!isOpen);
@@ -35,28 +40,35 @@ const Header: React.FC<PropsSelectNetwork> = ({
   const selectedNetwork = getSelectedNetwork();
   const formatNetworkString = (selectedNetwork: string) => {
     if (!selectedNetwork) return "";
-  
+
     const network = getNetwork(selectedNetwork);
     if (!network) return "";
-  
+
     const symbol = network.symbol ?? "";
     const name = network.name ?? "";
-  
+
     const splitName = name.split(" ");
     if (splitName.length >= 3) {
       return `${symbol} ${splitName.slice(0, 3).join("")}`;
     }
-  
+
     return `${symbol} ${name.slice(0, 3).toUpperCase()}`;
+  };
+
+  const onLogout = () => {
+    clearEncryptedWallletAddress();
+    navigate("/");
   };
   return (
     <div className="bg-[#FFFFFF] w-[375px] flex flex-row  items-center justify-between px-4 py-2 shadow-2xl h-16 md:w-full">
       {/* network sections */}
       <button
-        className="w-24 bg-gray-600 rounded-full px-4 py-1 flex flex-row items-center justify-between text-white"
+        className="w-[110px] bg-gray-600 rounded-full px-4 py-1 flex flex-row items-center justify-between text-white"
         onClick={HandleSelectNetwork}
       >
-        {selectedNetwork && formatNetworkString(selectedNetwork)}
+        <span className="truncate">
+          {selectedNetwork && formatNetworkString(selectedNetwork)}
+        </span>
 
         <IoIosArrowDown className="font-bold text-xl text-white ml-2" />
       </button>
@@ -81,8 +93,21 @@ const Header: React.FC<PropsSelectNetwork> = ({
       </div>
 
       {/* more section */}
-      <div>
-        <IoMdMore className="text-3xl font-bold text-gray-700" />
+      <div className="cursor-pointer relative">
+        <IoMdMore
+          className="text-3xl font-bold text-gray-700"
+          onClick={() => setShowMenu((show) => !show)}
+        />
+        <div
+          className={`${
+            !showMenu ? "hidden" : "absolute"
+          } absolute top-[100%] right-0 w-[100px] h-[70px] border bg-white rounded-md flex flex-col`}
+        >
+          <span className="border-b px-2 font-bold">Menu</span>
+          <div className="p-2">
+            <button onClick={onLogout}>Logout</button>
+          </div>
+        </div>
       </div>
     </div>
   );

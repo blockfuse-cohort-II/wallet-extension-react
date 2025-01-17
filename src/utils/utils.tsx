@@ -140,3 +140,7 @@ export const getDecryptedWalletAddress = (): string | null => {
 export const persistEncryptedWalletAddress = (address: string) => {
   localStorage.setItem("encryptedWalletAddress", address);
 };
+
+export const clearEncryptedWallletAddress = () => {
+  localStorage.clear();
+};

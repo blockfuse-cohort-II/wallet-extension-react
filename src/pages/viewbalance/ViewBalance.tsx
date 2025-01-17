@@ -5,11 +5,18 @@ import { PiHandDepositFill } from "react-icons/pi";
 import SelectNetwork from "../../components/SelectNetwork";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { getBalance, getDecryptedWalletAddress, getSelectedNetwork, networks } from "../../utils/utils";
+import {
+  getBalance,
+  getDecryptedWalletAddress,
+  getSelectedNetwork,
+  networks,
+} from "../../utils/utils";
+import { RiLoader2Line } from "react-icons/ri";
 
 const ViewBalance = () => {
   const [searchParams] = useSearchParams();
-  const address = searchParams.get("address") ?? getDecryptedWalletAddress() ?? "";
+  const address =
+    searchParams.get("address") ?? getDecryptedWalletAddress() ?? "";
   const [isOpenNetworkTap, setIsOpenNetworkTap] = useState(false);
   const [balance, setBalance] = useState("0.00");
   const [loading, setLoading] = useState(false);
@@ -45,9 +52,13 @@ const ViewBalance = () => {
             <p className="font-karla font-semibold text-lg leading-6">
               Your balance
             </p>
-            <h2 className="font-karla font-extrabold text-gray-600 text-4xl my-2">
-              {loading ? "Loading..." : `${balance} ETH`}
-            </h2>
+            <div className="font-karla font-extrabold text-gray-600 text-4xl my-2">
+              {loading ? (
+                <RiLoader2Line className="animate-spin" />
+              ) : (
+                `${balance} ETH`
+              )}
+            </div>
             <h3 className="font-karla font-bold text-lg leading-5">+12.44%</h3>
           </div>
 
