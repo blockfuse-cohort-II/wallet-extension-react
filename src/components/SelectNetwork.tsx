@@ -55,7 +55,7 @@ const SelectNetwork: React.FC<PropsSelectNetwork> = ({
             placeholder="Search"
             value={searchQuery}
             onChange={handleSearchChange}
-            className="w-full h-full outline-none pl-2"
+            className="w-full h-full outline-none pl-2 text-black"
           />
         </div>
 
