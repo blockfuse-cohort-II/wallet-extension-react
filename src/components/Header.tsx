@@ -9,6 +9,7 @@ import {
   getSelectedNetwork,
 } from "../utils/utils";
 import { useNavigate } from "react-router-dom";
+import useOutsideClick from "../hooks/use-outside-click";
 
 interface PropsSelectNetwork {
   isOpen: boolean;
@@ -24,6 +25,8 @@ const Header: React.FC<PropsSelectNetwork> = ({
   const [isCopied, setIsCopied] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
   const navigate = useNavigate();
+
+  const dropdownRef = useOutsideClick(() => setShowMenu(false));
 
   // open and closing navigation;
   const HandleSelectNetwork = () => {
@@ -103,6 +106,7 @@ const Header: React.FC<PropsSelectNetwork> = ({
           className={`${
             !showMenu ? "hidden" : "absolute"
           } absolute top-[100%] right-0 w-[100px] h-[70px] border bg-white rounded-md flex flex-col`}
+          ref={dropdownRef as React.RefObject<HTMLDivElement>}
         >
           <span className="border-b px-2 font-bold">Menu</span>
           <div className="p-2">
