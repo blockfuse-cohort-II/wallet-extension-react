@@ -74,10 +74,10 @@ const CreateWallet = () => {
         <button
           onClick={handleContinue}
           disabled={!walletAddress}
-          className={`text-slate-800 border border-slate-800 bg-white px-4 py-2 rounded font-bold w-full mt-10
+          className={`text-slate-800 border border-slate-800 bg-white px-4 py-2 rounded font-bold w-full mt-10 text-sm
             ${!walletAddress && "opacity-50 cursor-not-allowed"}`}
         >
-          Continue to Wallet
+          I have copied, continue to Wallet
         </button>
       </div>
     </div>
