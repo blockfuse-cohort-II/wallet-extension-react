@@ -77,7 +77,7 @@ const ViewBalance = () => {
 
         {/* Assets Section */}
         <div className="flex flex-col w-full px-2">
-          <h2 className="font-karla font-semibold">Assets</h2>
+          <h2 className="font-karla  text-lg font-semibold">Assets</h2>
 
           <div className="mt-4">
             {assets.length > 0 ? (
@@ -148,3 +148,5 @@ const ViewBalance = () => {
 };
 
 export default ViewBalance;
+
+
