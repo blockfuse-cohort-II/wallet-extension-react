@@ -8,6 +8,7 @@ import {
   getNetwork,
   getSelectedNetwork,
 } from "../utils/utils";
+import { useNavigate } from "react-router-dom";
 
 interface PropsSelectNetwork {
   isOpen: boolean;
@@ -22,6 +23,8 @@ const Header: React.FC<PropsSelectNetwork> = ({
 }) => {
   const [isCopied, setIsCopied] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
+  const navigate = useNavigate();
+
   // open and closing navigation;
   const HandleSelectNetwork = () => {
     setIsOpenNetworkTab(!isOpen);
@@ -54,7 +57,7 @@ const Header: React.FC<PropsSelectNetwork> = ({
 
   const onLogout = () => {
     clearEncryptedWallletAddress();
-    window.location.href = "/";
+    navigate("/");
   };
   return (
     <div className="bg-[#FFFFFF] w-[375px] flex flex-row  items-center justify-between px-4 py-2 shadow-2xl h-16 md:w-full">
