@@ -40,7 +40,7 @@ Katera Wallet is a browser extension for managing cryptocurrency wallets. It all
 ### Prerequisites
 Ensure you have the following installed:
 - Node.js (v18 or later)
-- npm
+- npm 
 
 ### Clone the Repository
 ```bash
@@ -68,8 +68,8 @@ The production build will be available in the `dist` directory.
 ---
 
 ## Key Technologies
--Frontend: React, Typescript, TailwindCss
--Api Layer: ether.js, 
+-Frontend: React, Typescript, TailwindCss.
+-Api Layer: ether.js.
 -Vite: Fast development server and build tool.
 -Extension: CRXjs
 
