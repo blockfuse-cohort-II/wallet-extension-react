@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { CiSearch } from "react-icons/ci";
 import { IoMdMore, IoMdClose, IoMdAdd } from "react-icons/io";
-import { getNetwork, networks, persistSelectedNetwork } from "../utils/utils";
+import { addCustomNetwork, getNetwork, networks, persistSelectedNetwork } from "../utils/utils";
 import EthIcon from "../../src/assets/ETH stroke icon.png";
 import { useNavigate } from "react-router-dom";
 
@@ -18,6 +18,12 @@ const SelectNetwork: React.FC<PropsSelectNetwork> = ({
 }) => {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [customNetwork, setCustomNetwork] = useState({
+    name: "",
+    rpcUrl: "",
+    chainId: "",
+  });
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(event.target.value);
@@ -26,6 +32,33 @@ const SelectNetwork: React.FC<PropsSelectNetwork> = ({
   const handleCloseNetworkBar = () => {
     setIsOpenNetworkTab(!isOpen);
   };
+
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setCustomNetwork({ name: "", rpcUrl: "", chainId: "" });
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setCustomNetwork((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleAddCustomNetwork = () => {
+    const { name, rpcUrl, chainId } = customNetwork;
+    if (!name || !rpcUrl || !chainId) {
+      alert("Please fill in all fields.");
+      return;
+    }
+
+    addCustomNetwork(name, rpcUrl, parseInt(chainId));
+    handleCloseModal();
+  };
+
+
 
   // Filter networks based on searchQuery
   const filteredNetworks = Object.keys(networks).filter((network) => {
@@ -157,10 +190,65 @@ const SelectNetwork: React.FC<PropsSelectNetwork> = ({
 
         {/* custom network  */}
 
-        <button className="absolute bottom-[20%] w-[80%] h-8 bg-white text-black rounded-full mt-3 flex flex-row items-center justify-center font-poppins ">
+        <button className="absolute bottom-[20%] w-[80%] h-8 bg-white text-black rounded-full mt-3 flex flex-row items-center justify-center font-poppins "
+        onClick={handleOpenModal}>
           <IoMdAdd className="text-2xl font-bold mr-3" />
           Add custom Network
         </button>
+        {isModalOpen && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+            <div className="bg-white p-6 rounded shadow-md w-[90%] md:w-[400px]">
+              <h2 className="text-xl font-bold mb-4">Add Custom Network</h2>
+              <div className="mb-4">
+                <label className="block text-gray-700 mb-1">Network Name</label>
+                <input
+                  type="text"
+                  name="name"
+                  value={customNetwork.name}
+                  onChange={handleInputChange}
+                  className="w-full p-2 border rounded"
+                  placeholder="e.g., Custom Network"
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-gray-700 mb-1">RPC URL</label>
+                <input
+                  type="text"
+                  name="rpcUrl"
+                  value={customNetwork.rpcUrl}
+                  onChange={handleInputChange}
+                  className="w-full p-2 border rounded"
+                  placeholder="e.g., https://custom-rpc.com"
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-gray-700 mb-1">Chain ID</label>
+                <input
+                  type="text"
+                  name="chainId"
+                  value={customNetwork.chainId}
+                  onChange={handleInputChange}
+                  className="w-full p-2 border rounded"
+                  placeholder="e.g., 1337"
+                />
+              </div>
+              <div className="flex justify-end">
+                <button
+                  onClick={handleAddCustomNetwork}
+                  className="bg-blue-500 text-white px-4 py-2 rounded mr-2"
+                >
+                  Add
+                </button>
+                <button
+                  onClick={handleCloseModal}
+                  className="bg-gray-300 px-4 py-2 rounded"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
 
     </div>
