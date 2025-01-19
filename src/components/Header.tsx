@@ -15,12 +15,16 @@ interface PropsSelectNetwork {
   isOpen: boolean;
   setIsOpenNetworkTab: React.Dispatch<React.SetStateAction<boolean>>;
   address: string;
+  isAccountModalOpen:boolean
+  setIsAccountModalOpen:React.Dispatch<React.SetStateAction<boolean>>
 }
 
 const Header: React.FC<PropsSelectNetwork> = ({
   isOpen,
   setIsOpenNetworkTab,
   address,
+  setIsAccountModalOpen,
+  isAccountModalOpen
 }) => {
   const [isCopied, setIsCopied] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
@@ -62,6 +66,11 @@ const Header: React.FC<PropsSelectNetwork> = ({
     clearEncryptedWallletAddress();
     navigate("/");
   };
+    // logic for opening account modal
+  const handleOpenAccountModal=()=>{
+    setIsAccountModalOpen(!isAccountModalOpen)
+  }
+
   return (
     <div className="bg-[#FFFFFF] w-[375px] flex flex-row  items-center justify-between px-4 py-2 shadow-2xl h-16 md:w-full">
       {/* network sections */}
@@ -72,7 +81,7 @@ const Header: React.FC<PropsSelectNetwork> = ({
         <div className="truncate">
           {selectedNetwork && formatNetworkString(selectedNetwork)}
         </div>
-        <IoIosArrowDown className="font-bold text-base text-white ml-2" />
+        <IoIosArrowDown className="font-bold text-base text-white ml-2"  />
       </button>
 
       {/* account section */}
@@ -82,7 +91,7 @@ const Header: React.FC<PropsSelectNetwork> = ({
           <img src={AccountIcon} alt="homeicon" className="w-5 h-5 " />
           <h2 className="font-bold mx-2 text-gray-700 text-sm">Account 1 </h2>
 
-          <IoIosArrowDown className="font-bold text-xl text-gray-700" />
+          <IoIosArrowDown className="font-bold text-xl text-gray-700" onClick={handleOpenAccountModal} />
         </div>
 
         {/* address */}
