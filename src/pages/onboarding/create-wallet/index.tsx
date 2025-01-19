@@ -127,6 +127,8 @@ const CreateWallet = () => {
         >
           Continue to Wallet
         </button>
+
+        <button>Copy </button>
       </div>
     </div>
   );

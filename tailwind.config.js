@@ -11,6 +11,10 @@ export default {
         poppins: ["Poppins", 'serif'],
         inter: ["Inter", 'serif'],
         karla: ["Karla", 'serif']
+      },
+      colors: {
+        background: '#242424',
+        
       }
     },
   },
