@@ -13,6 +13,7 @@ function App() {
         <Route path="/create-wallet" element={<GenerateSeed />} />
         <Route path="/view-balance" element={<ViewBalance />} />
         <Route path="/transactions" element={<Transactions />} /> 
+
       </Routes>
     </div>
   );
