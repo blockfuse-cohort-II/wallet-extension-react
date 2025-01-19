@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import { getPrivateKey, sendEther } from "../utils/utils";
 import { RiCloseLine } from "react-icons/ri";
-import { IoIosArrowDown } from "react-icons/io";
-import AccountIcon from "../assets/Account icon.png";
 
 interface SendModalProps {
   isOpen: boolean;
