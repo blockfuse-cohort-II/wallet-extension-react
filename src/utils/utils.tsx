@@ -1,13 +1,39 @@
 import { ethers, TransactionResponse } from "ethers";
+import { HDNode } from "@ethersproject/hdnode";
 
-export function generateSeedPhrase(): string {
+export function generateSeedPhrase() {
   const wallet = ethers.Wallet.createRandom();
   if (!wallet.mnemonic) throw new Error("Failed to generate mnemonic");
   return wallet.mnemonic.phrase;
 }
+export function createHDWallet(
+  seedPhrase: string,
+  path: string = "m/44'/60'/0'/0/0"
+): ethers.Wallet {
+  const hdNode = HDNode.fromMnemonic(seedPhrase, path);
+  const derivedNode = hdNode.derivePath(path);
+  return new ethers.Wallet(derivedNode.privateKey);
+}
+
+export function generateHDWallet(): {
+  seedPhrase: string;
+  wallet: ethers.Wallet;
+} {
+  const seedPhrase = generateSeedPhrase();
+  const wallet = createHDWallet(seedPhrase);
+  return { seedPhrase, wallet };
+}
+
+export function createAccountFromHDNode(
+  seedPhrase: string,
+  accountIndex: number
+): ethers.Wallet {
+  const path = `m/44'/60'/0'/0/${accountIndex}`;
+  return createHDWallet(seedPhrase, path);
+}
 
 export function getAddressFromSeedPhrase(seedPhrase: string): string {
-  const wallet = ethers.Wallet.fromPhrase(seedPhrase);
+  const wallet = HDNode.fromMnemonic(seedPhrase);
   return wallet.address;
 }
 
@@ -18,11 +44,14 @@ export async function sendEther(
   networkChainId: number,
   providerUrl: string
 ): Promise<TransactionResponse> {
-  const provider = new ethers.JsonRpcProvider(providerUrl, networkChainId);
+  const provider = new ethers.JsonRpcProvider(
+    providerUrl,
+    networkChainId
+  );
   const wallet = new ethers.Wallet(senderPrivateKey, provider);
   const tx = {
     to: recipientAddress,
-    value: ethers.parseEther(amountInEther),
+    value: ethers.formatEther(amountInEther),
   };
   return await wallet.sendTransaction(tx);
 }
@@ -32,7 +61,10 @@ export async function getBalance(
   networkChainId: number,
   providerUrl: string
 ): Promise<string> {
-  const provider = new ethers.JsonRpcProvider(providerUrl, networkChainId);
+  const provider = new ethers.JsonRpcProvider(
+    providerUrl,
+    networkChainId
+  );
   const balance = await provider.getBalance(address);
   return ethers.formatEther(balance);
 }
@@ -112,7 +144,6 @@ export const getDecryptedWalletAddress = (): string | null => {
   }
   return null;
 };
-
 
 export const persistEncryptedWalletAddress = (address: string) => {
   localStorage.setItem("encryptedWalletAddress", address);
