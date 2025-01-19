@@ -34,7 +34,7 @@ const CreatePassword = () => {
               Create a Wallet
             </button>
           </Link>
-          <Link to="/transactions">
+          <Link to="/create-wallet?type=create">
             <button className=" border border-slate-800  text-slate-800 px-4 py-3 rounded font-bold w-full">
               {" "}
               Import an existing wallet

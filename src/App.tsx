@@ -11,8 +11,7 @@ function App() {
         <Route path="/" element={<CreatePassword />} />
         <Route path="/create-wallet" element={<CreateWallet />} />
         <Route path="/view-balance" element={<ViewBalance />} />
-        <Route path="/transactions" element={<Transactions />} />
-        
+        <Route path="/transactions" element={<Transactions />} /> 
       </Routes>
     </div>
   );
