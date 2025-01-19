@@ -8,12 +8,8 @@ interface SendModalProps {
   walletAddress: string;
 }
 
-const SendModal: React.FC<SendModalProps> = ({
-  isOpen,
-  onClose,
-  walletAddress,
-}) => {
-  console.log(walletAddress, "walletAddress"); //for now we are just testing with one walletAddress, we have to use this to store privatekeys
+const SendModal: React.FC<SendModalProps> = ({ isOpen, onClose, walletAddress }) => {
+    console.log(walletAddress, "walletAddress") //for now we are just testing with one walletAddress, we have to use this to store privatekeys
   const [recipient, setRecipient] = useState("");
   const [amount, setAmount] = useState("");
   const [loading, setLoading] = useState(false);
@@ -28,30 +24,28 @@ const SendModal: React.FC<SendModalProps> = ({
     setLoading(true);
     setMessage("");
     try {
-      const selectedNetwork =
-        localStorage.getItem("selectedNetwork") ?? "mainnet";
-      console.log(selectedNetwork, "selectednet");
+      const selectedNetwork = localStorage.getItem("selectedNetwork") ?? "mainnet";
+      console.log(selectedNetwork, "selectednet")
       const networks: { [key: string]: { rpcUrl: string; chainId: number } } = {
         // mainnet: {
         //   rpcUrl: "https://mainnet.infura.io/v3/1cef973dff844ba09dea342050cd5967",
         //   chainId: 1,
         // },
         sepolia: {
-          rpcUrl:
-            "https://sepolia.infura.io/v3/1cef973dff844ba09dea342050cd5967",
-          chainId: 11155111,
-        },
+            rpcUrl: "https://sepolia.infura.io/v3/1cef973dff844ba09dea342050cd5967",
+            chainId: 11155111,
+          },
         // Add other networks here...
       };
       const network = networks[selectedNetwork as keyof typeof networks];
-      console.log(network, "network");
+      console.log(network, "network")
       if (!network) throw new Error("Network configuration missing!");
 
       const providerUrl = network.rpcUrl;
       const chainId = network.chainId;
 
-      // Retrieve the encrypted private key from storage and decrypt it
-      const privateKey = await getPrivateKey();
+       // Retrieve the encrypted private key from storage and decrypt it
+       const privateKey = await getPrivateKey();
 
       const transaction = await sendEther(
         privateKey, // Replace with private key in backend for security
