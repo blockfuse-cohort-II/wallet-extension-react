@@ -189,7 +189,7 @@ const SelectNetwork: React.FC<PropsSelectNetwork> = ({
         </div>
 
         {/* custom network  */}
-
+        
         <button className="absolute bottom-[20%] w-[80%] h-8 bg-white text-black rounded-full mt-3 flex flex-row items-center justify-center font-poppins "
         onClick={handleOpenModal}>
           <IoMdAdd className="text-2xl font-bold mr-3" />
