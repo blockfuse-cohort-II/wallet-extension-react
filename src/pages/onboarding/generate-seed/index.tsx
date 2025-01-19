@@ -1,7 +1,19 @@
-import { BsEye } from "react-icons/bs";
+import { useState } from "react";
+import { BsEye, BsEyeSlash } from "react-icons/bs";
 import { Link } from "react-router-dom";
 
 const GenerateSeed = () => {
+  const [visibility, setVisibility] = useState(
+    Array.from({ length: 12 }, () => false)
+  );
+  const toggleVisibility = (index: number) => {
+    setVisibility((prevVisibility) => {
+      const newVisibility = [...prevVisibility];
+      newVisibility[index] = !newVisibility[index];
+      return newVisibility;
+    });
+  };
+
   return (
     <div className="h-full overflow-auto no-scrollbar  py-4 px-4">
       <header className="flex items-center font-medium font-poppins gap-3 text-white">
@@ -37,19 +49,20 @@ const GenerateSeed = () => {
             >
               <div className="inline-flex gap-2">
                 <p>{index + 1}.</p>
-                <p>Access</p>
+                <p>{visibility[index] ? "Access" : "******"}</p>
               </div>
-              <BsEye />
+              <button onClick={() => toggleVisibility(index)}>
+                {visibility[index] ?  <BsEye /> : <BsEyeSlash />}
+              </button>
             </div>
           ))}
         </div>
 
-          <Link to=''>
-        <button className="w-full mt-3 p-3 bg-[#E6E6E6] rounded-full text-[#1A1A1A] font-poppins">
-          Ok, I saved it somewhere safe
-        </button>
-          
-          </Link>
+        <Link to="">
+          <button className="w-full mt-3 p-3 bg-[#E6E6E6] rounded-full text-[#1A1A1A] font-poppins">
+            Ok, I saved it somewhere safe
+          </button>
+        </Link>
       </div>
     </div>
   );
