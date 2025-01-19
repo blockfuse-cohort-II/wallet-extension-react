@@ -7,9 +7,9 @@ function App() {
   return (
     <div className="h-full w-[375px] md:w-full">
       <Routes>
-        <Route path="/" element={<CreatePassword />} />
+        {/* <Route path="/" element={<CreatePassword />} /> */}
         <Route path="/create-wallet" element={<CreateWallet />} />
-        <Route path="/view-balance" element={<ViewBalance />} />
+        <Route path="/" element={<ViewBalance />} />
       </Routes>
     </div>
   );
