@@ -2,6 +2,7 @@ import { Route, Routes } from "react-router-dom";
 import CreateWallet from "./pages/onboarding/create-wallet";
 import CreatePassword from "./pages/onboarding/welcome-page";
 import ViewBalance from "./pages/viewbalance/ViewBalance";
+import Transactions from "./pages/transactions";
 
 function App() {
   return (
@@ -10,6 +11,8 @@ function App() {
         <Route path="/" element={<CreatePassword />} />
         <Route path="/create-wallet" element={<CreateWallet />} />
         <Route path="/view-balance" element={<ViewBalance />} />
+        <Route path="/transactions" element={<Transactions />} />
+        
       </Routes>
     </div>
   );

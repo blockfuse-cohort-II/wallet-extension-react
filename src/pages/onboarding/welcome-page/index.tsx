@@ -13,7 +13,7 @@ const CreatePassword = () => {
     }
   }, [navigate]);
   return (
-    <div className="relative p-10 font-outfit h-full w-full flex items-center justify-center">
+    <div className="relative p-10 font-outfit h-full w-full flex items-center justify-center bg-background">
       {/* <Navbar /> */}
       <div className="w-full text-center flex flex-col items-center gap-32">
         <div className="flex flex-col gap-4">
@@ -34,7 +34,7 @@ const CreatePassword = () => {
               Create a Wallet
             </button>
           </Link>
-          <Link to="/create-wallet?type=create">
+          <Link to="/transactions">
             <button className=" border border-slate-800  text-slate-800 px-4 py-3 rounded font-bold w-full">
               {" "}
               Import an existing wallet
