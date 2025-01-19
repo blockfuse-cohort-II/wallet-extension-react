@@ -12,6 +12,7 @@ import {
   networks,
 } from "../../utils/utils";
 import { RiLoader2Line } from "react-icons/ri";
+import SendModal from "../../components/SendModal";
 
 const ViewBalance = () => {
   const [searchParams] = useSearchParams();
@@ -20,8 +21,17 @@ const ViewBalance = () => {
   const [isOpenNetworkTap, setIsOpenNetworkTap] = useState(false);
   const [balance, setBalance] = useState("0.00");
   const [loading, setLoading] = useState(false);
+  const [isSendModalOpen, setIsSendModalOpen] = useState(false);
   const [assets, setAssets] = useState([]);
   const currentNetwork = getSelectedNetwork() as keyof typeof networks;
+
+  const handleOpenSendModal = () => {
+    setIsSendModalOpen(true);
+  };
+
+  const handleCloseSendModal = () => {
+    setIsSendModalOpen(false);
+  };
 
   useEffect(() => {
     setLoading(true);
@@ -64,7 +74,7 @@ const ViewBalance = () => {
 
           {/* Send and Deposit */}
           <div className="flex flex-row items-center justify-between w-[200px] mt-4">
-            <div className="flex flex-row items-center">
+            <div className="flex flex-row items-center" onClick={handleOpenSendModal}>
               <IoIosSend />
               <h2 className="font-karla text-base font-bold ml-1">Send</h2>
             </div>
@@ -141,6 +151,13 @@ const ViewBalance = () => {
           isOpen={isOpenNetworkTap}
           setIsOpenNetworkTab={setIsOpenNetworkTap}
           address={address}
+        />
+      )}
+       {isSendModalOpen && (
+        <SendModal
+          isOpen={isSendModalOpen}
+          onClose={handleCloseSendModal}
+          walletAddress={address}
         />
       )}
     </div>
