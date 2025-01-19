@@ -13,6 +13,8 @@ import {
 } from "../../utils/utils";
 import { RiLoader2Line } from "react-icons/ri";
 import SendModal from "../../components/SendModal";
+import ReceiveModal from "../../components/ReceiveModal";
+
 
 const ViewBalance = () => {
   const [searchParams] = useSearchParams();
@@ -22,6 +24,7 @@ const ViewBalance = () => {
   const [balance, setBalance] = useState("0.00");
   const [loading, setLoading] = useState(false);
   const [isSendModalOpen, setIsSendModalOpen] = useState(false);
+  const [isReceiveModalOpen, setIsReceiveModalOpen] = useState(false);
   const [assets, setAssets] = useState([]);
   const currentNetwork = getSelectedNetwork() as keyof typeof networks;
 
@@ -31,6 +34,14 @@ const ViewBalance = () => {
 
   const handleCloseSendModal = () => {
     setIsSendModalOpen(false);
+  };
+
+  const handleOpenReceiveModal = () => {
+    setIsReceiveModalOpen(true);
+  };
+
+  const handleCloseReceiveModal = () => {
+    setIsReceiveModalOpen(false);
   };
 
   useEffect(() => {
@@ -74,13 +85,19 @@ const ViewBalance = () => {
 
           {/* Send and Deposit */}
           <div className="flex flex-row items-center justify-between w-[200px] mt-4">
-            <div className="flex flex-row items-center" onClick={handleOpenSendModal}>
+            <div
+              className="flex flex-row items-center cursor-pointer "
+              onClick={handleOpenSendModal}
+            >
               <IoIosSend />
               <h2 className="font-karla text-base font-bold ml-1">Send</h2>
             </div>
-            <div className="flex flex-row items-center">
+            <div
+              className="flex flex-row items-center cursor-pointer"
+              onClick={handleOpenReceiveModal}
+            >
               <PiHandDepositFill />
-              <h2 className="font-karla text-base font-bold ml-1">Deposit</h2>
+              <h2 className="font-karla text-base font-bold ml-1">Receive</h2>
             </div>
           </div>
         </div>
@@ -153,10 +170,17 @@ const ViewBalance = () => {
           address={address}
         />
       )}
-       {isSendModalOpen && (
+      {isSendModalOpen && (
         <SendModal
           isOpen={isSendModalOpen}
           onClose={handleCloseSendModal}
+          walletAddress={address}
+        />
+      )}
+      {isReceiveModalOpen && (
+        <ReceiveModal
+          isOpen={isReceiveModalOpen}
+          onClose={handleCloseReceiveModal}
           walletAddress={address}
         />
       )}
@@ -165,5 +189,3 @@ const ViewBalance = () => {
 };
 
 export default ViewBalance;
-
-
