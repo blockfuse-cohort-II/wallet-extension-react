@@ -72,7 +72,7 @@ const Header: React.FC<PropsSelectNetwork> = ({
   }
 
   return (
-    <div className="bg-[#FFFFFF] w-[375px] flex flex-row  items-center justify-between px-4 py-2 shadow-2xl h-16 md:w-full">
+    <div className=" w-[375px] flex flex-row  items-center justify-between px-4 py-2 shadow-2xl h-16 md:w-full">
       {/* network sections */}
       <button
         className="w-[100px] bg-gray-500 rounded-full px-4 py-1 flex items-center justify-between text-white"

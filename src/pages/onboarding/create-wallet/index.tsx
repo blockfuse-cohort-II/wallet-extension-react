@@ -10,7 +10,7 @@ import { FaExclamationCircle } from "react-icons/fa";
 import { IoMdArrowBack } from "react-icons/io";
 // import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import logo from "./../../../assets/logoo.png";
+import logo from "./../../../assets/logo2.png";
 
 const CreateWallet = () => {
   const navigate = useNavigate();
@@ -75,7 +75,7 @@ const CreateWallet = () => {
         >
           <IoMdArrowBack style={{ marginRight: "5px" }} />
         </button>
-        <img src={logo} alt="" style={{ width: "70px" }} />
+        <img src={logo} alt="" style={{ width: "40px" }} />
       </div>
       <div className="pt-5 text-center flex flex-col">
         <div>
