@@ -4,6 +4,7 @@ import {
   persistEncryptedWalletAddress,
   generateSeedPhrase,
   getAddressFromSeedPhrase,
+  savePrivateKey,
 } from "../../../utils/utils";
 import { FaExclamationCircle } from "react-icons/fa";
 import { IoMdArrowBack } from "react-icons/io";
@@ -21,22 +22,31 @@ const CreateWallet = () => {
   const handleGenerateSeedPhrase = () => {
     const newSeedPhrase = generateSeedPhrase();
     setSeedPhrase(newSeedPhrase);
-    const address = getAddressFromSeedPhrase(newSeedPhrase);
+    const {address, privateKey} = getAddressFromSeedPhrase(newSeedPhrase);
     setWalletAddress(address);
+
+     // Save the encrypted private key immediately
+    //  const passphrase = "secure-internal-passphrase"; // Internal passphrase
+    //  savePrivateKey(privateKey, seedPhrase);
+     savePrivateKey(privateKey);
+     console.log(seedPhrase, "seedPhrase", privateKey, "privateKey");
+     console.log("Private key securely stored.");
+    
   };
 
   const handleSeedPhraseInput = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const inputPhrase = e.target.value;
     setSeedPhrase(inputPhrase);
     if (inputPhrase.trim()) {
-      const address = getAddressFromSeedPhrase(inputPhrase);
+      const {address} = getAddressFromSeedPhrase(inputPhrase);
       setWalletAddress(address);
     }
   };
 
   const handleContinue = () => {
-    if (walletAddress) {
+    if (walletAddress && seedPhrase) {
       persistEncryptedWalletAddress(walletAddress);
+      alert("Wallet created successfully and private key securely stored.");
       navigate(`/view-balance?address=${walletAddress}`);
     }
   };
