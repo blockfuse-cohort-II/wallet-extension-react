@@ -3,7 +3,7 @@ import logo from "./../../../assets/logo2.png";
 import { getDecryptedWalletAddress } from "../../../utils/utils";
 import { useEffect } from "react";
 
-const CreatePassword = () => {
+const WelcomePage = () => {
   const navigate = useNavigate();
   useEffect(() => {
     const walletAddress = getDecryptedWalletAddress();
@@ -31,4 +31,4 @@ const CreatePassword = () => {
   );
 };
 
-export default CreatePassword;
+export default WelcomePage;

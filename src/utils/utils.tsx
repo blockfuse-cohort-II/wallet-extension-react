@@ -92,7 +92,7 @@ export interface NetworkConfig {
   name: string;
   rpcUrl: string;
   chainId: number;
-  symbol?: string; // Ξ (Ethereum)
+  symbol?: string; 
 }
 
 const defaultNetworks: Record<string, NetworkConfig & { symbol: string }> = {
@@ -156,22 +156,6 @@ export const persistEncryptedWalletAddress = (address: string) => {
 export const clearEncryptedWallletAddress = () => {
   localStorage.clear();
 };
-
-// export async function savePrivateKey(privateKey: string, passphrase: string): Promise<void> {
-//   try {
-//     // Encrypt the private key using the custom encryptPrivateKey function
-//     const encryptedPrivateKey = await encryptPrivateKey(privateKey, passphrase);
-//     console.log(encryptedPrivateKey, "encryptedPrivateKey")
-
-//     // Store the encrypted private key in chrome.storage.local
-//     chrome.storage.local.set({ encryptedPrivateKey }, () => {
-//       console.log("Private key securely stored.");
-//     });
-//   } catch (error) {
-//     console.error("Failed to encrypt or store the private key:", error);
-//     throw new Error("Encryption or storage failed.");
-//   }
-// }
 
 export function savePrivateKey(privateKey: string): void {
   chrome.storage.local.set({ privateKey }, () => {
