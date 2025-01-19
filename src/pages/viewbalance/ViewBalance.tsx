@@ -48,7 +48,7 @@ const ViewBalance = () => {
   }, [address, currentNetwork]);
 
   return (
-    <div className="bg-white relative w-[375px]">
+    <div className=" relative w-[375px]">
       <Header
         isOpen={isOpenNetworkTap}
         setIsOpenNetworkTab={setIsOpenNetworkTap}
