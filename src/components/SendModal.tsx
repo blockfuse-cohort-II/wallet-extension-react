@@ -66,10 +66,13 @@ const SendModal: React.FC<SendModalProps> = ({ isOpen, onClose, walletAddress })
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white w-[90%] md:w-[400px] p-6 rounded shadow-md">
-        <div className="flex justify-between items-center mb-4">
-          <h2 className="text-xl font-bold">Send Ether</h2>
-          <RiCloseLine className="cursor-pointer text-2xl" onClick={onClose} />
+      <div className=" w-[90%] md:w-[400px] p-6 rounded shadow-md">
+        <div className="flex items-center mb-4">
+          <RiCloseLine
+            className="cursor-pointer text-xl  bg-[#D9D9D9] rounded-full mr-3"
+            onClick={onClose}
+          />
+          <h2 className="text-xl font-bold">Send</h2>
         </div>
         <div className="mb-4">
           <label className="block text-gray-600 mb-1">Recipient Address</label>
