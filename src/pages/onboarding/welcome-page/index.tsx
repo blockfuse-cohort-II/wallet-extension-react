@@ -1,56 +1,31 @@
 import { Link, useNavigate } from "react-router-dom";
-import logo from "./../../../assets/logoo.png";
+import logo from "./../../../assets/logo2.png";
 import { getDecryptedWalletAddress } from "../../../utils/utils";
 import { useEffect } from "react";
 
 const CreatePassword = () => {
   const navigate = useNavigate();
   useEffect(() => {
-    const walletAddress = getDecryptedWalletAddress(); 
+    const walletAddress = getDecryptedWalletAddress();
 
-    if (walletAddress) {
-
+    if (walletAddress) {  
       navigate(`/view-balance?address=${walletAddress}`);
     }
   }, [navigate]);
   return (
-    <div className="relative p-10 font-outfit h-full w-full flex items-center justify-center">
-      {/* <Navbar /> */}
-      <div className="w-full text-center flex flex-col items-center gap-32">
-        <div className="flex flex-col gap-4">
-          <div className="flex">
-            <img src={logo} alt="" style={{ width: "100px" }} />
-            <h1 className="ml-[-30px] mt-2 text-gray-800 font-bold text-[60px] font-karla bg-gradient-to-r from-slate-800 to-gray-500  bg-clip-text text-transparent">
-              atera
-            </h1>
-          </div>
-          <p className="text-gray-800 font-karla text-base ">
-            Welcome to Katera, the wallet built to safeguard your funds
-            effortlessly.
-          </p>
-        </div>
-        <div className="w-full flex flex-col gap-2.5 mt-2">
-              <Link 
-              to="/create-wallet?type=create"
-              >
-            <button className="bg-slate-800 text-white px-4 py-3 rounded font-bold w-full">
-              Create a Wallet
-            </button>
-          </Link>
-          <Link 
-              to="/create-wallet?type=create"
-          
-          >
-            <button className=" border border-slate-800  text-slate-800 px-4 py-3 rounded font-bold w-full">
-              {" "}
-              Import an existing wallet
-            </button>
-          </Link>
-        </div>
+    <div className="relative p-5 h-full w-full flex flex-col items-center justify-center text-white">
+      <div className="flex h-full flex-col gap-1 justify-center items-center text-center">
+        <img src={logo} alt="" className="h-12 w-12 flex justify-center mb-2" />
+          <h1 className="text-2xl font-quicksand font-semibold">Welcome to Katera</h1>
+          <p className="font-inter text-gray-400 text-sm ">A boring Ethereum wallet built for DeFi & NFTs</p>
       </div>
 
-      <div className="absolute mt-auto bottom-4">
-        Built with by ❤️ cohort two geeks
+      <div className="flex flex-col gap-3 w-full mt-auto">
+          <Link to='/create-wallet'>
+          <button className="w-full p-3 bg-violet-500 rounded-full text-white font-poppins">Create a new wallet</button>
+          </Link>
+          <button className="w-full p-3 bg-[#4D4D4D] rounded-full text-white font-poppins">I already have a wallet</button>
+
       </div>
     </div>
   );

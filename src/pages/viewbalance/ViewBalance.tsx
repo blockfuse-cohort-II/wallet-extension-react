@@ -12,6 +12,7 @@ import {
   networks,
 } from "../../utils/utils";
 import { RiLoader2Line } from "react-icons/ri";
+import SendModal from "../../components/SendModal";
 
 const ViewBalance = () => {
   const [searchParams] = useSearchParams();
@@ -20,8 +21,17 @@ const ViewBalance = () => {
   const [isOpenNetworkTap, setIsOpenNetworkTap] = useState(false);
   const [balance, setBalance] = useState("0.00");
   const [loading, setLoading] = useState(false);
+  const [isSendModalOpen, setIsSendModalOpen] = useState(false);
   const [assets, setAssets] = useState([]);
   const currentNetwork = getSelectedNetwork() as keyof typeof networks;
+
+  const handleOpenSendModal = () => {
+    setIsSendModalOpen(true);
+  };
+
+  const handleCloseSendModal = () => {
+    setIsSendModalOpen(false);
+  };
 
   useEffect(() => {
     setLoading(true);
@@ -38,7 +48,7 @@ const ViewBalance = () => {
   }, [address, currentNetwork]);
 
   return (
-    <div className="bg-white relative w-[375px]">
+    <div className=" relative w-[375px]">
       <Header
         isOpen={isOpenNetworkTap}
         setIsOpenNetworkTab={setIsOpenNetworkTap}
@@ -64,7 +74,7 @@ const ViewBalance = () => {
 
           {/* Send and Deposit */}
           <div className="flex flex-row items-center justify-between w-[200px] mt-4">
-            <div className="flex flex-row items-center">
+            <div className="flex flex-row items-center" onClick={handleOpenSendModal}>
               <IoIosSend />
               <h2 className="font-karla text-base font-bold ml-1">Send</h2>
             </div>
@@ -77,7 +87,7 @@ const ViewBalance = () => {
 
         {/* Assets Section */}
         <div className="flex flex-col w-full px-2">
-          <h2 className="font-karla font-semibold">Assets</h2>
+          <h2 className="font-karla  text-lg font-semibold">Assets</h2>
 
           <div className="mt-4">
             {assets.length > 0 ? (
@@ -143,8 +153,17 @@ const ViewBalance = () => {
           address={address}
         />
       )}
+       {isSendModalOpen && (
+        <SendModal
+          isOpen={isSendModalOpen}
+          onClose={handleCloseSendModal}
+          walletAddress={address}
+        />
+      )}
     </div>
   );
 };
 
 export default ViewBalance;
+
+

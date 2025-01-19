@@ -4,7 +4,13 @@ import {
   persistEncryptedWalletAddress,
   generateSeedPhrase,
   getAddressFromSeedPhrase,
+  savePrivateKey,
 } from "../../../utils/utils";
+import { FaExclamationCircle } from "react-icons/fa";
+import { IoMdArrowBack } from "react-icons/io";
+// import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import logo from "./../../../assets/logo2.png";
 
 const CreateWallet = () => {
   const navigate = useNavigate();
@@ -16,31 +22,73 @@ const CreateWallet = () => {
   const handleGenerateSeedPhrase = () => {
     const newSeedPhrase = generateSeedPhrase();
     setSeedPhrase(newSeedPhrase);
-    const address = getAddressFromSeedPhrase(newSeedPhrase);
+    const {address, privateKey} = getAddressFromSeedPhrase(newSeedPhrase);
     setWalletAddress(address);
+
+     // Save the encrypted private key immediately
+    //  const passphrase = "secure-internal-passphrase"; // Internal passphrase
+    //  savePrivateKey(privateKey, seedPhrase);
+     savePrivateKey(privateKey);
+     console.log(seedPhrase, "seedPhrase", privateKey, "privateKey");
+     console.log("Private key securely stored.");
+    
   };
 
   const handleSeedPhraseInput = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const inputPhrase = e.target.value;
     setSeedPhrase(inputPhrase);
     if (inputPhrase.trim()) {
-      const address = getAddressFromSeedPhrase(inputPhrase);
+      const {address} = getAddressFromSeedPhrase(inputPhrase);
       setWalletAddress(address);
     }
   };
 
   const handleContinue = () => {
-    if (walletAddress) {
+    if (walletAddress && seedPhrase) {
       persistEncryptedWalletAddress(walletAddress);
+      alert("Wallet created successfully and private key securely stored.");
       navigate(`/view-balance?address=${walletAddress}`);
     }
   };
 
+  const handleBack = () => {
+    navigate(-1);
+  };
+
+  // const notify = () => {
+  //   toast.success("This is a success message!");
+  // };
+
   return (
     <div className="p-10">
-      <div className="pt-20 text-center flex flex-col">
+      <div className="flex justify-between">
+        <button
+          className="rounded"
+          onClick={handleBack}
+          style={{
+            alignItems: "center",
+            display: "inline",
+            cursor: "pointer",
+            color: "black",
+            fontSize: "20px",
+          }}
+        >
+          <IoMdArrowBack style={{ marginRight: "5px" }} />
+        </button>
+        <img src={logo} alt="" style={{ width: "40px" }} />
+      </div>
+      <div className="pt-5 text-center flex flex-col">
         <div>
-          <p className="text-justify justify-center text-[#FEC84B] bg-[#FEC84B]/20 border border-[#f5c453] m-auto full p-5 mb-5">
+          <p className="flex text-justify justify-center text-[#FEC84B] bg-[#FEC84B]/20 border border-[#f5c453] m-auto full p-5 mb-5 text-sm">
+            <FaExclamationCircle
+              style={{
+                color: "orange",
+                fontSize: "40px",
+                marginRight: "5px",
+                position: "relative",
+                bottom: "10px",
+              }}
+            />
             {type === "create"
               ? "Once you generate the seed phrase, save it securely and once you have saved it, you can proceed to wallet."
               : "Please enter your seed phrase to recover your wallet."}
@@ -79,9 +127,13 @@ const CreateWallet = () => {
         >
           Continue to Wallet
         </button>
+
+        <button>Copy </button>
       </div>
     </div>
   );
 };
 
 export default CreateWallet;
+
+
