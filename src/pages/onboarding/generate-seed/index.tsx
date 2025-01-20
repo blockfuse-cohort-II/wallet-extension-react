@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { BsEye, BsEyeSlash } from "react-icons/bs";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const GenerateSeed = () => {
+  const navigate = useNavigate();
+
   const [visibility, setVisibility] = useState(
     Array.from({ length: 12 }, () => false)
   );
@@ -16,7 +18,7 @@ const GenerateSeed = () => {
 
   return (
     <div className="h-full  py-6 px-4">
-      <header className="flex items-center font-medium font-poppins gap-3 text-white">
+      <header className="flex items-center font-medium font-poppins gap-3 text-white cursor-pointer" onClick={() => navigate(-1)}>
         <svg
           width="20"
           height="20"
