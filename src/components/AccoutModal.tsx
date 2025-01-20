@@ -63,10 +63,16 @@ const AccountModal: React.FC<PropsSelectNetwork> = ({
     setAccountsIndex(index);
     localStorage.setItem("selectedAccountIndex", index.toString());
     setIsAccountModalOpen(!isOpen);
+    navigate(`/view-balance?address=${account}`);
   };
 
   const handleAddAccount = () => {
     const newAccount = createAccountFromHDNode(getMnemonic(), accounts.length);
+    const keys = [
+      ...JSON.parse(localStorage.getItem("privateKey") ?? "[]"),
+      newAccount.privateKey,
+    ];
+    localStorage.setItem('privateKey', JSON.stringify(keys))
     const updatedAccounts = [...accounts, newAccount.address];
     setAccounts(updatedAccounts);
     localStorage.setItem("accounts", JSON.stringify(updatedAccounts));
@@ -157,7 +163,7 @@ const AccountModal: React.FC<PropsSelectNetwork> = ({
               <div className="flex ">
                 <div className="flex flex-col items-end mr-2">
                   <p className="font-poppins text-base">{`$ ${parseFloat(
-                   "0"
+                    "0"
                   ).toFixed(2)} USD`}</p>
                   <div className="flex flex-row items-center justify-between">
                     <img
