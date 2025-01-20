@@ -15,17 +15,16 @@ const SuccessPage = () => {
   const walletAddress = getDecryptedWalletAddress();
 
   const verifyPassword = () => {
-    if(password.length < 8){
+    if (password.length < 8) {
       toast.warning("password must be more than 8 words");
-    }
-    else if (password === confirmPassword) {
+    } else if (password === confirmPassword) {
       // Save password in local storage
       savePassword(password);
       toast.success("Password created");
-      (() => navigate(`/view-balance?address=${walletAddress}`))();
+      navigate(`/view-balance?address=${walletAddress}`);
       return;
     } else {
-      toast.warning("Passwords do not match")
+      toast.warning("Passwords do not match");
     }
   };
 
@@ -37,8 +36,12 @@ const SuccessPage = () => {
       </div>
       <div className="flex flex-col justify-between h-[500px]">
         <div>
-          <p className="text-xl mb-2 mt-4 text-white">One last step and you're all set!</p>
-          <p className="text-white/50">Now create a password to help you login</p>
+          <p className="text-xl mb-2 mt-4 text-white">
+            One last step and you're all set!
+          </p>
+          <p className="text-white/50">
+            Now create a password to help you login
+          </p>
         </div>
 
         <div className="text-white font-poppins">

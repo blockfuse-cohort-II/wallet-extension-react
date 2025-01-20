@@ -4,12 +4,9 @@ import { IoIosArrowDown, IoMdMore } from "react-icons/io";
 import { BiCopy } from "react-icons/bi";
 import { LuCopyCheck } from "react-icons/lu";
 import { useNavigate } from "react-router-dom";
-import {
-  clearStore,
-  getNetwork,
-  getSelectedNetwork,
-} from "../utils/utils";
+import {  getNetwork, getSelectedNetwork } from "../utils/utils";
 import useOutsideClick from "../hooks/use-outside-click";
+import AccountDetails from "./AccountDetails";
 
 interface PropsSelectNetwork {
   isOpen: boolean;
@@ -26,6 +23,7 @@ const Header: React.FC<PropsSelectNetwork> = ({
 }) => {
   const [isCopied, setIsCopied] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
+  const [accountDetailsModalOpen, setAccountDetailsModalOpen] = useState(false);
   const [currentAccount, setCurrentAccount] = useState<string>("");
   const navigate = useNavigate();
   const dropdownRef = useOutsideClick(() => setShowMenu(false));
@@ -52,10 +50,10 @@ const Header: React.FC<PropsSelectNetwork> = ({
   };
 
   const handleLogout = () => {
-    const password = localStorage.getItem("password");
-    clearStore();
-    localStorage.setItem("password", password ?? "");
-    navigate("/");
+    // const password = localStorage.getItem("password");
+    // clearStore();
+    // localStorage.setItem("password", password ?? "");
+    navigate("/login");
   };
 
   const handleOpenAccountModal = () => {
@@ -80,7 +78,6 @@ const Header: React.FC<PropsSelectNetwork> = ({
     return `${symbol} ${name.slice(0, 3).toUpperCase()}`;
   };
 
-
   return (
     <div className="bg-background w-[375px] flex flex-row items-center justify-between px-4 py-2 shadow-xl h-16 md:w-full">
       {/* network sections */}
@@ -99,7 +96,10 @@ const Header: React.FC<PropsSelectNetwork> = ({
         {/* Account Info */}
         <div className="flex flex-row items-center">
           <img src={AccountIcon} alt="account-icon" className="w-5 h-5" />
-          <h2 className="font-bold mx-2 text-white text-sm">Account {parseInt(localStorage.getItem("selectedAccountIndex") ?? '0')+ 1}</h2>
+          <h2 className="font-bold mx-2 text-white text-sm">
+            Account{" "}
+            {parseInt(localStorage.getItem("selectedAccountIndex") ?? "0") + 1}
+          </h2>
           <IoIosArrowDown
             className="font-bold text-xl text-white"
             onClick={handleOpenAccountModal}
@@ -112,7 +112,11 @@ const Header: React.FC<PropsSelectNetwork> = ({
             {currentAccount}
           </h2>
           <button onClick={handleCopy} className="ml-4 text-gray-700">
-            {isCopied ? <LuCopyCheck className="text-white" /> : <BiCopy className="text-white" />}
+            {isCopied ? (
+              <LuCopyCheck className="text-white" />
+            ) : (
+              <BiCopy className="text-white" />
+            )}
           </button>
         </div>
       </div>
@@ -126,15 +130,25 @@ const Header: React.FC<PropsSelectNetwork> = ({
         <div
           className={`${
             !showMenu ? "hidden" : "absolute"
-          } absolute top-[100%] right-0 w-[150px] h-[100px] border bg-[] rounded-md flex flex-col text-white`}
+          } absolute top-[100%] right-0 w-[120px] py-4 border bg-background  shadow-lg border-gray-600 rounded-md flex flex-col text-white px-3 cursor-pointer  `}
           ref={dropdownRef as React.RefObject<HTMLDivElement>}
         >
-          <span className="border-b px-2 font-bold">Menu</span>
-          <div className="p-2">
-            <button onClick={handleLogout}>Logout</button>
-          </div>
+          <span onClick={() => setAccountDetailsModalOpen(true)} className="font-poppins hover:text-violet-500 transition-all duration-200 ease-linear">
+            Account Details
+          </span>
+
+          <span onClick={handleLogout} className="mt-2 font-poppins hover:text-violet-500 transition-all duration-200 ease-linear">
+            Logout
+          </span>
         </div>
       </div>
+
+      <AccountDetails
+        isOpen={accountDetailsModalOpen}
+        onClose={() => setAccountDetailsModalOpen(false)}
+        index={parseInt(localStorage.getItem("selectedAccountIndex") ?? "0") + 1}
+        walletAddress={currentAccount}
+      />
     </div>
   );
 };

@@ -62,11 +62,14 @@ const AccountModal: React.FC<PropsSelectNetwork> = ({
   const handleAccountSelect = (index: number, account: string) => {
     setAccountsIndex(index);
     localStorage.setItem("selectedAccountIndex", index.toString());
+    setIsAccountModalOpen(!isOpen);
     navigate(`/view-balance?address=${account}`);
   };
 
   const handleAddAccount = () => {
     const newAccount = createAccountFromHDNode(getMnemonic(), accounts.length);
+    const existing = JSON.parse(localStorage.getItem("privateKey") ?? "[]");
+    const keys = [...existing, newAccount.privateKey];
     const updatedAccounts = [...accounts, newAccount.address];
     setAccounts(updatedAccounts);
     localStorage.setItem("accounts", JSON.stringify(updatedAccounts));
@@ -74,6 +77,7 @@ const AccountModal: React.FC<PropsSelectNetwork> = ({
       "selectedAccountIndex",
       (updatedAccounts.length - 1).toString()
     );
+    localStorage.setItem("privateKey", JSON.stringify(keys));
 
     const fetchBalance = async () => {
       const newBalance = await getBalance(
@@ -117,7 +121,7 @@ const AccountModal: React.FC<PropsSelectNetwork> = ({
 
         {/* Networks */}
         <div
-          className="mt-2 h-[60%] overflow-auto px-6"
+          className="mt-2 h-[60%] overflow-auto px-6 w-full"
           style={{
             scrollbarWidth: "none" /* Firefox */,
             msOverflowStyle: "none" /* IE and Edge */,
@@ -125,9 +129,9 @@ const AccountModal: React.FC<PropsSelectNetwork> = ({
         >
           {/* Accounts */}
           {accounts.map((account, index) => (
-            <div
+            <button
               key={index + account}
-              className={`flex flex-row items-center h-15 px-2 py-2 rounded-sm justify-between ${
+              className={`flex flex-row w-full text-sm items-center h-15 mt-3 px-2 py-2 rounded-sm justify-between ${
                 index === accountsIndex ? "bg-gray-700" : ""
               }`}
               onClick={() => handleAccountSelect(index, account)}
@@ -143,8 +147,8 @@ const AccountModal: React.FC<PropsSelectNetwork> = ({
                 </div>
 
                 {/* Account name and address */}
-                <div className="ml-5">
-                  <h2 className="font-poppins font-bold text-xl">
+                <div className="ml-3 flex flex-col items-start">
+                  <h2 className="font-poppins font-bold text-sm">
                     {`Account ${index + 1}`}
                   </h2>
                   <span className="font-poppins text-sm font-normal">
@@ -154,10 +158,10 @@ const AccountModal: React.FC<PropsSelectNetwork> = ({
               </div>
 
               {/* Account balance and assets */}
-              <div className="flex">
+              <div className="flex ">
                 <div className="flex flex-col items-end mr-2">
                   <p className="font-poppins text-base">{`$ ${parseFloat(
-                   "0"
+                    "0"
                   ).toFixed(2)} USD`}</p>
                   <div className="flex flex-row items-center justify-between">
                     <img
@@ -165,9 +169,9 @@ const AccountModal: React.FC<PropsSelectNetwork> = ({
                       alt="asset icon"
                       className="w-3 mr-2"
                     />
-                    <h2 className="font-poppins">
+                    <h2 className="font-poppins text-green-300 ">
                       {accountBalances[index] || "0.00"}{" "}
-                      <span>
+                      <span className="text-sm">
                         {
                           networks[
                             getSelectedNetwork() as keyof typeof networks
@@ -177,15 +181,14 @@ const AccountModal: React.FC<PropsSelectNetwork> = ({
                     </h2>
                   </div>
                 </div>
-                <IoMdMore className="font-bold text-2xl" />
               </div>
-            </div>
+            </button>
           ))}
         </div>
 
         {/* Add account button */}
         <button
-          className="absolute bottom-[20%] w-[80%] h-8 bg-white text-black rounded-full mt-3 flex flex-row items-center justify-center font-poppins"
+          className="absolute bottom-[20%] w-full h-8 bg-white text-black rounded-full mt-3 flex flex-row items-center justify-center font-poppins"
           onClick={handleAddAccount}
         >
           <IoMdAdd className="text-2xl font-bold mr-3" />

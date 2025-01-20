@@ -11,7 +11,7 @@ import {
   getDecryptedWalletAddress,
   getSelectedNetwork,
   networks,
-  getTokens
+  getTokens,
 } from "../../utils/utils";
 import { RiLoader2Line } from "react-icons/ri";
 import SendModal from "../../components/SendModal";
@@ -23,6 +23,7 @@ const ViewBalance = () => {
   const address =
     searchParams.get("address") ?? getDecryptedWalletAddress() ?? "";
   const [isOpenNetworkTap, setIsOpenNetworkTap] = useState(false);
+  const [priceChange, setPriceChange] = useState("0.00");
   const [balance, setBalance] = useState("0.00");
   const [loading, setLoading] = useState(false);
   const [isSendModalOpen, setIsSendModalOpen] = useState(false);
@@ -53,8 +54,6 @@ const ViewBalance = () => {
           localStorage.getItem("accounts") ?? "[]"
         );
         console.log("storedAccounts", storedAccounts);
-        // const selectedAddress = storedAccounts[selectedAccountIndex];
-        // console.log("selectedAddress", selectedAddress);
         const ethBalance = await getBalance(
           address,
           networks[currentNetwork].chainId,
@@ -70,8 +69,10 @@ const ViewBalance = () => {
         const data = await response.json();
         console.log("data", data);
         const rate = data.ethereum.usd;
+        const change = data.ethereum.usd_24h_change.toFixed(2);
         console.log("rate", rate);
         setUsdBalance((parseFloat(ethBalance) * rate).toFixed(2));
+        setPriceChange(change)
         console.log("usdBalance", usdBalance);
       } catch (error) {
         console.error("Error fetching balance:", error);
@@ -117,7 +118,7 @@ const ViewBalance = () => {
             <p className="font-karla font-semibold text-lg leading-6">
               Total Asset Value
             </p>
-            <div className="font-karla font-bold  text-4xl my-2">
+            <div className="font-karla font-bold  text-2xl my-2">
               {loading ? (
                 <RiLoader2Line className="animate-spin" />
               ) : (
@@ -126,8 +127,12 @@ const ViewBalance = () => {
                 })()
               )}
             </div>
-            <h3 className="font-karla font-bold text-[#5CE677] text-lg leading-5">
-              +98.02% (24h)
+            <h3
+              className={`font-karla font-bold text-lg leading-5 ${
+                priceChange.startsWith("-") ? "text-red-500" : "text-[#5CE677]"
+              }`}
+            >
+              {priceChange}% (24h)
             </h3>
           </div>
 
@@ -188,7 +193,7 @@ const ViewBalance = () => {
                             {asset.name}
                           </h2>
                           <p className="font-karla font-medium text-green-400">
-                          +98.02%
+                            +98.02%
                           </p>
                         </div>
                       </div>
@@ -234,6 +239,9 @@ const ViewBalance = () => {
             isOpen={isReceiveModalOpen}
             onClose={handleCloseReceiveModal}
             walletAddress={address}
+            index={
+              parseInt(localStorage.getItem("selectedAccountIndex") ?? "0") + 1
+            }
           />
         )}
 
