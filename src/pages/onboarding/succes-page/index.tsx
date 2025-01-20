@@ -15,7 +15,10 @@ const SuccessPage = () => {
   const walletAddress = getDecryptedWalletAddress();
 
   const verifyPassword = () => {
-    if (password === confirmPassword) {
+    if(password.length < 8){
+      toast.warning("password must be more than 8 words");
+    }
+    else if (password === confirmPassword) {
       // Save password in local storage
       savePassword(password);
       toast.success("Password created");
