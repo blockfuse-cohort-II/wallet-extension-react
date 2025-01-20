@@ -8,6 +8,7 @@ import VerifySeed from "./pages/onboarding/verify-seed";
 import Login from "./pages/login";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Toaster } from "sonner";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route path="/login" element={<Login />} /> 
       </Routes>
       <ToastContainer />
+      <Toaster position="top-center" richColors />
     </div>
   );
 }
