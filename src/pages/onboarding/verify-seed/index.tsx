@@ -83,13 +83,12 @@ const VerifySeed = () => {
           {!isImported ? "Verify" : "Input"} Recovery Phrase
         </h2>
         <p className="font-inter text-gray-400">
-          This is a crucial step to ensure your seed phrase is correct and can
-          be used to recover your account. Please verify each word carefully and
+          Please verify each word carefully and
           store it securely.
         </p>
       </div>
 
-      <div className="mt-8 grid grid-cols-2 gap-4">
+      <div className="mt-6 grid grid-cols-2 gap-4">
         {Array.from({ length: 12 }).map((_, index) => (
           <div
             key={index + 1}

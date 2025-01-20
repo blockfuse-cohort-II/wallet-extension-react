@@ -72,7 +72,7 @@ const Header: React.FC<PropsSelectNetwork> = ({
   }
 
   return (
-    <div className="bg-[#0c0c0c] w-[375px] flex flex-row items-center justify-between px-4 py-2 shadow-md h-16 md:w-full">
+    <div className="bg-background w-[375px] flex flex-row items-center justify-between px-4 py-2 shadow-md h-16 md:w-full">
       {/* network sections */}
       <button
         className="w-[100px] bg-gray-500 rounded-full px-4 py-1 flex items-center justify-between text-white"
@@ -99,9 +99,9 @@ const Header: React.FC<PropsSelectNetwork> = ({
           <h2 className="w-24 overflow-hidden text-white text-sm">
             {address}
           </h2>
-          <button onClick={HandleCopy} className="ml-4 text-gray-700">
+          {/* <button onClick={HandleCopy} className="ml-4 text-gray-700">
             {isCopied ? <LuCopyCheck className="text-white"/> : <BiCopy className="text-white"/>}
-          </button>
+          </button> */}
         </div>
       </div>
 
