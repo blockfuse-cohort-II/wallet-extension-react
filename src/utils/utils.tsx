@@ -184,10 +184,10 @@ export const getTokens = async () => {
       change: number;
     }
     // Counter for SNo of final output
-    let results: assets[] = [];
+    const results: assets[] = [];
   
     // Loop through all tokens with non-zero balance
-    for (let token of nonZeroBalances) { 
+    for (const token of nonZeroBalances) { 
       // Get balance of token
       let balance = Number(token.tokenBalance);
   
@@ -217,7 +217,7 @@ export const getNfts = async (network_name: string) => {
   const alchemy = new Alchemy(config);
 
   // Wallet address -- replace with your desired address
-  let address = getDecryptedWalletAddress();
+  const address = getDecryptedWalletAddress();
   if (!address) {
     throw new Error("Wallet address not found");
   }
@@ -233,7 +233,7 @@ export const getNfts = async (network_name: string) => {
 
   let i = 1;
 
-  for (let nft of nftList) {
+  for (const nft of nftList) {
     console.log(`${i}. ${nft}`);
     i++;
   }

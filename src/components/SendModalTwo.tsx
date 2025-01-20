@@ -324,6 +324,7 @@ const SendModal: React.FC<SendModalProps> = ({
             disabled={loading} // Disable the button while loading
           >
             {loading ? "Sending..." : "Continue"}
+            
           </button>
         </div>
       </div>
