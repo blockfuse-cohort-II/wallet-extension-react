@@ -14,6 +14,7 @@ export function savePassword(password: string): void {
 }
 
 export function validatePassword(password: string): boolean {
+  console.log("password-validate", password);
   return localStorage.getItem("password") === password;
 }
 
