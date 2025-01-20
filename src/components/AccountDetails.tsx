@@ -1,4 +1,7 @@
 import { RiCloseLine } from "react-icons/ri";
+import { IoCopy } from "react-icons/io5";
+import logo from "../assets/logo2.png";
+import AccountIcon from "../assets/Account icon.png";
 
 interface SendModalProps {
   isOpen: boolean;
@@ -10,37 +13,34 @@ const AccountDetails: React.FC<SendModalProps> = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className=" w-[90%] md:w-[400px] p-6 rounded shadow-md">
-        <div className="flex items-center mb-4">
-          <RiCloseLine
-            className="cursor-pointer text-xl  bg-[#D9D9D9] rounded-full mr-3"
-            onClick={onClose}
+    <div className="fixed text-sm inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 backdrop-blur-md">
+      <div className=" w-[90%] md:w-[400px] p-6 rounded flex flex-col items-center gap-9">
+        <RiCloseLine
+          className="cursor-pointer text-xl  bg-[#D9D9D9] rounded-full mr-3"
+          onClick={onClose}
+        />
+        <div className="flex rounded-lg justify-between bg-[#363636] p-2">
+          <img
+            src={AccountIcon}
+            alt="homeicon"
+            className="w-10 h-10 rounded-full "
           />
-          <h2 className="text-xl  text-white font-bold">Receive</h2>
+
+          <div className="text-white mr-24">
+            <p>Account 1</p>
+            <p className="text-[13px]">0xfdk2....dds323</p>
+          </div>
         </div>
         <div className="">
-          <img src="" alt="" />
+          <img src={logo} alt="" className="h-[150px] w-[150px]" />
         </div>
-        <div>
-          <h2>Account1</h2>
-          <p>0xffee455434ererj3438434</p>
+        <div className="text-white flex flex-col items-center gap-2">
+          <h2 className="text-lg">Account1</h2>
+          <p className="base">0xffee455434ererj34djsdj4934843938434</p>
         </div>
-        <div>
-          <svg
-            width="17"
-            height="15"
-            viewBox="0 0 17 19"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M4.25 15.5V0.5H16.25V15.5H4.25ZM5.75 14H14.75V2H5.75V14ZM0.75 19V4.30775H2.25V17.5H12.4423V19H0.75Z"
-              fill="white"
-              fill-opacity="0.5"
-            />
-          </svg>
-          Copy Address
+        <div className="text-violet-500 flex items-center gap-2 mb-3 cursor-pointer">
+          <IoCopy />
+          <div>Copy Address</div>
         </div>
       </div>
     </div>
