@@ -3,13 +3,13 @@ import { IoCopy } from "react-icons/io5";
 import logo from "../assets/logo2.png";
 import AccountIcon from "../assets/Account icon.png";
 
-interface SendModalProps {
+interface AccountDetailsProps {
   isOpen: boolean;
   onClose: () => void;
-  walletAddress: string;
+  // walletAddress: string;
 }
 
-const AccountDetails: React.FC<SendModalProps> = ({ isOpen, onClose }) => {
+const AccountDetails: React.FC<AccountDetailsProps> = ({ isOpen, onClose }: AccountDetailsProps) => {
   if (!isOpen) return null;
 
   return (
