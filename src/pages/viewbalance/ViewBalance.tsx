@@ -62,7 +62,7 @@ const ViewBalance = () => {
 
 
   return (
-    <div className="bg-white relative w-[375px]">
+    <div className="bg-[#252525] relative w-[375px]">
       <Header
         isOpen={isOpenNetworkTap}
         setIsOpenNetworkTab={setIsOpenNetworkTap}
@@ -74,8 +74,8 @@ const ViewBalance = () => {
       {/* View account section */}
       <div className="mt-5">
         {/* Balance section */}
-        <div className="flex flex-col items-center w-[360px] md:w-full p-2 mx-3 bg-[242424]">
-          <div className="w-[355px]  h-40 md:w-full flex flex-col text-white  border border-gray-300 align-middle justify-center px-3 rounded-lg">
+        <div className="flex flex-col items-center w-[350px] md:w-full p-2 mx-2 bg-[242424]">
+          <div className="w-[345px]  h-40 md:w-full flex flex-col text-white  border border-gray-300 align-middle justify-center px-3 rounded-lg">
             <p className="font-karla font-semibold text-lg leading-6">
               Total Asset Value
             </p>
@@ -91,29 +91,14 @@ const ViewBalance = () => {
 
           {/* Send and Deposit */}
           <div className="flex flex-row items-center justify-between w-[200px] mt-4">
-            <div
-              className="flex flex-row items-center cursor-pointer "
-              onClick={handleOpenSendModal}
-            >
-              <IoIosSend />
-              <h2 className="font-karla text-base font-bold ml-1">Send</h2>
-            </div>
-            <div
-              className="flex flex-row items-center cursor-pointer"
-              onClick={handleOpenReceiveModal}
-            >
-              <PiHandDepositFill />
-              <h2 className="font-karla text-base font-bold ml-1">Receive</h2>
-            </div>
-
             <div className="flex flex-row items-center justify-between w-[200px] mt-6 text-white">
               <button className="flex flex-row items-center border border-gray-400 px-4 py-2 rounded-lg hover:bg-violet-500 mr-4" onClick={handleOpenSendModal}>
                 <IoIosSend />
                 <h2 className="font-karla text-base font-bold ml-1">Send</h2>
               </button>
-              <button className="flex flex-row items-center border border-gray-400 px-4 py-2 rounded-lg hover:bg-violet-500 ">
+              <button className="flex flex-row items-center border border-gray-400 px-4 py-2 rounded-lg hover:bg-violet-500 "  onClick={handleOpenReceiveModal}>
                 <PiHandDepositFill />
-                <h2 className="font-karla text-base font-bold ml-1">Deposit</h2>
+                <h2 className="font-karla text-base font-bold ml-1">Receive</h2>
               </button>
 
             </div>
