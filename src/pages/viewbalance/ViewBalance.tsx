@@ -75,7 +75,7 @@ const ViewBalance = () => {
       <div className="mt-5">
         {/* Balance section */}
         <div className="flex flex-col items-center w-[350px] md:w-full p-2 mx-2 bg-[242424]">
-          <div className="w-[345px]  h-40 md:w-full flex flex-col text-white  border border-gray-300 align-middle justify-center px-3 rounded-lg">
+          <div className="w-[345px]  h-40 md:w-full flex flex-col text-white  border border-[#4D4D4D] align-middle justify-center px-3 rounded-lg">
             <p className="font-karla font-semibold text-lg leading-6">
               Total Asset Value
             </p>

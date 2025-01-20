@@ -50,16 +50,15 @@ const VerifySeed = () => {
         <p>Verify Recovery Phrase</p>
       </header>
 
-      <div className="mt-10 text-white flex flex-col gap-1">
+      <div className="mt-6 text-white flex flex-col gap-1">
         <h2 className="text-2xl font-karla">Verify Recovery Phrase</h2>
         <p className="font-inter text-gray-400">
-          This is a crucial step to ensure your seed phrase is correct and can
-          be used to recover your account. Please verify each word carefully and
+          Please verify each word carefully and
           store it securely.
         </p>
       </div>
 
-      <div className="mt-8 grid grid-cols-2 gap-4">
+      <div className="mt-6 grid grid-cols-2 gap-4">
         {Array.from({ length: 12 }).map((_, index) => (
           <div
             key={index}
@@ -83,7 +82,7 @@ const VerifySeed = () => {
       </div>
 
       <Link to="/success-page">
-        <button className="w-full mt-8 p-3 bg-violet-500 text-white rounded-full font-poppins">
+        <button className="w-full mt-6 p-3 bg-violet-500 text-white rounded-full font-poppins">
           I'm sure, Finish
         </button>
       </Link>
