@@ -263,7 +263,7 @@ const SendModal: React.FC<SendModalProps> = ({
   onClick={handleSend}
   disabled={loading} // Disable the button while loading
 >
-  {loading ? "Sending..." : "Continue"}
+  {loading ? "Sending..." : "Continue"} 
 </button>
         </div>
       </div>
