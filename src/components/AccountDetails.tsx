@@ -42,6 +42,9 @@ const AccountDetails: React.FC<SendModalProps> = ({ isOpen, onClose }) => {
           <IoCopy />
           <div>Copy Address</div>
         </div>
+        <button className="text-violet-500 border border-border rounded-full p-3 px-11 hover:bg-[#363636]">
+          Show private key
+        </button>
       </div>
     </div>
   );
