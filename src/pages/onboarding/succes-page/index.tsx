@@ -1,8 +1,13 @@
 // import Success from "../../../components/icons/Success";
 import { Link } from "react-router-dom";
 import BackArrow from "../../../components/icons/BackArrow";
+import {  useNavigate } from "react-router-dom";
+import Success from "../../../components/icons/Success";
+import { getDecryptedWalletAddress } from "../../../utils/utils";
 
 const SuccessPage = () => {
+  const navigate = useNavigate();
+  const walletAddress = getDecryptedWalletAddress();
   return (
     <div className="p-6">
       <div className="flex gap-2">
@@ -35,11 +40,12 @@ const SuccessPage = () => {
         </div>
 
         <div className="w-full">
-          <Link to="/view-balance">
-            <button className="w-full p-3 bg-violet-500 rounded-full text-white font-poppins">
-              Get Started
-            </button>
-          </Link>
+          <button
+            className="w-full p-3 bg-violet-500 rounded-full text-white font-poppins"
+            onClick={() => navigate(`/view-balance?address=${walletAddress}`)}
+          >
+            Get Started
+          </button>
         </div>
       </div>
     </div>
