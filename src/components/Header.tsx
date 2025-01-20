@@ -23,7 +23,7 @@ const Header: React.FC<PropsSelectNetwork> = ({
 }) => {
   const [isCopied, setIsCopied] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
-  const [accountDetailsModalOpen, setAccountDetailsModalOpen] = useState(true);
+  const [accountDetailsModalOpen, setAccountDetailsModalOpen] = useState(false);
   const [currentAccount, setCurrentAccount] = useState<string>("");
   const navigate = useNavigate();
   const dropdownRef = useOutsideClick(() => setShowMenu(false));
