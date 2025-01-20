@@ -15,8 +15,8 @@ interface PropsSelectNetwork {
   isOpen: boolean;
   setIsOpenNetworkTab: React.Dispatch<React.SetStateAction<boolean>>;
   address: string;
-  isAccountModalOpen:boolean
-  setIsAccountModalOpen:React.Dispatch<React.SetStateAction<boolean>>
+  isAccountModalOpen: boolean;
+  setIsAccountModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const Header: React.FC<PropsSelectNetwork> = ({
@@ -24,7 +24,7 @@ const Header: React.FC<PropsSelectNetwork> = ({
   setIsOpenNetworkTab,
   address,
   setIsAccountModalOpen,
-  isAccountModalOpen
+  isAccountModalOpen,
 }) => {
   const [isCopied, setIsCopied] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
@@ -66,13 +66,13 @@ const Header: React.FC<PropsSelectNetwork> = ({
     clearEncryptedWallletAddress();
     navigate("/");
   };
-    // logic for opening account modal
-  const handleOpenAccountModal=()=>{
-    setIsAccountModalOpen(!isAccountModalOpen)
-  }
+  // logic for opening account modal
+  const handleOpenAccountModal = () => {
+    setIsAccountModalOpen(!isAccountModalOpen);
+  };
 
   return (
-    <div className="bg-background w-[375px] flex flex-row items-center justify-between px-4 py-2 shadow-md h-16 md:w-full">
+    <div className="bg-background w-[375px] flex flex-row items-center justify-between px-4 py-2 shadow-xl h-16 md:w-full">
       {/* network sections */}
       <button
         className="w-[100px] bg-gray-500 rounded-full px-4 py-1 flex items-center justify-between text-white"
@@ -81,7 +81,7 @@ const Header: React.FC<PropsSelectNetwork> = ({
         <div className="truncate">
           {selectedNetwork && formatNetworkString(selectedNetwork)}
         </div>
-        <IoIosArrowDown className="font-bold text-base text-white ml-2"  />
+        <IoIosArrowDown className="font-bold text-base text-white ml-2" />
       </button>
 
       {/* account section */}
@@ -91,14 +91,15 @@ const Header: React.FC<PropsSelectNetwork> = ({
           <img src={AccountIcon} alt="homeicon" className="w-5 h-5 " />
           <h2 className="font-bold mx-2 text-white text-sm">Account 1 </h2>
 
-          <IoIosArrowDown className="font-bold text-xl text-white" onClick={handleOpenAccountModal} />
+          <IoIosArrowDown
+            className="font-bold text-xl text-white"
+            onClick={handleOpenAccountModal}
+          />
         </div>
 
         {/* address */}
         <div className="flex flex-row items-center ">
-          <h2 className="w-24 overflow-hidden text-white text-sm">
-            {address}
-          </h2>
+          <h2 className="w-24 overflow-hidden text-white text-sm">{address}</h2>
           {/* <button onClick={HandleCopy} className="ml-4 text-gray-700">
             {isCopied ? <LuCopyCheck className="text-white"/> : <BiCopy className="text-white"/>}
           </button> */}
@@ -114,10 +115,13 @@ const Header: React.FC<PropsSelectNetwork> = ({
         <div
           className={`${
             !showMenu ? "hidden" : "absolute"
-          } absolute top-[100%] right-0 w-[100px] h-[70px] border bg-white rounded-md flex flex-col`}
+          } absolute top-[100%] right-0 w-[150px] h-[100px] border bg-[] rounded-md flex flex-col text-white`}
           ref={dropdownRef as React.RefObject<HTMLDivElement>}
         >
           <span className="border-b px-2 font-bold">Menu</span>
+          <div className="p-2">
+            <button onClick={onLogout}>Account Details</button>
+          </div>
           <div className="p-2">
             <button onClick={onLogout}>Logout</button>
           </div>
