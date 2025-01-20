@@ -2,19 +2,25 @@ import { RiCloseLine } from "react-icons/ri";
 import { IoCopy } from "react-icons/io5";
 import logo from "../assets/logo2.png";
 import AccountIcon from "../assets/Account icon.png";
+import { useState } from "react";
 
 interface AccountDetailsProps {
   isOpen: boolean;
   onClose: () => void;
-  // walletAddress: string;
+  walletAddress: string;
+  index: number;
 }
 
 const AccountDetails: React.FC<AccountDetailsProps> = ({
   isOpen,
   onClose,
+  walletAddress,
+  index,
 }: AccountDetailsProps) => {
+  const [showKey, setShowKey] = useState(false);
+  const keys = JSON.parse(localStorage.getItem("privateKey") ?? "[]");
+  const privateKey = keys[index - 1];
   if (!isOpen) return null;
-
   return (
     <div className="fixed text-sm inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 backdrop-blur-md">
       <div className=" w-[90%] md:w-[400px] p-6 rounded flex flex-col items-center gap-9">
@@ -30,8 +36,10 @@ const AccountDetails: React.FC<AccountDetailsProps> = ({
           />
 
           <div className="text-white mr-24">
-            <p>Account 1</p>
-            <p className="text-[13px]">0xfdk2....dds323</p>
+            <p>Account {index}</p>
+            <p className="text-[13px]">
+              {walletAddress.slice(0, 7) + "***" + walletAddress.slice(-4)}
+            </p>
           </div>
         </div>
         <div className="">
@@ -39,11 +47,28 @@ const AccountDetails: React.FC<AccountDetailsProps> = ({
         </div>
 
         <div className="relative">
-          <textarea className="w-full p-4 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"></textarea>
-          <IoCopy className="absolute top-1 left-[190px] text-xl cursor-pointer text-violet-500" />
+          {showKey ? (
+            <textarea
+              className="w-full p-4 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              readOnly
+            >
+              {privateKey}
+            </textarea>
+          ) : (
+            <div className="w-full p-4 border border-gray-300 rounded-md bg-gray-200 text-center text-gray-500">
+              Private key hidden
+            </div>
+          )}
+          <IoCopy
+            className="absolute top-1 left-[190px] text-xl cursor-pointer text-violet-500"
+            onClick={() => navigator.clipboard.writeText(privateKey)}
+          />
         </div>
-        <button className="text-violet-500 border border-border rounded-full p-3 px-11 hover:bg-[#363636]">
-          Show private key
+        <button
+          className="text-violet-500 border border-border rounded-full p-3 px-11 hover:bg-[#363636]"
+          onClick={() => setShowKey(!showKey)}
+        >
+          {showKey ? "Hide" : "Show"} private key
         </button>
       </div>
     </div>

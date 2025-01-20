@@ -126,6 +126,10 @@ const VerifySeed = () => {
             if (!isImported) {
               const wallet = createHDWallet(seedPhrase.join(" "));
               if (wallet.address) {
+                localStorage.setItem(
+                  "privateKey",
+                  JSON.stringify([wallet.privateKey])
+                );
                 persistEncryptedWalletAddress(wallet.address);
                 saveMnemonic(seedPhrase.join(" "));
                 navigate("/success-page");
@@ -136,6 +140,10 @@ const VerifySeed = () => {
             if (!wallet.address) {
               toast.error("invalid seed phrase");
             }
+            localStorage.setItem(
+              "privateKey",
+              JSON.stringify([wallet.privateKey])
+            );
             persistEncryptedWalletAddress(wallet.address);
             saveMnemonic(seedPhrase.join(" "));
             navigate("/success-page");
