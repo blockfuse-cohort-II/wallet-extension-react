@@ -201,10 +201,13 @@ const ViewBalance = () => {
           onClose={handleCloseReceiveModal}
           walletAddress={address}
         />
+      )
+      }
 
       {isAccountModalOpen && (
         <AccoutModal isOpen={isAccountModalOpen} setIsAccountModalOpen={setIsAccountModalOpen}/>
       )}
+    </div>
     </div>
   );
 };
