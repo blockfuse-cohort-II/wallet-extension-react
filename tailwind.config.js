@@ -8,6 +8,7 @@ export default {
         poppins: ["Poppins", "serif"],
         inter: ["Inter", "serif"],
         karla: ["Karla", "serif"],
+        quicksand: ["Quicksand", "serif"]
       },
       colors: {
         background: "#242424",
