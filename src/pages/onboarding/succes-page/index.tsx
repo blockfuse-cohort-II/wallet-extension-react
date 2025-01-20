@@ -1,4 +1,5 @@
 import Success from "../../../components/icons/Success";
+import { Link } from "react-router-dom";
 
 const SuccessPage = () => {
   return (
@@ -13,8 +14,8 @@ const SuccessPage = () => {
           <p className="text-white/50">You can now fully enjoy using your wallet.</p>
         </div>
 
-        <div className="item-ba">
-          <button className="w-full p-3 bg-violet-500 rounded-full text-white font-poppins">Get Started</button>
+        <div className="w-full">
+          <Link to="/view-balance" className="w-full p-3 bg-violet-500 rounded-full text-white font-poppins">Get Started</Link>
         </div>
       </div>
 
