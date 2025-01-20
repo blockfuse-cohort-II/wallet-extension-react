@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react";
 import { BsEye, BsEyeSlash } from "react-icons/bs";
-// import { toast } from "react-toastify";
 import {
   createHDWallet,
   getWalletFromSeedPhrase,
   persistEncryptedWalletAddress,
   saveMnemonic,
-} from "../../../utils/utils";
+} from "../../utils/utils";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { toast } from "sonner";
 

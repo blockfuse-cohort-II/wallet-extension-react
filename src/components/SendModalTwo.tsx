@@ -26,7 +26,10 @@ const SendModal: React.FC<SendModalProps> = ({
     []
   );
   const [isAddContactModalOpen, setIsAddContactModalOpen] = useState(false);
-  const [newContact, setNewContact] = useState<{ name: string; address: string }>({
+  const [newContact, setNewContact] = useState<{
+    name: string;
+    address: string;
+  }>({
     name: "",
     address: "",
   });
@@ -92,7 +95,10 @@ const SendModal: React.FC<SendModalProps> = ({
       alert("Please fill in both name and address fields.");
       return;
     }
-    if (!newContact.address.startsWith("0x") || newContact.address.length !== 42) {
+    if (
+      !newContact.address.startsWith("0x") ||
+      newContact.address.length !== 42
+    ) {
       alert("Please enter a valid public address.");
       return;
     }
@@ -132,9 +138,40 @@ const SendModal: React.FC<SendModalProps> = ({
             <IoIosArrowDown className="font-bold cursor-pointer text-base text-white ml-2" />
           </div>
         </div>
+
+        <div className="flex rounded-lg justify-between bg-[#363636] p-2 text-white">
+          <div>
+            <img
+              src={ethIcon}
+              alt="homeicon"
+              className="w-10 h-10 rounded-full "
+            />
+
+            <div className="text-white mr-24">
+              <p className="truncate">Sepolia</p>
+              <IoIosArrowDown className="font-bold cursor-pointer text-base text-white ml-2" />
+            </div>
+          </div>
+          <div>0</div>
+        </div>
+        <div className="text-white">
+          <p>Balance:</p>
+          <p>4.3823932</p>
+          <p className="text-violet-500">Max</p>
+        </div>
         <div className="text-white mt-8 ">
           <h2 className="mb-2">To</h2>
           <div>
+            <img
+              src={AccountIcon}
+              alt="homeicon"
+              className="w-10 h-10 rounded-full "
+            />
+
+            <div className="text-white mr-24">
+              <p>Account 2</p>
+              <p className="text-[13px]">0xfdk2....dds323</p>
+            </div>
             <input
               type="text"
               placeholder="Enter public address (0x) or domain name"
@@ -143,24 +180,30 @@ const SendModal: React.FC<SendModalProps> = ({
               onChange={(e) => setRecipient(e.target.value)}
             />
           </div>
+          <RiCloseLine
+            className="cursor-pointer text-xl  bg-[#D9D9D9] rounded-full mr-3"
+            onClick={onClose}
+          />
         </div>
 
         <div className="mt-4">
           <header className="flex gap-6 cursor-pointer mb-3">
             <p
-              className={`${activeTab === "account"
+              className={`${
+                activeTab === "account"
                   ? "text-violet-500 border-b-2 border-violet-500"
                   : "text-white"
-                } px-3 pb-1.5`}
+              } px-3 pb-1.5`}
               onClick={() => setActiveTa("account")}
             >
               Your account
             </p>
             <p
-              className={`${activeTab === "contact"
+              className={`${
+                activeTab === "contact"
                   ? "text-violet-500 border-b-2 border-violet-500 "
                   : "text-white"
-                } px-3 pb-1.5`}
+              } px-3 pb-1.5`}
               onClick={() => setActiveTa("contact")}
             >
               {" "}
@@ -219,6 +262,21 @@ const SendModal: React.FC<SendModalProps> = ({
                   </div>
                 </div>
               </div>
+              <div className="flex rounded-lg justify-between bg-[#363636] p-2 text-white">
+                <div>
+                  <img
+                    src={ethIcon}
+                    alt="homeicon"
+                    className="w-10 h-10 rounded-full "
+                  />
+
+                  <div className="text-white mr-24">
+                    <p className="truncate">Sepolia</p>
+                    <IoIosArrowDown className="font-bold cursor-pointer text-base text-white ml-2" />
+                  </div>
+                </div>
+                <div>0</div>
+              </div>
             </div>
           )}
           {activeTab === "contact" && (
@@ -257,14 +315,17 @@ const SendModal: React.FC<SendModalProps> = ({
             Cancel
           </button>
           <button
-  className={`text-violet-500 border border-border rounded-full p-3 px-11 ${
-    loading ? "bg-gray-600 cursor-not-allowed" : "bg-[#363636] hover:bg-gray-700"
-  }`}
-  onClick={handleSend}
-  disabled={loading} // Disable the button while loading
->
-  {loading ? "Sending..." : "Continue"} 
-</button>
+            className={`text-violet-500 border border-border rounded-full p-3 px-11 ${
+              loading
+                ? "bg-gray-600 cursor-not-allowed"
+                : "bg-[#363636] hover:bg-gray-700"
+            }`}
+            onClick={handleSend}
+            disabled={loading} // Disable the button while loading
+          >
+            {loading ? "Sending..." : "Continue"}
+            
+          </button>
         </div>
       </div>
       {isAddContactModalOpen && (

@@ -1,13 +1,23 @@
-// import Success from "../../../components/icons/Success";
-// import { Link } from "react-router-dom";
+import { useState } from "react";
 import BackArrow from "../../../components/icons/BackArrow";
 import {  useNavigate } from "react-router-dom";
-// import Success from "../../../components/icons/Success";
-import { getDecryptedWalletAddress } from "../../../utils/utils";
+import { getDecryptedWalletAddress, savePassword } from "../../../utils/utils";
 
 const SuccessPage = () => {
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const navigate = useNavigate();
   const walletAddress = getDecryptedWalletAddress();
+
+  const verifyPassword = () => {
+    if (password === confirmPassword) {
+      // Save password in local storage
+      savePassword(password);
+      (() => navigate(`/view-balance?address=${walletAddress}`))();
+      return;
+    }
+  }
+
   return (
     <div className="p-6">
       <div className="flex gap-2">
@@ -28,12 +38,24 @@ const SuccessPage = () => {
           <form action="">
             <div className="flex flex-col gap-1 mb-5">
               <label htmlFor="">New Password</label>
-              <input type="password" className="text-white/50 bg-white/5 outline-0 border-0 py-2 px-3 rounded-lg"/>
+              <input 
+                type="password" 
+                className="text-white/50 bg-white/5 outline-0 border-0 py-2 px-3 rounded-lg"
+                value={password}
+                onChange={(e) =>
+                  setPassword(e.target.value)
+                }/>
             </div>
 
             <div className="flex flex-col gap-1">
               <label htmlFor="">Confirm Password</label>
-              <input type="password" className="text-white/50 bg-white/5 outline-0 border-0 py-2 px-3 rounded-lg"/>
+              <input 
+                type="password"
+                className="text-white/50 bg-white/5 outline-0 border-0 py-2 px-3 rounded-lg"
+                value={confirmPassword}
+                onChange={(e) =>
+                  setConfirmPassword(e.target.value)
+                }/>
             </div>
 
           </form>
@@ -42,7 +64,7 @@ const SuccessPage = () => {
         <div className="w-full">
           <button
             className="w-full p-3 bg-violet-500 rounded-full text-white font-poppins"
-            onClick={() => navigate(`/view-balance?address=${walletAddress}`)}
+            onClick={verifyPassword}
           >
             Get Started
           </button>

@@ -5,12 +5,13 @@ import { PiHandDepositFill } from "react-icons/pi";
 import SelectNetwork from "../../components/SelectNetwork";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import AccoutModal from "../../components/AccoutModal";
+import AccountModal from "../../components/AccoutModal";
 import {
   getBalance,
   getDecryptedWalletAddress,
   getSelectedNetwork,
   networks,
+  getTokens
 } from "../../utils/utils";
 import { RiLoader2Line } from "react-icons/ri";
 import SendModal from "../../components/SendModal";
@@ -25,9 +26,59 @@ const ViewBalance = () => {
   const [loading, setLoading] = useState(false);
   const [isSendModalOpen, setIsSendModalOpen] = useState(false);
   const [isReceiveModalOpen, setIsReceiveModalOpen] = useState(false);
-  const [assets, setAssets] = useState([]);
-  const [isAccountModalOpen, setIsAccountModalOpen] = useState(false)
+  interface Asset {
+    name: string;
+    quantity: number;
+    price: string;
+    change: number;
+  }
+
+  const [assets, setAssets] = useState<Asset[]>([]);
+  const [isAccountModalOpen, setIsAccountModalOpen] = useState(false);
+  const [selectedAccountIndex] = useState<number>(
+    parseInt(localStorage.getItem("selectedAccountIndex") ?? "0")
+  );
   const currentNetwork = getSelectedNetwork() as keyof typeof networks;
+  const [usdBalance, setUsdBalance] = useState("0.00");
+
+  useEffect(() => {
+    const fetchBalanceAndConvert = async () => {
+      setLoading(true);
+      try {
+        const tokens = await getTokens();
+        setAssets(tokens);
+        const storedAccounts = JSON.parse(
+          localStorage.getItem("accounts") ?? "[]"
+        );
+        console.log("storedAccounts", storedAccounts);
+        const selectedAddress = storedAccounts[selectedAccountIndex];
+        console.log("selectedAddress", selectedAddress);
+        const ethBalance = await getBalance(
+          selectedAddress,
+          networks[currentNetwork].chainId,
+          networks[currentNetwork].rpcUrl
+        );
+        console.log("ethBalance", ethBalance);
+        console.log("balance1", balance);
+        setBalance(parseFloat(ethBalance).toFixed(4));
+        console.log("balance2", balance);
+        const response = await fetch(
+          "https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd"
+        );
+        const data = await response.json();
+        console.log("data", data);
+        const rate = data.ethereum.usd;
+        console.log("rate", rate);
+        setUsdBalance((parseFloat(ethBalance) * rate).toFixed(2));
+        console.log("usdBalance", usdBalance);
+      } catch (error) {
+        console.error("Error fetching balance:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchBalanceAndConvert();
+  }, [address, currentNetwork, selectedAccountIndex]);
 
   const handleOpenSendModal = () => {
     setIsSendModalOpen(true);
@@ -44,29 +95,16 @@ const ViewBalance = () => {
   const handleCloseReceiveModal = () => {
     setIsReceiveModalOpen(false);
   };
-
-  useEffect(() => {
-    setLoading(true);
-    getBalance(
-      address,
-      networks[currentNetwork].chainId,
-      networks[currentNetwork].rpcUrl
-    )
-      .then((balance) => {
-        setBalance(parseFloat(balance).toFixed(4));
-        setAssets([]);
-      })
-      .finally(() => setLoading(false));
-  }, [address, currentNetwork]);
-
-  return ( 
+  const displayBalance =
+    networks[currentNetwork].ticker === "USD" ? usdBalance : balance;
+  console.log(balance, "balance");
+  return (
     <div className="bg-[#252525] relative w-[375px]">
       <Header
         isOpen={isOpenNetworkTap}
         setIsOpenNetworkTab={setIsOpenNetworkTap}
         isAccountModalOpen={isAccountModalOpen}
         setIsAccountModalOpen={setIsAccountModalOpen}
-        address={address}
       />
       {/* View account section */}
       <div className="mt-5">
@@ -80,30 +118,41 @@ const ViewBalance = () => {
               {loading ? (
                 <RiLoader2Line className="animate-spin" />
               ) : (
-                `${balance} ETH`
+                (() => {
+                  return `${displayBalance} ${networks[currentNetwork].ticker}`;
+                })()
               )}
             </div>
-            <h3 className="font-karla font-bold text-[#5CE677] text-lg leading-5">+98.02% (24h)</h3>
+            <h3 className="font-karla font-bold text-[#5CE677] text-lg leading-5">
+              +98.02% (24h)
+            </h3>
           </div>
 
           {/* Send and Deposit */}
           <div className="flex flex-row items-center justify-between w-[200px] mt-4">
             <div className="flex flex-row items-center justify-between w-[200px] mt-6 text-white">
-              <button className="flex flex-row items-center border border-gray-400 px-4 py-2 rounded-lg hover:bg-violet-500 mr-4" onClick={handleOpenSendModal}>
+              <button
+                className="flex flex-row items-center border border-gray-400 px-4 py-2 rounded-lg hover:bg-violet-500 mr-4"
+                onClick={handleOpenSendModal}
+              >
                 <IoIosSend />
                 <h2 className="font-karla text-base font-bold ml-1">Send</h2>
               </button>
-              <button className="flex flex-row items-center border border-gray-400 px-4 py-2 rounded-lg hover:bg-violet-500 "  onClick={handleOpenReceiveModal}>
+              <button
+                className="flex flex-row items-center border border-gray-400 px-4 py-2 rounded-lg hover:bg-violet-500 "
+                onClick={handleOpenReceiveModal}
+              >
                 <PiHandDepositFill />
                 <h2 className="font-karla text-base font-bold ml-1">Receive</h2>
               </button>
-
             </div>
           </div>
 
           {/* Assets Section */}
           <div className="flex flex-col w-full px-4 mt-6">
-            <h2 className="font-karla  text-white text-lg font-semibold">Assets</h2>
+            <h2 className="font-karla  text-white text-lg font-semibold">
+              Assets
+            </h2>
 
             <div className="mt-4">
               {assets.length > 0 ? (
@@ -113,7 +162,7 @@ const ViewBalance = () => {
                       name: string;
                       quantity: number;
                       price: string;
-                      change: string;
+                      change: number;
                     },
                     index: number
                   ) => (
@@ -161,37 +210,40 @@ const ViewBalance = () => {
           </div>
         </div>
 
-      {/* Select Network */}
-      {isOpenNetworkTap && (
-        <SelectNetwork
-          isOpen={isOpenNetworkTap}
-          setIsOpenNetworkTab={setIsOpenNetworkTap}
-          address={address}
-        />
-      )}
-      {isSendModalOpen && (
-        <SendModal
-          isOpen={isSendModalOpen}
-          onClose={handleCloseSendModal}
-          walletAddress={address}
-        />
-      )}
+        {/* Select Network */}
+        {isOpenNetworkTap && (
+          <SelectNetwork
+            isOpen={isOpenNetworkTap}
+            setIsOpenNetworkTab={setIsOpenNetworkTap}
+            address={address}
+          />
+        )}
+        {isSendModalOpen && (
+          <SendModal
+            isOpen={isSendModalOpen}
+            onClose={handleCloseSendModal}
+            walletAddress={address}
+          />
+        )}
 
-      {isReceiveModalOpen && (
-        <ReceiveModal
-          isOpen={isReceiveModalOpen}
-          onClose={handleCloseReceiveModal}
-          walletAddress={address}
-        />
-      )
-      }
+        {isReceiveModalOpen && (
+          <ReceiveModal
+            isOpen={isReceiveModalOpen}
+            onClose={handleCloseReceiveModal}
+            walletAddress={address}
+          />
+        )}
 
-      {isAccountModalOpen && (
-        <AccoutModal isOpen={isAccountModalOpen} setIsAccountModalOpen={setIsAccountModalOpen}/>
-      )}
-    </div>
+        {isAccountModalOpen && (
+          <AccountModal
+            isOpen={isAccountModalOpen}
+            setIsAccountModalOpen={setIsAccountModalOpen}
+            address={address}
+          />
+        )}
+      </div>
     </div>
   );
-}
+};
 
 export default ViewBalance;
