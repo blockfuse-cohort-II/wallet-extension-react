@@ -1,4 +1,4 @@
-import Success from "../../../components/icons/success";
+import Success from "../../../components/icons/Success";
 
 const SuccessPage = () => {
   return (
