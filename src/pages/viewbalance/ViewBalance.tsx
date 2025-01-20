@@ -11,7 +11,7 @@ import {
   getDecryptedWalletAddress,
   getSelectedNetwork,
   networks,
-  getTokens
+  getTokens,
 } from "../../utils/utils";
 import { RiLoader2Line } from "react-icons/ri";
 import SendModal from "../../components/SendModal";
@@ -51,8 +51,6 @@ const ViewBalance = () => {
           localStorage.getItem("accounts") ?? "[]"
         );
         console.log("storedAccounts", storedAccounts);
-        // const selectedAddress = storedAccounts[selectedAccountIndex];
-        // console.log("selectedAddress", selectedAddress);
         const ethBalance = await getBalance(
           address,
           networks[currentNetwork].chainId,
@@ -185,7 +183,7 @@ const ViewBalance = () => {
                             {asset.name}
                           </h2>
                           <p className="font-karla font-medium text-green-400">
-                          +98.02%
+                            +98.02%
                           </p>
                         </div>
                       </div>
@@ -231,6 +229,9 @@ const ViewBalance = () => {
             isOpen={isReceiveModalOpen}
             onClose={handleCloseReceiveModal}
             walletAddress={address}
+            index={
+              parseInt(localStorage.getItem("selectedAccountIndex") ?? "0") + 1
+            }
           />
         )}
 
