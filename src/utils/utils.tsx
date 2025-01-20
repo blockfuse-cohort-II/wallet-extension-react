@@ -15,9 +15,9 @@ export function generateSeedPhrase(): string {
   return wallet.mnemonic.phrase;
 }
 
-export function getAddressFromSeedPhrase(seedPhrase: string): string {
+export function getAddressFromSeedPhrase(seedPhrase: string): ({address: string, privateKey: string}) {
   const wallet = ethers.Wallet.fromPhrase(seedPhrase);
-  return wallet.address;
+  return { address: wallet.address, privateKey: wallet.privateKey };
 }
 
 export async function sendEther(
