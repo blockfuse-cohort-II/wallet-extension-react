@@ -20,7 +20,7 @@ const WelcomePage = () => {
           Welcome to Katera
         </h1>
         <p className="font-inter text-gray-400 text-sm ">
-          A boring Ethereum wallet built for DeFi & NFTs
+          A boring Ethereum wallet built just for you 😘
         </p>
       </div>
 
@@ -30,6 +30,11 @@ const WelcomePage = () => {
             Create a new wallet
           </button>
         </Link>
+        {/*<Link to="/login?type=import">
+          <button className="w-full p-3 bg-[#4D4D4D] rounded-full text-white font-poppins">
+            Login
+          </button>
+        </Link>*/}
         <Link to="/verify-seed?type=import">
           <button className="w-full p-3 bg-[#4D4D4D] rounded-full text-white font-poppins">
             I already have a wallet

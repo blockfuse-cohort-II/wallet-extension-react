@@ -168,7 +168,7 @@ const ViewBalance = () => {
                   ) => (
                     <div
                       key={asset?.name + index}
-                      className="flex flex-row justify-between items-center w-full h-[77px] border-b-2 shadow-md px-2 mb-3"
+                      className="flex flex-row justify-between items-center w-full h-[77px] bg-[#1d1c1c]  rounded px-2 mb-3"
                     >
                       <div className="flex flex-row items-center">
                         {/* Asset Icon */}
@@ -176,26 +176,26 @@ const ViewBalance = () => {
                           <img
                             src={EthIcon}
                             alt="assetIcon"
-                            className="object-contain w-full h-full"
+                            className="object-contain w-full h-full bg-white rounded-full"
                           />
                         </div>
                         {/* Asset Name and Quantity */}
-                        <div className="flex flex-col items-start ml-4">
+                        <div className="flex flex-col items-start ml-4 text-white">
                           <h2 className="font-karla font-bold leading-6">
                             {asset.name}
                           </h2>
-                          <p className="font-karla font-medium">
-                            {asset.quantity}
+                          <p className="font-karla font-medium text-green-400">
+                          +98.02%
                           </p>
                         </div>
                       </div>
                       {/* Asset Price */}
-                      <div className="flex flex-col items-end">
+                      <div className="flex flex-col items-end text-white">
                         <h2 className="font-karla text-base font-bold leading-6">
-                          {asset.price}
+                          $0.13
                         </h2>
-                        <p className="font-medium font-karla text-gray-500">
-                          {asset.change}
+                        <p className="font-medium font-karla text-white">
+                          0.0004 Eth
                         </p>
                       </div>
                     </div>
