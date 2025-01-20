@@ -3,13 +3,13 @@ import { IoCopy } from "react-icons/io5";
 import logo from "../assets/logo2.png";
 import AccountIcon from "../assets/Account icon.png";
 
-interface SendModalProps {
+interface AccountDetailsProps {
   isOpen: boolean;
   onClose: () => void;
-  walletAddress: string;
+  // walletAddress: string;
 }
 
-const AccountDetails: React.FC<SendModalProps> = ({ isOpen, onClose }) => {
+const AccountDetails: React.FC<AccountDetailsProps> = ({ isOpen, onClose }: AccountDetailsProps) => {
   if (!isOpen) return null;
 
   return (
@@ -19,11 +19,11 @@ const AccountDetails: React.FC<SendModalProps> = ({ isOpen, onClose }) => {
           className="cursor-pointer text-xl  bg-[#D9D9D9] rounded-full mr-3"
           onClick={onClose}
         />
-        <div className="flex rounded-lg justify-between bg-[#363636] p-2">
+        <div className="flex gap-3 items-center rounded-lg justify-between bg-[#363636] p-2 font-poppins">
           <img
             src={AccountIcon}
             alt="homeicon"
-            className="w-10 h-10 rounded-full "
+            className="w-8 h-8 rounded-full "
           />
 
           <div className="text-white mr-24">
@@ -34,9 +34,9 @@ const AccountDetails: React.FC<SendModalProps> = ({ isOpen, onClose }) => {
         <div className="">
           <img src={logo} alt="" className="h-[150px] w-[150px]" />
         </div>
-        <div className="text-white flex flex-col items-center gap-2">
+        <div className="text-white flex flex-col items-center gap-2 font-poppins">
           <h2 className="text-lg">Account1</h2>
-          <p className="base">0xffee455434ererj34djsdj4934843938434</p>
+          <p className="base font-quicksand">0xffee455434ererj34djsdj4934843938434</p>
         </div>
         <div className="text-violet-500 flex items-center gap-2 mb-3 cursor-pointer">
           <IoCopy />
