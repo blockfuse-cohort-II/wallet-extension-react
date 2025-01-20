@@ -1,8 +1,5 @@
-// import Success from "../../../components/icons/Success";
-// import { Link } from "react-router-dom";
 import BackArrow from "../../../components/icons/BackArrow";
 import {  useNavigate } from "react-router-dom";
-// import Success from "../../../components/icons/Success";
 import { getDecryptedWalletAddress } from "../../../utils/utils";
 
 const SuccessPage = () => {

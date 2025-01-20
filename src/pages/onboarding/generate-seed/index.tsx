@@ -3,7 +3,6 @@ import { BsEye, BsEyeSlash } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import { generateSeedPhrase } from "../../../utils/utils";
 import { toast } from "sonner";
-// import { toast } from "react-toastify";
 
 const GenerateSeed = () => {
   const [seedPhrase, setSeedPhrase] = useState<string[]>();
