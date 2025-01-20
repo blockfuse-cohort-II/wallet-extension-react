@@ -14,8 +14,8 @@ const ReceiveModal: React.FC<SendModalProps> = ({
   walletAddress,
 }) => {
   console.log(walletAddress, "walletAddress"); //for now we are just testing with one walletAddress, we have to use this to store privatekeys
-  const [recipient, setRecipient] = useState("");
-  const [amount, setAmount] = useState("");
+  const [recipient, setRecipient] = useState(""); // haven't been used
+  const [amount, setAmount] = useState(""); // haven't been used
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
 
@@ -62,6 +62,10 @@ const ReceiveModal: React.FC<SendModalProps> = ({
       );
       setMessage(`Transaction successful! Hash: ${transaction.hash}`);
     } catch (error) {
+      console.error(error);
+      console.error(setRecipient);
+      console.error(setAmount);
+
       setMessage("Failed to send transaction. Please try again.");
     } finally {
       setLoading(false);
