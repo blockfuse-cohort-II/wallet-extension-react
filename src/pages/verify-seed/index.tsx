@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BsEye, BsEyeSlash } from "react-icons/bs";
 import {
   createHDWallet,
@@ -17,6 +17,13 @@ const VerifySeed = () => {
   const [seedPhrase, setSeedPhrase] = useState(
     Array.from({ length: 12 }, () => "")
   );
+
+  const [isValid, setIsValid] = useState(false);
+
+  useEffect(() => {
+    const allFieldsFilled = seedPhrase.every((word) => word.trim() !== "");
+    setIsValid(allFieldsFilled);
+  }, [seedPhrase]);
 
   const toggleVisibility = (index: number) => {
     setVisibility((prevVisibility) => {
@@ -80,7 +87,8 @@ const VerifySeed = () => {
           {!isImported ? "Verify" : "Input"} Recovery Phrase
         </h2>
         <p className="font-inter text-gray-400">
-          Please verify each word carefully and store it securely.
+          Please verify each word carefully and store it securely. if you copied
+          your phrase to your clipboard, you can simply paste it here
         </p>
       </div>
 
@@ -109,7 +117,10 @@ const VerifySeed = () => {
       </div>
 
       <button
-        className="w-full mt-8 p-3 bg-violet-500 text-white rounded-full font-poppins"
+        className={`w-full mt-8 p-3 ${
+          !isValid ? "opacity-30" : ""
+        } bg-violet-500 text-white rounded-full font-poppins`}
+        disabled={!isValid}
         onClick={() => {
           try {
             if (!isImported) {
