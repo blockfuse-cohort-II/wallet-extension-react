@@ -9,6 +9,7 @@ import Login from "./pages/login";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Toaster } from "sonner";
+import Contacts from "./pages/contacts";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path="/transactions" element={<Transactions />} /> 
         <Route path="/success-page" element={<SuccessPage />} /> 
         <Route path="/login" element={<Login />} /> 
+        <Route path="/contacts" element={<Contacts />} />
       </Routes>
       <ToastContainer />
       <Toaster position="top-center" richColors />
