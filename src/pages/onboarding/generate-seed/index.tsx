@@ -23,8 +23,8 @@ const GenerateSeed = () => {
   }, [seedPhrase]);
 
   return (
-    <div className="h-full overflow-auto no-scrollbar  py-4 px-4">
-      <header className="flex items-center font-medium font-poppins gap-3 text-white">
+    <div className="h-full  py-6 px-4">
+      <header className="flex items-center font-medium font-poppins gap-3 text-white cursor-pointer" onClick={() => navigate(-1)}>
         <svg
           width="20"
           height="20"
@@ -42,7 +42,7 @@ const GenerateSeed = () => {
         <p>Secret Recovery Phrase</p>
       </header>
 
-      <div className="mt-4 text-white flex flex-col gap-1">
+      <div className="mt-8 text-white flex flex-col gap-1">
         <h2 className="text-2xl font-karla">Protect you wallet</h2>
         <p className="font-inter text-gray-400">
           This is the only way to recover your account. Please store it safely.
@@ -60,15 +60,12 @@ const GenerateSeed = () => {
                 <p>{index + 1}.</p>
                 <p>{visibility[index] ? value : "******"}</p>
               </div>
-              <button onClick={() => toggleVisibility(index)}>
-                {visibility[index] ?  <BsEye /> : <BsEyeSlash />}
-              </button>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
 
         <Link to="/verify-seed">
-          <button className="w-full mt-3 p-3 bg-[#E6E6E6] rounded-full text-[#1A1A1A] font-poppins">
+          <button className="w-full mt-8 p-3 bg-[#E6E6E6] rounded-full text-[#1A1A1A] font-poppins">
             Ok, I saved it somewhere safe
           </button>
         </Link>

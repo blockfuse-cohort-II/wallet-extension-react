@@ -113,7 +113,7 @@ const SelectNetwork: React.FC<PropsSelectNetwork> = ({
               return (
                 <button
                   key={network}
-                  className="flex flex-row items-center justify-between hover:border h-10 hover:bg-gray-400 px-2 w-full"
+                  className="flex flex-row items-center justify-between hover:border h-14 hover:bg-gray-400 px-2 w-full"
                   onClick={() => {
                     persistSelectedNetwork(network);
                     setIsOpenNetworkTab(false);

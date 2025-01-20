@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import { getPrivateKey, sendEther } from "../utils/utils";
 import { RiCloseLine } from "react-icons/ri";
-import { IoIosArrowDown } from "react-icons/io";
-import AccountIcon from "../assets/Account icon.png";
 
 interface SendModalProps {
   isOpen: boolean;
@@ -10,7 +8,7 @@ interface SendModalProps {
   walletAddress: string;
 }
 
-const SendModal: React.FC<SendModalProps> = ({
+const ReceiveModal: React.FC<SendModalProps> = ({
   isOpen,
   onClose,
   walletAddress,
@@ -80,37 +78,32 @@ const SendModal: React.FC<SendModalProps> = ({
             className="cursor-pointer text-xl  bg-[#D9D9D9] rounded-full mr-3"
             onClick={onClose}
           />
-          <h2 className="text-xl  text-white font-bold">Send</h2>
+          <h2 className="text-xl  text-white font-bold">Receive</h2>
         </div>
         <div className="">
-          <h2>From</h2>
-          <div className="flex justify-between bg-[#363636] p-2">
-            <img
-              src={AccountIcon}
-              alt="homeicon"
-              className="w-10 h-10 rounded-full "
-            />
-
-            <div className="text-white">
-              <p>Account 1</p>
-              <p>0xfdkda823dsddsdd323</p>
-            </div>
-            <IoIosArrowDown className="font-bold text-base text-white ml-2" />
-          </div>
+          <img src="" alt="" />
         </div>
         <div>
-          <h2>To</h2>
-          <div>
-            <input
-              type="text"
-              placeholder="Enter public address (0x) or domain name"
-              className="bg-transparent border p-3 rounded-md border-border"
-            />
-          </div>
+          <h2>Account1</h2>
+          <p>0xffee455434ererj3438434</p>
         </div>
-        
+        <div>
+          <svg
+            width="17"
+            height="15"
+            viewBox="0 0 17 19"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M4.25 15.5V0.5H16.25V15.5H4.25ZM5.75 14H14.75V2H5.75V14ZM0.75 19V4.30775H2.25V17.5H12.4423V19H0.75Z"
+              fill="white"
+              fill-opacity="0.5"
+            />
+          </svg>
+          Copy Address
+        </div>
 
-        
         {message && <p className="text-red-500 text-sm">{message}</p>}
         <div className="flex justify-end mt-4">
           <button
@@ -126,4 +119,4 @@ const SendModal: React.FC<SendModalProps> = ({
   );
 };
 
-export default SendModal;
+export default ReceiveModal;

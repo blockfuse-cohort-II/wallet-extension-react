@@ -72,7 +72,7 @@ const Header: React.FC<PropsSelectNetwork> = ({
   }
 
   return (
-    <div className=" w-[375px] flex flex-row  items-center justify-between px-4 py-2 shadow-2xl h-16 md:w-full">
+    <div className="bg-[#0c0c0c] w-[375px] flex flex-row items-center justify-between px-4 py-2 shadow-md h-16 md:w-full">
       {/* network sections */}
       <button
         className="w-[100px] bg-gray-500 rounded-full px-4 py-1 flex items-center justify-between text-white"
@@ -89,18 +89,18 @@ const Header: React.FC<PropsSelectNetwork> = ({
         {/* account */}
         <div className="flex flex-row items-center ">
           <img src={AccountIcon} alt="homeicon" className="w-5 h-5 " />
-          <h2 className="font-bold mx-2 text-gray-700 text-sm">Account 1 </h2>
+          <h2 className="font-bold mx-2 text-white text-sm">Account 1 </h2>
 
-          <IoIosArrowDown className="font-bold text-xl text-gray-700" onClick={handleOpenAccountModal} />
+          <IoIosArrowDown className="font-bold text-xl text-white" onClick={handleOpenAccountModal} />
         </div>
 
         {/* address */}
         <div className="flex flex-row items-center ">
-          <h2 className="w-24 overflow-hidden text-gray-700 text-sm">
+          <h2 className="w-24 overflow-hidden text-white text-sm">
             {address}
           </h2>
           <button onClick={HandleCopy} className="ml-4 text-gray-700">
-            {isCopied ? <LuCopyCheck /> : <BiCopy />}
+            {isCopied ? <LuCopyCheck className="text-white"/> : <BiCopy className="text-white"/>}
           </button>
         </div>
       </div>
@@ -108,7 +108,7 @@ const Header: React.FC<PropsSelectNetwork> = ({
       {/* more section */}
       <div className="cursor-pointer relative">
         <IoMdMore
-          className="text-3xl font-bold text-gray-700"
+          className="text-3xl font-bold text-white"
           onClick={() => setShowMenu((show) => !show)}
         />
         <div
