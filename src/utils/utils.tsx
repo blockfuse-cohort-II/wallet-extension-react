@@ -1,5 +1,5 @@
 import { ethers, TransactionResponse } from "ethers";
-import { HDNode } from '@ethersproject/hdnode';
+import { HDNode } from "@ethersproject/hdnode";
 
 export function savePassword(password: string): void {
   localStorage.setItem("password", password);
@@ -9,10 +9,10 @@ export function checkPassword(password: string): boolean {
   return localStorage.getItem("password") === password;
 }
 
-export function generateSeedPhrase() {
+export function generateSeedPhrase(): ethers.Mnemonic {
   const wallet = ethers.Wallet.createRandom();
   if (!wallet.mnemonic) throw new Error("Failed to generate mnemonic");
-  return wallet.mnemonic.phrase;
+  return wallet.mnemonic;
 }
 
 export function createHDWallet(
@@ -29,8 +29,8 @@ export function generateHDWallet(): {
   wallet: ethers.Wallet;
 } {
   const seedPhrase = generateSeedPhrase();
-  const wallet = createHDWallet(seedPhrase);
-  return { seedPhrase, wallet };
+  const wallet = createHDWallet(seedPhrase.phrase);
+  return { seedPhrase: seedPhrase.phrase, wallet };
 }
 
 export function createAccountFromHDNode(
@@ -49,12 +49,10 @@ export function getAddressFromSeedPhrase(seedPhrase: string): {
   return wallet;
 }
 
-
 export function getAddressFromPrivateKey(privateKey: string): ethers.Wallet {
   const wallet = new ethers.Wallet(privateKey);
   return wallet;
 }
-
 
 export async function sendEther(
   senderPrivateKey: string,
@@ -101,7 +99,7 @@ export interface NetworkConfig {
   name: string;
   rpcUrl: string;
   chainId: number;
-  symbol?: string; 
+  symbol?: string;
 }
 
 const defaultNetworks: Record<string, NetworkConfig & { symbol: string }> = {
@@ -157,7 +155,6 @@ export const getDecryptedWalletAddress = (): string | null => {
   }
   return null;
 };
-
 
 export const persistEncryptedWalletAddress = (address: string) => {
   localStorage.setItem("encryptedWalletAddress", address);

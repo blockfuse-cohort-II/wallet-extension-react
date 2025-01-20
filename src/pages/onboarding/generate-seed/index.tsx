@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { BsEye, BsEyeSlash } from "react-icons/bs";
 import { Link } from "react-router-dom";
+import { generateSeedPhrase } from '../../../utils/utils';
 
 const GenerateSeed = () => {
+  const mnemonic = generateSeedPhrase();
   const [visibility, setVisibility] = useState(
     Array.from({ length: 12 }, () => false)
   );
@@ -13,7 +15,7 @@ const GenerateSeed = () => {
       return newVisibility;
     });
   };
-
+console.log(mnemonic) 
   return (
     <div className="h-full overflow-auto no-scrollbar  py-4 px-4">
       <header className="flex items-center font-medium font-poppins gap-3 text-white">
@@ -41,21 +43,7 @@ const GenerateSeed = () => {
         </p>
 
         <div className="mt-3 border grow w-full h-auto rounded-lg border-gray-500">
-          {Array.from({ length: 12 }).map((_, index) => (
-            <div
-              className={`p-3 ${
-                index < 11 && "border-b"
-              }  border-b-gray-500 w-full flex justify-between items-center font-poppins`}
-            >
-              <div className="inline-flex gap-2">
-                <p>{index + 1}.</p>
-                <p>{visibility[index] ? "Access" : "******"}</p>
-              </div>
-              <button onClick={() => toggleVisibility(index)}>
-                {visibility[index] ?  <BsEye /> : <BsEyeSlash />}
-              </button>
-            </div>
-          ))}
+          {/* {mnemonic.wordlist} */}
         </div>
 
         <Link to="/verify-seed">

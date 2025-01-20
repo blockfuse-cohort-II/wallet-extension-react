@@ -14,7 +14,6 @@ function App() {
         <Route path="/view-balance" element={<ViewBalance />} />
         <Route path="/verify-seed" element={<VerifySeed />} />
         <Route path="/transactions" element={<Transactions />} /> 
-
       </Routes>
     </div>
   );

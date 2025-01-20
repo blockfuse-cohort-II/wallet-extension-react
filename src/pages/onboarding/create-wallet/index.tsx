@@ -55,10 +55,6 @@ const CreateWallet = () => {
     navigate(-1);
   };
 
-  // const notify = () => {
-  //   toast.success("This is a success message!");
-  // };
-
   return (
     <div className="p-10">
       <div className="flex justify-between">
