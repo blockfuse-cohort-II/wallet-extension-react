@@ -4,7 +4,7 @@ import { IoIosArrowDown, IoMdMore } from "react-icons/io";
 import { BiCopy } from "react-icons/bi";
 import { LuCopyCheck } from "react-icons/lu";
 import { useNavigate } from "react-router-dom";
-import { clearStore, getNetwork, getSelectedNetwork } from "../utils/utils";
+import {  getNetwork, getSelectedNetwork } from "../utils/utils";
 import useOutsideClick from "../hooks/use-outside-click";
 import AccountDetails from "./AccountDetails";
 
@@ -23,7 +23,7 @@ const Header: React.FC<PropsSelectNetwork> = ({
 }) => {
   const [isCopied, setIsCopied] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
-  const [accountDetailsModalOpen, setAccountDetailsModalOpen] = useState(true);
+  const [accountDetailsModalOpen, setAccountDetailsModalOpen] = useState(false);
   const [currentAccount, setCurrentAccount] = useState<string>("");
   const navigate = useNavigate();
   const dropdownRef = useOutsideClick(() => setShowMenu(false));
@@ -50,10 +50,10 @@ const Header: React.FC<PropsSelectNetwork> = ({
   };
 
   const handleLogout = () => {
-    const password = localStorage.getItem("password");
-    clearStore();
-    localStorage.setItem("password", password ?? "");
-    navigate("/");
+    // const password = localStorage.getItem("password");
+    // clearStore();
+    // localStorage.setItem("password", password ?? "");
+    navigate("/login");
   };
 
   const handleOpenAccountModal = () => {
@@ -146,6 +146,8 @@ const Header: React.FC<PropsSelectNetwork> = ({
       <AccountDetails
         isOpen={accountDetailsModalOpen}
         onClose={() => setAccountDetailsModalOpen(false)}
+        index={parseInt(localStorage.getItem("selectedAccountIndex") ?? "0") + 1}
+        walletAddress={currentAccount}
       />
     </div>
   );

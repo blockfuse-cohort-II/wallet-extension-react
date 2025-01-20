@@ -68,11 +68,8 @@ const AccountModal: React.FC<PropsSelectNetwork> = ({
 
   const handleAddAccount = () => {
     const newAccount = createAccountFromHDNode(getMnemonic(), accounts.length);
-    const keys = [
-      ...JSON.parse(localStorage.getItem("privateKey") ?? "[]"),
-      newAccount.privateKey,
-    ];
-    localStorage.setItem('privateKey', JSON.stringify(keys))
+    const existing = JSON.parse(localStorage.getItem("privateKey") ?? "[]");
+    const keys = [...existing, newAccount.privateKey];
     const updatedAccounts = [...accounts, newAccount.address];
     setAccounts(updatedAccounts);
     localStorage.setItem("accounts", JSON.stringify(updatedAccounts));
@@ -80,6 +77,7 @@ const AccountModal: React.FC<PropsSelectNetwork> = ({
       "selectedAccountIndex",
       (updatedAccounts.length - 1).toString()
     );
+    localStorage.setItem("privateKey", JSON.stringify(keys));
 
     const fetchBalance = async () => {
       const newBalance = await getBalance(
