@@ -130,13 +130,16 @@ const Header: React.FC<PropsSelectNetwork> = ({
         <div
           className={`${
             !showMenu ? "hidden" : "absolute"
-          } absolute top-[100%] right-0 w-[150px] h-[100px] border bg-[] rounded-md flex flex-col text-white`}
+          } absolute top-[100%] right-0 w-[120px] py-4 border bg-background  shadow-lg border-gray-600 rounded-md flex flex-col text-white px-3 cursor-pointer  `}
           ref={dropdownRef as React.RefObject<HTMLDivElement>}
         >
-          <span className="border-b px-2 font-bold">Menu</span>
-          <div className="p-2">
-            <button onClick={handleLogout}>Logout</button>
-          </div>
+          <span onClick={() => setAccountDetailsModalOpen(true)} className="font-poppins hover:text-violet-500 transition-all duration-200 ease-linear">
+            Account Details
+          </span>
+
+          <span onClick={handleLogout} className="mt-2 font-poppins hover:text-violet-500 transition-all duration-200 ease-linear">
+            Logout
+          </span>
         </div>
       </div>
 
