@@ -39,11 +39,8 @@ const AccountDetails: React.FC<AccountDetailsProps> = ({
         </div>
 
         <div className="relative">
-          <textarea
-            className="w-full p-4 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-            placeholder="Type something here..."
-          ></textarea>
-          <IoCopy className="absolute top-6 left-[100px]" />
+          <textarea className="w-full p-4 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"></textarea>
+          <IoCopy className="absolute top-1 left-[190px] text-xl cursor-pointer text-violet-500" />
         </div>
         <button className="text-violet-500 border border-border rounded-full p-3 px-11 hover:bg-[#363636]">
           Show private key
