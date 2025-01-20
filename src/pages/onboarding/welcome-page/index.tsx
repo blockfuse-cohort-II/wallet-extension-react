@@ -3,15 +3,15 @@ import logo from "./../../../assets/logo2.png";
 import { getDecryptedWalletAddress } from "../../../utils/utils";
 import { useEffect } from "react";
 
-const CreatePassword = () => {
+const WelcomePage = () => {
   const navigate = useNavigate();
   useEffect(() => {
+    localStorage.removeItem("seedPhrase");
     const walletAddress = getDecryptedWalletAddress();
-
     if (walletAddress) {
       navigate(`/view-balance?address=${walletAddress}`);
     }
-  }, [navigate]);
+  });
   return (
     <div className="relative p-5 h-full w-full flex flex-col items-center justify-center text-white">
       <div className="flex h-full flex-col gap-1 justify-center items-center text-center">
@@ -30,12 +30,14 @@ const CreatePassword = () => {
             Create a new wallet
           </button>
         </Link>
-        <button className="w-full p-3 bg-[#4D4D4D] rounded-full text-white font-poppins">
-          I already have a wallet
-        </button>
+        <Link to="/verify-seed?type=import">
+          <button className="w-full p-3 bg-[#4D4D4D] rounded-full text-white font-poppins">
+            I already have a wallet
+          </button>
+        </Link>
       </div>
     </div>
   );
 };
 
-export default CreatePassword;
+export default WelcomePage;

@@ -1,5 +1,5 @@
-import { ethers, TransactionResponse } from "ethers";
-import { HDNode } from '@ethersproject/hdnode';
+import { ethers, TransactionResponse ,Mnemonic} from "ethers";
+import { HDNode } from "@ethersproject/hdnode";
 
 export function savePassword(password: string): void {
   localStorage.setItem("password", password);
@@ -9,15 +9,46 @@ export function checkPassword(password: string): boolean {
   return localStorage.getItem("password") === password;
 }
 
-export function generateSeedPhrase(): string {
+export function generateSeedPhrase(): ethers.Mnemonic {
   const wallet = ethers.Wallet.createRandom();
   if (!wallet.mnemonic) throw new Error("Failed to generate mnemonic");
-  return wallet.mnemonic.phrase;
+  return wallet.mnemonic;
 }
 
-export function getAddressFromSeedPhrase(seedPhrase: string): ({address: string, privateKey: string}) {
+export function createHDWallet(
+  seedPhrase: string,
+  path: string = "m/44'/60'/0'/0/0"
+): ethers.Wallet {
+  const isValid = Mnemonic.isValidMnemonic(seedPhrase)
+
+  if (!isValid){
+    throw  Error('Not a valid seed phrase')
+  }
+
+  const hdNode = HDNode.fromMnemonic(seedPhrase, path);
+  const derivedNode = hdNode.derivePath(path);
+  return new ethers.Wallet(derivedNode.privateKey);
+}
+
+export function createAccountFromHDNode(
+  seedPhrase: string,
+  accountIndex: number
+): ethers.Wallet {
+  const path = `m/44'/60'/0'/0/${accountIndex}`;
+  return createHDWallet(seedPhrase, path);
+}
+
+export function getWalletFromSeedPhrase(seedPhrase: string): {
+  address: string;
+  privateKey: string;
+} {
   const wallet = ethers.Wallet.fromPhrase(seedPhrase);
-  return { address: wallet.address, privateKey: wallet.privateKey };
+  return wallet;
+}
+
+export function getAddressFromPrivateKey(privateKey: string): ethers.Wallet {
+  const wallet = new ethers.Wallet(privateKey);
+  return wallet;
 }
 
 export async function sendEther(
@@ -31,7 +62,7 @@ export async function sendEther(
   const wallet = new ethers.Wallet(senderPrivateKey, provider);
   const tx = {
     to: recipientAddress,
-    value: ethers.parseEther(amountInEther),
+    value: ethers.formatEther(amountInEther),
   };
   return await wallet.sendTransaction(tx);
 }
@@ -65,7 +96,7 @@ export interface NetworkConfig {
   name: string;
   rpcUrl: string;
   chainId: number;
-  symbol?: string; // Ξ (Ethereum)
+  symbol?: string;
 }
 
 const defaultNetworks: Record<string, NetworkConfig & { symbol: string }> = {
@@ -121,7 +152,6 @@ export const getDecryptedWalletAddress = (): string | null => {
   }
   return null;
 };
-
 
 export const persistEncryptedWalletAddress = (address: string) => {
   localStorage.setItem("encryptedWalletAddress", address);
