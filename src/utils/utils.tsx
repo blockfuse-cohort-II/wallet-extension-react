@@ -152,7 +152,8 @@ export const clearStore = () => {
   localStorage.clear();
 };
 
-export const getTokens = async (network_name: string) => {
+export const getTokens = async () => {
+  const network_name: string = localStorage.getItem('selectedNetwork') || ''
   const config = {
     apiKey: "alcht_bOZV7tenTgYPT9vyuBsOdSiE0WsuiL",
     network: alchemyNetworks[network_name],
