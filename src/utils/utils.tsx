@@ -1,6 +1,12 @@
 import { ethers, TransactionResponse ,Mnemonic} from "ethers";
 import { HDNode } from "@ethersproject/hdnode";
 
+interface Contact {
+  name: string;
+  address: string;
+}
+
+
 export function savePassword(password: string): void {
   localStorage.setItem("password", password);
 }
@@ -184,3 +190,20 @@ export const getMnemonic = async () => {
   }
   return '';
 }
+
+
+export const saveContact = (contact: Contact): void => {
+  const contacts = getContacts();
+  contacts.push(contact);
+  localStorage.setItem("contacts", JSON.stringify(contacts));
+};
+
+export const getContacts = (): Contact[] => {
+  const contacts = localStorage.getItem("contacts");
+  return contacts ? JSON.parse(contacts) : [];
+};
+
+export const deleteContact = (address: string): void => {
+  const contacts = getContacts().filter((c) => c.address !== address);
+  localStorage.setItem("contacts", JSON.stringify(contacts));
+};
