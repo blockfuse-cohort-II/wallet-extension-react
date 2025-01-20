@@ -4,7 +4,7 @@ import CreatePassword from "./pages/onboarding/welcome-page";
 import ViewBalance from "./pages/viewbalance/ViewBalance";
 import GenerateSeed from "./pages/onboarding/generate-seed";
 import Transactions from "./pages/transactions";
-import SuccessPage from "./pages/onboarding/succes";
+import SuccessPage from "./pages/onboarding/succes-page";
 import VerifySeed from "./pages/onboarding/verify-seed";
 
 function App() {
