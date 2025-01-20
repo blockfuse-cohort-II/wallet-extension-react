@@ -24,7 +24,7 @@ const ViewBalance = () => {
   const [loading, setLoading] = useState(false);
   const [isSendModalOpen, setIsSendModalOpen] = useState(false);
   const [assets, setAssets] = useState([]);
-  const [isAccountModalOpen, setIsAccountModalOpen]=useState(true)
+  const [isAccountModalOpen, setIsAccountModalOpen]=useState(false)
   const currentNetwork = getSelectedNetwork() as keyof typeof networks;
 
   const handleOpenSendModal = () => {
@@ -51,7 +51,7 @@ const ViewBalance = () => {
 
 
   return (
-    <div className="bg-white relative w-[375px]">
+    <div className="bg-[#242424] relative w-[375px]">
 
       {/* ------------Header------------------ */}
       <Header
@@ -63,39 +63,39 @@ const ViewBalance = () => {
         
       />
       {/* View account section */}
-      <div className="mt-3">
+      <div className="mt-5">
         {/* Balance section */}
-        <div className="flex flex-col items-center w-[375px] md:w-full p-2">
-          <div className="w-[355px] bg-gradient-to-r from-[#ADFDC666] via-[#eee3ae66] to-[#E1ACAC66] h-40 md:w-full flex flex-col items-center justify-center align-middle">
+        <div className="flex flex-col items-center w-[360px] md:w-full p-2 mx-3 bg-[242424]">
+          <div className="w-[355px]  h-40 md:w-full flex flex-col text-white  border border-gray-300 align-middle justify-center px-3 rounded-lg">
             <p className="font-karla font-semibold text-lg leading-6">
-              Your balance
+                Total Asset Value
             </p>
-            <div className="font-karla font-extrabold text-gray-600 text-4xl my-2">
+            <div className="font-karla font-bold  text-4xl my-2">
               {loading ? (
                 <RiLoader2Line className="animate-spin" />
               ) : (
                 `${balance} ETH`
               )}
             </div>
-            <h3 className="font-karla font-bold text-lg leading-5">+12.44%</h3>
+            <h3 className="font-karla font-bold text-[#5CE677] text-lg leading-5">+98.02% (24h)</h3>
           </div>
 
           {/* Send and Deposit */}
-          <div className="flex flex-row items-center justify-between w-[200px] mt-4">
-            <div className="flex flex-row items-center" onClick={handleOpenSendModal}>
+          <div className="flex flex-row items-center justify-between w-[200px] mt-6 text-white">
+            <button className="flex flex-row items-center border border-gray-400 px-4 py-2 rounded-lg hover:bg-violet-500 mr-4" onClick={handleOpenSendModal}>
               <IoIosSend />
               <h2 className="font-karla text-base font-bold ml-1">Send</h2>
-            </div>
-            <div className="flex flex-row items-center">
+            </button>
+            <button className="flex flex-row items-center border border-gray-400 px-4 py-2 rounded-lg hover:bg-violet-500 ">
               <PiHandDepositFill />
               <h2 className="font-karla text-base font-bold ml-1">Deposit</h2>
-            </div>
+            </button>
           </div>
         </div>
 
         {/* Assets Section */}
-        <div className="flex flex-col w-full px-2">
-          <h2 className="font-karla  text-lg font-semibold">Assets</h2>
+        <div className="flex flex-col w-full px-4 mt-6">
+          <h2 className="font-karla  text-white text-lg font-semibold">Assets</h2>
 
           <div className="mt-4">
             {assets.length > 0 ? (
