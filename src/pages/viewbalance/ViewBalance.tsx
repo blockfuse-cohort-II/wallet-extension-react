@@ -5,6 +5,7 @@ import { PiHandDepositFill } from "react-icons/pi";
 import SelectNetwork from "../../components/SelectNetwork";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
+import AccoutModal from "../../components/AccoutModal";
 import {
   getBalance,
   getDecryptedWalletAddress,
@@ -23,6 +24,7 @@ const ViewBalance = () => {
   const [loading, setLoading] = useState(false);
   const [isSendModalOpen, setIsSendModalOpen] = useState(false);
   const [assets, setAssets] = useState([]);
+  const [isAccountModalOpen, setIsAccountModalOpen]=useState(true)
   const currentNetwork = getSelectedNetwork() as keyof typeof networks;
 
   const handleOpenSendModal = () => {
@@ -47,12 +49,16 @@ const ViewBalance = () => {
       .finally(() => setLoading(false));
   }, [address, currentNetwork]);
 
+
   return (
     <div className=" relative w-[375px]">
       <Header
         isOpen={isOpenNetworkTap}
         setIsOpenNetworkTab={setIsOpenNetworkTap}
+        isAccountModalOpen={isAccountModalOpen}
+        setIsAccountModalOpen={ setIsAccountModalOpen}
         address={address}
+        
       />
       {/* View account section */}
       <div className="mt-3">
@@ -159,6 +165,10 @@ const ViewBalance = () => {
           onClose={handleCloseSendModal}
           walletAddress={address}
         />
+      )}
+
+      {isAccountModalOpen && (
+        <AccoutModal isOpen={isAccountModalOpen} setIsAccountModalOpen={setIsAccountModalOpen}/>
       )}
     </div>
   );
