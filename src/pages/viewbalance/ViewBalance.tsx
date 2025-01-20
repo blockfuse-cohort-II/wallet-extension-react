@@ -59,7 +59,7 @@ const ViewBalance = () => {
       .finally(() => setLoading(false));
   }, [address, currentNetwork]);
 
-  return (
+  return ( 
     <div className="bg-[#252525] relative w-[375px]">
       <Header
         isOpen={isOpenNetworkTap}
