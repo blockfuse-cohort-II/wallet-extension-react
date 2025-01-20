@@ -22,6 +22,7 @@ const ViewBalance = () => {
   const address =
     searchParams.get("address") ?? getDecryptedWalletAddress() ?? "";
   const [isOpenNetworkTap, setIsOpenNetworkTap] = useState(false);
+  const [priceChange, setPriceChange] = useState("0.00");
   const [balance, setBalance] = useState("0.00");
   const [loading, setLoading] = useState(false);
   const [isSendModalOpen, setIsSendModalOpen] = useState(false);
@@ -68,8 +69,10 @@ const ViewBalance = () => {
         const data = await response.json();
         console.log("data", data);
         const rate = data.ethereum.usd;
+        const change = data.ethereum.usd_24h_change.toFixed(2);
         console.log("rate", rate);
         setUsdBalance((parseFloat(ethBalance) * rate).toFixed(2));
+        setPriceChange(change)
         console.log("usdBalance", usdBalance);
       } catch (error) {
         console.error("Error fetching balance:", error);
@@ -123,8 +126,12 @@ const ViewBalance = () => {
                 })()
               )}
             </div>
-            <h3 className="font-karla font-bold text-[#5CE677] text-lg leading-5">
-              +98.02% (24h)
+            <h3
+              className={`font-karla font-bold text-lg leading-5 ${
+                priceChange.startsWith("-") ? "text-red-500" : "text-[#5CE677]"
+              }`}
+            >
+              {priceChange}% (24h)
             </h3>
           </div>
 
