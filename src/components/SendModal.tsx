@@ -5,6 +5,7 @@ import { IoIosArrowDown } from "react-icons/io";
 import AccountIcon from "../assets/Account icon.png";
 import ethIcon from "../assets/ETH stroke icon.png";
 import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
 interface SendModalProps {
   isOpen: boolean;
@@ -17,7 +18,7 @@ const SendModal: React.FC<SendModalProps> = ({
   walletAddress,
 }) => {
 
-const navigate = useNavigate();
+  const navigate = useNavigate();
 
   console.log(walletAddress, "walletAddress"); //for now we are just testing with one walletAddress, we have to use this to store privatekeys
   const [recipient, setRecipient] = useState("");
@@ -94,7 +95,7 @@ const navigate = useNavigate();
 
   const handleAddContact = () => {
     if (!newContact.name || !newContact.address) {
-      alert("Please fill in both name and address fields.");
+      toast.warning("Please fill in both name and address fields.");
       return;
     }
     if (!newContact.address.startsWith("0x") || newContact.address.length !== 42) {
@@ -154,8 +155,8 @@ const navigate = useNavigate();
           <header className="flex gap-6 cursor-pointer mb-3">
             <p
               className={`${activeTab === "account"
-                  ? "text-violet-500 border-b-2 border-violet-500"
-                  : "text-white"
+                ? "text-violet-500 border-b-2 border-violet-500"
+                : "text-white"
                 } px-3 pb-1.5`}
               onClick={() => setActiveTa("account")}
             >
@@ -163,8 +164,8 @@ const navigate = useNavigate();
             </p>
             <p
               className={`${activeTab === "contact"
-                  ? "text-violet-500 border-b-2 border-violet-500 "
-                  : "text-white"
+                ? "text-violet-500 border-b-2 border-violet-500 "
+                : "text-white"
                 } px-3 pb-1.5`}
               onClick={() => setActiveTa("contact")}
             >
@@ -248,7 +249,7 @@ const navigate = useNavigate();
                 <p className="text-gray-400">No contacts available.</p>
               )}
               <button
-                className="bg-blue-500 text-white px-3 py-1 rounded mt-4"
+                className="bg-violet-500 text-white px-3 py-1 rounded mt-4"
                 onClick={() => setIsAddContactModalOpen(true)}
               >
                 Add Contact
@@ -262,21 +263,20 @@ const navigate = useNavigate();
             Cancel
           </button>
           <button
-  className={`text-violet-500 border border-border rounded-full p-3 px-11 ${
-    loading ? "bg-gray-600 cursor-not-allowed" : "bg-[#363636] hover:bg-gray-700"
-  }`}
-  onClick={handleSend}
-  disabled={loading} // Disable the button while loading
->
-  {loading ? "Sending..." : "Continue"} 
-</button>
+            className={`text-violet-500 border border-border rounded-full p-3 px-11 ${loading ? "bg-gray-600 cursor-not-allowed" : "bg-[#363636] hover:bg-gray-700"
+              }`}
+            onClick={handleSend}
+            disabled={loading} // Disable the button while loading
+          >
+            {loading ? "Sending..." : "Continue"}
+          </button>
         </div>
       </div>
       {isAddContactModalOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-gray-800 p-6 rounded shadow-md w-[90%] md:w-[400px]">
+        <div className="fixed inset-0 bg-transparent backdrop-blur-sm bg-opacity-50 flex items-center justify-center z-50">
+          <div className=" bg-gray-700 p-6 rounded shadow-md w-[90%] md:w-[400px]">
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-xl font-bold">Add Contact</h2>
+              <h2 className="text-base font-poppins  font-semibold text-white">Add Contact</h2>
               <RiCloseLine
                 className="cursor-pointer text-2xl text-white"
                 onClick={() => setIsAddContactModalOpen(false)}
@@ -291,7 +291,7 @@ const navigate = useNavigate();
                 onChange={(e) =>
                   setNewContact({ ...newContact, name: e.target.value })
                 }
-                className="p-2 rounded bg-gray-700 text-white"
+                className="p-2 rounded bg-transparent text-white border border-slate-200"
               />
               <input
                 type="text"
@@ -300,7 +300,7 @@ const navigate = useNavigate();
                 onChange={(e) =>
                   setNewContact({ ...newContact, address: e.target.value })
                 }
-                className="p-2 rounded bg-gray-700 text-white"
+                className="p-2 rounded bg-transparent text-white border border-slate-200"
               />
             </div>
 
@@ -312,7 +312,7 @@ const navigate = useNavigate();
                 Cancel
               </button>
               <button
-                className="bg-blue-500 text-white px-4 py-2 rounded"
+                className="bg-violet-500 text-white px-4 py-2 rounded"
                 onClick={handleAddContact}
               >
                 Save
