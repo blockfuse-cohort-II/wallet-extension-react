@@ -52,7 +52,9 @@ const Header: React.FC<PropsSelectNetwork> = ({
   };
 
   const handleLogout = () => {
+    const password = localStorage.getItem("password");
     clearStore();
+    localStorage.setItem("password", password ?? "");
     navigate("/");
   };
 
