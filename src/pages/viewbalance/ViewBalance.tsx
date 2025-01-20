@@ -11,6 +11,7 @@ import {
   getDecryptedWalletAddress,
   getSelectedNetwork,
   networks,
+  getTokens
 } from "../../utils/utils";
 import { RiLoader2Line } from "react-icons/ri";
 import SendModal from "../../components/SendModal";
@@ -25,7 +26,14 @@ const ViewBalance = () => {
   const [loading, setLoading] = useState(false);
   const [isSendModalOpen, setIsSendModalOpen] = useState(false);
   const [isReceiveModalOpen, setIsReceiveModalOpen] = useState(false);
-  const [assets] = useState([]);
+  interface Asset {
+    name: string;
+    quantity: number;
+    price: string;
+    change: number;
+  }
+
+  const [assets, setAssets] = useState<Asset[]>([]);
   const [isAccountModalOpen, setIsAccountModalOpen] = useState(false);
   const [selectedAccountIndex] = useState<number>(
     parseInt(localStorage.getItem("selectedAccountIndex") ?? "0")
@@ -37,24 +45,32 @@ const ViewBalance = () => {
     const fetchBalanceAndConvert = async () => {
       setLoading(true);
       try {
+        const tokens = await getTokens();
+        setAssets(tokens);
         const storedAccounts = JSON.parse(
           localStorage.getItem("accounts") ?? "[]"
         );
+        console.log("storedAccounts", storedAccounts);
         const selectedAddress = storedAccounts[selectedAccountIndex];
-
+        console.log("selectedAddress", selectedAddress);
         const ethBalance = await getBalance(
           selectedAddress,
           networks[currentNetwork].chainId,
           networks[currentNetwork].rpcUrl
         );
+        console.log("ethBalance", ethBalance);
+        console.log("balance1", balance);
         setBalance(parseFloat(ethBalance).toFixed(4));
-
+        console.log("balance2", balance);
         const response = await fetch(
           "https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd"
         );
         const data = await response.json();
+        console.log("data", data);
         const rate = data.ethereum.usd;
+        console.log("rate", rate);
         setUsdBalance((parseFloat(ethBalance) * rate).toFixed(2));
+        console.log("usdBalance", usdBalance);
       } catch (error) {
         console.error("Error fetching balance:", error);
       } finally {
@@ -146,7 +162,7 @@ const ViewBalance = () => {
                       name: string;
                       quantity: number;
                       price: string;
-                      change: string;
+                      change: number;
                     },
                     index: number
                   ) => (
