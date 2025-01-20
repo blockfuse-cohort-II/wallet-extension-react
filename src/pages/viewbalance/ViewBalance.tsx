@@ -14,6 +14,8 @@ import {
 } from "../../utils/utils";
 import { RiLoader2Line } from "react-icons/ri";
 import SendModal from "../../components/SendModal";
+import ReceiveModal from "../../components/ReceiveModal";
+
 
 const ViewBalance = () => {
   const [searchParams] = useSearchParams();
@@ -23,6 +25,7 @@ const ViewBalance = () => {
   const [balance, setBalance] = useState("0.00");
   const [loading, setLoading] = useState(false);
   const [isSendModalOpen, setIsSendModalOpen] = useState(false);
+  const [isReceiveModalOpen, setIsReceiveModalOpen] = useState(false);
   const [assets, setAssets] = useState([]);
   const [isAccountModalOpen, setIsAccountModalOpen]=useState(false)
   const currentNetwork = getSelectedNetwork() as keyof typeof networks;
@@ -33,6 +36,14 @@ const ViewBalance = () => {
 
   const handleCloseSendModal = () => {
     setIsSendModalOpen(false);
+  };
+
+  const handleOpenReceiveModal = () => {
+    setIsReceiveModalOpen(true);
+  };
+
+  const handleCloseReceiveModal = () => {
+    setIsReceiveModalOpen(false);
   };
 
   useEffect(() => {
@@ -79,6 +90,22 @@ const ViewBalance = () => {
           </div>
 
           {/* Send and Deposit */}
+          <div className="flex flex-row items-center justify-between w-[200px] mt-4">
+            <div
+              className="flex flex-row items-center cursor-pointer "
+              onClick={handleOpenSendModal}
+            >
+              <IoIosSend />
+              <h2 className="font-karla text-base font-bold ml-1">Send</h2>
+            </div>
+            <div
+              className="flex flex-row items-center cursor-pointer"
+              onClick={handleOpenReceiveModal}
+            >
+              <PiHandDepositFill />
+              <h2 className="font-karla text-base font-bold ml-1">Receive</h2>
+            </div>
+
           <div className="flex flex-row items-center justify-between w-[200px] mt-6 text-white">
             <button className="flex flex-row items-center border border-gray-400 px-4 py-2 rounded-lg hover:bg-violet-500 mr-4" onClick={handleOpenSendModal}>
               <IoIosSend />
@@ -88,6 +115,7 @@ const ViewBalance = () => {
               <PiHandDepositFill />
               <h2 className="font-karla text-base font-bold ml-1">Deposit</h2>
             </button>
+
           </div>
         </div>
 
@@ -159,13 +187,20 @@ const ViewBalance = () => {
           address={address}
         />
       )}
-       {isSendModalOpen && (
+      {isSendModalOpen && (
         <SendModal
           isOpen={isSendModalOpen}
           onClose={handleCloseSendModal}
           walletAddress={address}
         />
       )}
+
+      {isReceiveModalOpen && (
+        <ReceiveModal
+          isOpen={isReceiveModalOpen}
+          onClose={handleCloseReceiveModal}
+          walletAddress={address}
+        />
 
       {isAccountModalOpen && (
         <AccoutModal isOpen={isAccountModalOpen} setIsAccountModalOpen={setIsAccountModalOpen}/>
@@ -175,5 +210,3 @@ const ViewBalance = () => {
 };
 
 export default ViewBalance;
-
-
