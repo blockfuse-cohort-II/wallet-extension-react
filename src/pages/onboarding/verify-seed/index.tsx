@@ -2,15 +2,28 @@ import { useState } from "react";
 import { BsEye, BsEyeSlash } from "react-icons/bs";
 import { Link } from "react-router-dom";
 
-const GenerateSeed = () => {
+const VerifySeed = () => {
   const [visibility, setVisibility] = useState(
     Array.from({ length: 12 }, () => false)
   );
+  const [seedPhrase, setSeedPhrase] = useState(
+    Array.from({ length: 12 }, () => "")
+  );
+
   const toggleVisibility = (index: number) => {
     setVisibility((prevVisibility) => {
       const newVisibility = [...prevVisibility];
       newVisibility[index] = !newVisibility[index];
       return newVisibility;
+    });
+  };
+
+  // Function to handle input changes
+  const handleInputChange = (index: number, value: string) => {
+    setSeedPhrase((prevSeedPhrase) => {
+      const newSeedPhrase = [...prevSeedPhrase];
+      newSeedPhrase[index] = value;
+      return newSeedPhrase;
     });
   };
 
@@ -31,40 +44,48 @@ const GenerateSeed = () => {
           />
         </svg>
 
-        <p>Secret Recovery Phrase</p>
+        <p>Verify Recovery Phrase</p>
       </header>
 
-      <div className="mt-4 text-white flex flex-col gap-1">
-        <h2 className="text-2xl font-karla">Protect you wallet</h2>
+      <div className="mt-10 text-white flex flex-col gap-1">
+        <h2 className="text-2xl font-karla">Verify Recovery Phrase</h2>
         <p className="font-inter text-gray-400">
-          This is the only way to recover your account. Please store it safely.
+          This is a crucial step to ensure your seed phrase is correct and can
+          be used to recover your account. Please verify each word carefully and
+          store it securely.
         </p>
-
-        <div className="mt-3 border grow w-full h-auto rounded-lg border-gray-500">
-          {Array.from({ length: 12 }).map((_, index) => (
-            <div
-              className={`p-3 ${
-                index < 11 && "border-b"
-              }  border-b-gray-500 w-full flex justify-between items-center font-poppins`}
-            >
-              <div className="inline-flex gap-2">
-                <p>{index + 1}.</p>
-                <p>{visibility[index] ? "Access" : "******"}</p>
-              </div>
-              <button onClick={() => toggleVisibility(index)}>
-                {visibility[index] ?  <BsEye /> : <BsEyeSlash />}
-              </button>
-            </div>
-          ))}
-        </div>
-        <Link to="/verify-seed">
-          <button className="w-full mt-3 p-3 bg-[#E6E6E6] rounded-full text-[#1A1A1A] font-poppins">
-            Ok, I saved it somewhere safe
-          </button>
-        </Link>
       </div>
+
+      <div className="mt-8 grid grid-cols-2 gap-4">
+        {Array.from({ length: 12 }).map((_, index) => (
+          <div
+            key={index}
+            className="flex relative font-poppins text-white items-center gap-1"
+          >
+            {index + 1}.
+            <input
+              type={visibility[index] ? "text" : "password"}
+              value={seedPhrase[index]}
+              onChange={(e) => handleInputChange(index, e.target.value)}
+              className="w-full p-2 border border-gray-500 bg-transparent focus:outline-none rounded-lg pr-10"
+            />
+            <button
+              onClick={() => toggleVisibility(index)}
+              className="etxt-white right-0 flex items-center pr-3"
+            >
+              {visibility[index] ? <BsEye /> :  <BsEyeSlash /> }
+            </button>
+          </div>
+        ))}
+      </div>
+
+      <Link to="/success-page">
+        <button className="w-full mt-8 p-3 bg-violet-500 text-white rounded-full font-poppins">
+          I'm sure, Finish
+        </button>
+      </Link>
     </div>
   );
 };
 
-export default GenerateSeed;
+export default VerifySeed;
