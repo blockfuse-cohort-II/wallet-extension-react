@@ -11,7 +11,7 @@ interface SendModalProps {
   walletAddress: string;
 }
 
-const SendModal: React.FC<SendModalProps> = ({
+const SendModalTwo: React.FC<SendModalProps> = ({
   isOpen,
   onClose,
   walletAddress,
@@ -186,130 +186,7 @@ const SendModal: React.FC<SendModalProps> = ({
           />
         </div>
 
-        <div className="mt-4">
-          <header className="flex gap-6 cursor-pointer mb-3">
-            <p
-              className={`${
-                activeTab === "account"
-                  ? "text-violet-500 border-b-2 border-violet-500"
-                  : "text-white"
-              } px-3 pb-1.5`}
-              onClick={() => setActiveTa("account")}
-            >
-              Your account
-            </p>
-            <p
-              className={`${
-                activeTab === "contact"
-                  ? "text-violet-500 border-b-2 border-violet-500 "
-                  : "text-white"
-              } px-3 pb-1.5`}
-              onClick={() => setActiveTa("contact")}
-            >
-              {" "}
-              Contacts
-            </p>
-          </header>
-          {activeTab === "account" && (
-            <div className="flex flex-col gap-2">
-              <div className="flex rounded-lg justify-around p-2 hover:border hover:bg-gray-800">
-                <div className="flex gap-3">
-                  <img
-                    src={AccountIcon}
-                    alt="homeicon"
-                    className="w-10 h-10 rounded-full "
-                  />
-
-                  <div className="text-white mr-24">
-                    <p>Account 1</p>
-                    <p className="text-[13px]">0xfdk2....dds323</p>
-                  </div>
-                </div>
-
-                <div className="text-white flex flex-col gap-1">
-                  <div className="flex gap-1">
-                    <div className="">$0.00</div>{" "}
-                    <div className="text-[10px] mt-[3px]">USD</div>
-                  </div>
-                  <div className="flex gap-1">
-                    <img src={ethIcon} alt="" className="h-[20px] w-[10px]" />{" "}
-                    <div className="text-sm">0 ETH</div>
-                  </div>
-                </div>
-              </div>
-              <div className="flex rounded-lg justify-around p-2 hover:border hover:bg-gray-800">
-                <div className="flex gap-3">
-                  <img
-                    src={AccountIcon}
-                    alt="homeicon"
-                    className="w-10 h-10 rounded-full "
-                  />
-
-                  <div className="text-white mr-24">
-                    <p>Account 2</p>
-                    <p className="text-[13px]">0xfdk2....dds323</p>
-                  </div>
-                </div>
-
-                <div className="text-white flex flex-col gap-1">
-                  <div className="flex gap-1">
-                    <div className="">$0.00</div>{" "}
-                    <div className="text-[10px] mt-[3px]">USD</div>
-                  </div>
-                  <div className="flex gap-1">
-                    <img src={ethIcon} alt="" className="h-[20px] w-[10px]" />{" "}
-                    <div className="text-sm">0 ETH</div>
-                  </div>
-                </div>
-              </div>
-              <div className="flex rounded-lg justify-between bg-[#363636] p-2 text-white">
-                <div>
-                  <img
-                    src={ethIcon}
-                    alt="homeicon"
-                    className="w-10 h-10 rounded-full "
-                  />
-
-                  <div className="text-white mr-24">
-                    <p className="truncate">Sepolia</p>
-                    <IoIosArrowDown className="font-bold cursor-pointer text-base text-white ml-2" />
-                  </div>
-                </div>
-                <div>0</div>
-              </div>
-            </div>
-          )}
-          {activeTab === "contact" && (
-            <div className="flex flex-col gap-2">
-              {contacts.length > 0 ? (
-                contacts.map((contact) => (
-                  <div
-                    key={contact.address}
-                    className="flex justify-between items-center p-2 border rounded hover:bg-gray-700 cursor-pointer"
-                    onClick={() => {
-                      setRecipient(contact.address); // Set the recipient address
-                      setActiveTa("account"); // Optionally switch back to the "Your account" tab
-                    }}
-                  >
-                    <div>
-                      <p className="text-white font-semibold">{contact.name}</p>
-                      <p className="text-gray-400 text-sm">{contact.address}</p>
-                    </div>
-                  </div>
-                ))
-              ) : (
-                <p className="text-gray-400">No contacts available.</p>
-              )}
-              <button
-                className="bg-blue-500 text-white px-3 py-1 rounded mt-4"
-                onClick={() => setIsAddContactModalOpen(true)}
-              >
-                Add Contact
-              </button>
-            </div>
-          )}
-        </div>
-
+       
         <div className="mt-10 flex justify-around">
           <button className="text-violet-500 border border-border rounded-full p-3 px-11 hover:bg-[#363636]">
             Cancel
@@ -381,4 +258,4 @@ const SendModal: React.FC<SendModalProps> = ({
   );
 };
 
-export default SendModal;
+export default SendModalTwo;

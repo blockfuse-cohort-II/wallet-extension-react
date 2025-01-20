@@ -4,18 +4,21 @@ import { RiCloseLine } from "react-icons/ri";
 import { IoIosArrowDown } from "react-icons/io";
 import AccountIcon from "../assets/Account icon.png";
 import ethIcon from "../assets/ETH stroke icon.png";
+import { useNavigate } from "react-router-dom";
 
 interface SendModalProps {
   isOpen: boolean;
   onClose: () => void;
   walletAddress: string;
 }
-
 const SendModal: React.FC<SendModalProps> = ({
   isOpen,
   onClose,
   walletAddress,
 }) => {
+
+const navigate = useNavigate();
+
   console.log(walletAddress, "walletAddress"); //for now we are just testing with one walletAddress, we have to use this to store privatekeys
   const [recipient, setRecipient] = useState("");
   const [amount, setAmount] = useState("");
@@ -37,9 +40,11 @@ const SendModal: React.FC<SendModalProps> = ({
   }, []);
 
   const handleSend = async () => {
+    onClose()
     console.log(recipient, amount, "recipient, amount");
     if (!recipient || !amount) {
       setMessage("Recipient address and amount are required.");
+      (() => navigate(`/view-balance?address=${walletAddress}`))();
       return;
     }
 
