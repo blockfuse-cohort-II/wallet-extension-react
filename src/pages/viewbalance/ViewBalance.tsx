@@ -16,7 +16,6 @@ import { RiLoader2Line } from "react-icons/ri";
 import SendModal from "../../components/SendModal";
 import ReceiveModal from "../../components/ReceiveModal";
 
-
 const ViewBalance = () => {
   const [searchParams] = useSearchParams();
   const address =
@@ -60,7 +59,6 @@ const ViewBalance = () => {
       .finally(() => setLoading(false));
   }, [address, currentNetwork]);
 
-
   return (
     <div className="bg-[#252525] relative w-[375px]">
       <Header
@@ -69,7 +67,6 @@ const ViewBalance = () => {
         isAccountModalOpen={isAccountModalOpen}
         setIsAccountModalOpen={setIsAccountModalOpen}
         address={address}
-
       />
       {/* View account section */}
       <div className="mt-5">
