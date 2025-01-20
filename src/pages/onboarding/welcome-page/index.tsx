@@ -20,7 +20,7 @@ const WelcomePage = () => {
           Welcome to Katera
         </h1>
         <p className="font-inter text-gray-400 text-sm ">
-          A boring Ethereum wallet built for DeFi & NFTs
+          A boring Ethereum wallet built just for you 😘
         </p>
       </div>
 
