@@ -62,7 +62,7 @@ const AccountModal: React.FC<PropsSelectNetwork> = ({
   const handleAccountSelect = (index: number, account: string) => {
     setAccountsIndex(index);
     localStorage.setItem("selectedAccountIndex", index.toString());
-    navigate(`/view-balance?address=${account}`);
+    setIsAccountModalOpen(!isOpen);
   };
 
   const handleAddAccount = () => {

@@ -112,7 +112,7 @@ const ViewBalance = () => {
             <p className="font-karla font-semibold text-lg leading-6">
               Total Asset Value
             </p>
-            <div className="font-karla font-bold  text-4xl my-2">
+            <div className="font-karla font-bold  text-2xl my-2">
               {loading ? (
                 <RiLoader2Line className="animate-spin" />
               ) : (
