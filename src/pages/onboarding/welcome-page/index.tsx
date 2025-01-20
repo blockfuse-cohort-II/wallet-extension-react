@@ -21,7 +21,7 @@ const CreatePassword = () => {
       </div>
 
       <div className="flex flex-col gap-3 w-full mt-auto">
-          <Link to='/create-wallet'>
+          <Link to='/login'>
           <button className="w-full p-3 bg-violet-500 rounded-full text-white font-poppins">Create a new wallet</button>
           </Link>
           <button className="w-full p-3 bg-[#4D4D4D] rounded-full text-white font-poppins">I already have a wallet</button>

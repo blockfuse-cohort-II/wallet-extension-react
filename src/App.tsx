@@ -6,6 +6,7 @@ import GenerateSeed from "./pages/onboarding/generate-seed";
 import Transactions from "./pages/transactions";
 import SuccessPage from "./pages/onboarding/succes-page";
 import VerifySeed from "./pages/onboarding/verify-seed";
+import Login from "./pages/login";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/verify-seed" element={<VerifySeed />} />
         <Route path="/transactions" element={<Transactions />} /> 
         <Route path="/success-page" element={<SuccessPage />} /> 
+        <Route path="/login" element={<Login />} /> 
       </Routes>
     </div>
   );
