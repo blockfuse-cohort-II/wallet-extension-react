@@ -5,6 +5,8 @@ import GenerateSeed from "./pages/onboarding/generate-seed";
 import Transactions from "./pages/transactions";
 import SuccessPage from "./pages/onboarding/succes-page";
 import VerifySeed from "./pages/onboarding/verify-seed";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   return (
@@ -17,6 +19,7 @@ function App() {
         <Route path="/transactions" element={<Transactions />} /> 
         <Route path="/success-page" element={<SuccessPage />} /> 
       </Routes>
+      <ToastContainer />
     </div>
   );
 }

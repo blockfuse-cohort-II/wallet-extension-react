@@ -1,4 +1,4 @@
-import { ethers, TransactionResponse } from "ethers";
+import { ethers, TransactionResponse ,Mnemonic} from "ethers";
 import { HDNode } from "@ethersproject/hdnode";
 
 export function savePassword(password: string): void {
@@ -19,6 +19,12 @@ export function createHDWallet(
   seedPhrase: string,
   path: string = "m/44'/60'/0'/0/0"
 ): ethers.Wallet {
+  const isValid = Mnemonic.isValidMnemonic(seedPhrase)
+
+  if (!isValid){
+    throw  Error('Not a valid seed phrase')
+  }
+
   const hdNode = HDNode.fromMnemonic(seedPhrase, path);
   const derivedNode = hdNode.derivePath(path);
   return new ethers.Wallet(derivedNode.privateKey);
@@ -32,7 +38,7 @@ export function createAccountFromHDNode(
   return createHDWallet(seedPhrase, path);
 }
 
-export function getAddressFromSeedPhrase(seedPhrase: string): {
+export function getWalletFromSeedPhrase(seedPhrase: string): {
   address: string;
   privateKey: string;
 } {

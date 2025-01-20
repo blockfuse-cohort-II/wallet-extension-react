@@ -6,12 +6,12 @@ import { useEffect } from "react";
 const WelcomePage = () => {
   const navigate = useNavigate();
   useEffect(() => {
+    localStorage.removeItem('seedPhrase');
     const walletAddress = getDecryptedWalletAddress();
-
     if (walletAddress) {  
       navigate(`/view-balance?address=${walletAddress}`);
     }
-  }, [navigate]);
+  });
   return (
     <div className="relative p-5 h-full w-full flex flex-col items-center justify-center text-white">
       <div className="flex h-full flex-col gap-1 justify-center items-center text-center">
@@ -24,8 +24,9 @@ const WelcomePage = () => {
           <Link to='/create-wallet'>
           <button className="w-full p-3 bg-violet-500 rounded-full text-white font-poppins">Create a new wallet</button>
           </Link>
+          <Link to='/verify-seed?type=import'>
           <button className="w-full p-3 bg-[#4D4D4D] rounded-full text-white font-poppins">I already have a wallet</button>
-
+          </Link>
       </div>
     </div>
   );
