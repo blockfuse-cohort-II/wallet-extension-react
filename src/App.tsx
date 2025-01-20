@@ -4,9 +4,12 @@ import ViewBalance from "./pages/viewbalance/ViewBalance";
 import GenerateSeed from "./pages/onboarding/generate-seed";
 import Transactions from "./pages/transactions";
 import SuccessPage from "./pages/onboarding/succes-page";
-import VerifySeed from "./pages/onboarding/verify-seed";
+import VerifySeed from "./pages/verify-seed";
+import Login from "./pages/login";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Toaster } from "sonner";
+import Contacts from "./pages/contacts";
 
 function App() {
   return (
@@ -18,8 +21,11 @@ function App() {
         <Route path="/verify-seed" element={<VerifySeed />} />
         <Route path="/transactions" element={<Transactions />} /> 
         <Route path="/success-page" element={<SuccessPage />} /> 
+        <Route path="/login" element={<Login />} /> 
+        <Route path="/contacts" element={<Contacts />} />
       </Routes>
       <ToastContainer />
+      <Toaster position="top-center" richColors />
     </div>
   );
 }

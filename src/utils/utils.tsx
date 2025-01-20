@@ -1,5 +1,11 @@
-import { ethers, TransactionResponse } from "ethers";
-import { Alchemy, Network } from "alchemy-sdk";
+import { ethers, TransactionResponse ,Mnemonic} from "ethers";
+import { HDNode } from "@ethersproject/hdnode";
+
+interface Contact {
+  name: string;
+  address: string;
+}
+
 
 export function savePassword(password: string): void {
   if (!password) throw new Error("Password cannot be empty");
@@ -76,30 +82,35 @@ const alchemyNetworks: Record<string, Network> = {
   sepolia: Network.ETH_SEPOLIA,
 };
 
-const defaultNetworks: Record<string, NetworkConfig & { symbol: string }> = {
+const defaultNetworks: Record<string, NetworkConfig & { symbol: string; ticker: string }> = {
   mainnet: {
     name: "Ethereum Mainnet",
     rpcUrl: "https://mainnet.infura.io/v3/1cef973dff844ba09dea342050cd5967",
     chainId: 1,
     symbol: "\u039E",
+    ticker: "USD",
   },
   polygon: {
     name: "Polygon Mainnet",
     rpcUrl: "https://polygon-rpc.com",
     chainId: 137,
     symbol: "\u039E",
+    ticker: "USD",
+
   },
   bsc: {
     name: "Binance Smart Chain",
     rpcUrl: "https://bsc-dataseed.binance.org/",
     chainId: 56,
     symbol: "\u0024",
+    ticker: "ETH",
   },
   sepolia: {
     name: "Sepolia Testnet",
     rpcUrl: "https://sepolia.infura.io/v3/1cef973dff844ba09dea342050cd5967",
     chainId: 11155111,
     symbol: "\u039E",
+    ticker: "SepoliaETH",
   },
 };
 
@@ -115,6 +126,7 @@ export function addCustomNetwork(
     rpcUrl,
     chainId,
     symbol: "\u039E",
+    ticker: "ETH",
   };
 }
 
@@ -135,7 +147,7 @@ export const persistEncryptedWalletAddress = (address: string) => {
   localStorage.setItem("encryptedWalletAddress", address);
 };
 
-export const clearEncryptedWallletAddress = () => {
+export const clearStore = () => {
   localStorage.clear();
 };
 
@@ -194,35 +206,27 @@ export const getTokens = async (network_name: string) => {
     return results;
 }
 
-export const getNfts = async (network_name: string) => {
-  const config = {
-    apiKey: "alcht_bOZV7tenTgYPT9vyuBsOdSiE0WsuiL",
-    network: alchemyNetworks[network_name],
-  };
-  const alchemy = new Alchemy(config);
-
-  // Wallet address -- replace with your desired address
-  let address = getDecryptedWalletAddress();
-  if (!address) {
-    throw new Error("Wallet address not found");
+export const getMnemonic = () => {
+  const mnemonic = localStorage.getItem("mnemonic");
+  if (mnemonic) {
+    return mnemonic;
   }
-
-  // Get all NFTs
-  const nfts = await alchemy.nft.getNftsForOwner(address);
-
-  // Parse output
-  const numNfts = nfts["totalCount"];
-  const nftList = nfts["ownedNfts"];
-
-  console.log(`Total NFTs owned by ${address}: ${numNfts} \n`);
-
-  let i = 1;
-
-  for (let nft of nftList) {
-    console.log(`${i}. ${nft}`);
-    i++;
-  }
+  return '';
 }
 
-getTokens("mainnet");
-getNfts("mainnet");
+
+export const saveContact = (contact: Contact): void => {
+  const contacts = getContacts();
+  contacts.push(contact);
+  localStorage.setItem("contacts", JSON.stringify(contacts));
+};
+
+export const getContacts = (): Contact[] => {
+  const contacts = localStorage.getItem("contacts");
+  return contacts ? JSON.parse(contacts) : [];
+};
+
+export const deleteContact = (address: string): void => {
+  const contacts = getContacts().filter((c) => c.address !== address);
+  localStorage.setItem("contacts", JSON.stringify(contacts));
+};
