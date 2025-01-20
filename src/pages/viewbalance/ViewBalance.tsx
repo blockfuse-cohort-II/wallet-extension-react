@@ -179,35 +179,35 @@ const ViewBalance = () => {
           </div>
         </div>
 
-        {/* Select Network */}
-        {isOpenNetworkTap && (
-          <SelectNetwork
-            isOpen={isOpenNetworkTap}
-            setIsOpenNetworkTab={setIsOpenNetworkTap}
-            address={address}
-          />
-        )}
-        {isSendModalOpen && (
-          <SendModal
-            isOpen={isSendModalOpen}
-            onClose={handleCloseSendModal}
-            walletAddress={address}
-          />
-        )}
+      {/* Select Network */}
+      {isOpenNetworkTap && (
+        <SelectNetwork
+          isOpen={isOpenNetworkTap}
+          setIsOpenNetworkTab={setIsOpenNetworkTap}
+          address={address}
+        />
+      )}
+      {isSendModalOpen && (
+        <SendModal
+          isOpen={isSendModalOpen}
+          onClose={handleCloseSendModal}
+          walletAddress={address}
+        />
+      )}
 
-        {isReceiveModalOpen && (
-          <ReceiveModal
-            isOpen={isReceiveModalOpen}
-            onClose={handleCloseReceiveModal}
-            walletAddress={address}
-          />
-        )}
+      {isReceiveModalOpen && (
+        <ReceiveModal
+          isOpen={isReceiveModalOpen}
+          onClose={handleCloseReceiveModal}
+          walletAddress={address}
+        />
+      )
+      }
 
-        {isAccountModalOpen && (
-          <AccoutModal isOpen={isAccountModalOpen} setIsAccountModalOpen={setIsAccountModalOpen} />
-        )}
-
-      </div>
+      {isAccountModalOpen && (
+        <AccoutModal isOpen={isAccountModalOpen} setIsAccountModalOpen={setIsAccountModalOpen}/>
+      )}
+    </div>
     </div>
   );
 }
