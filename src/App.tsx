@@ -4,6 +4,7 @@ import CreatePassword from "./pages/onboarding/welcome-page";
 import ViewBalance from "./pages/viewbalance/ViewBalance";
 import GenerateSeed from "./pages/onboarding/generate-seed";
 import Transactions from "./pages/transactions";
+import SuccessPage from "./pages/onboarding/succes-page";
 import VerifySeed from "./pages/onboarding/verify-seed";
 
 function App() {
@@ -15,7 +16,7 @@ function App() {
         <Route path="/view-balance" element={<ViewBalance />} />
         <Route path="/verify-seed" element={<VerifySeed />} />
         <Route path="/transactions" element={<Transactions />} /> 
-
+        <Route path="/success-page" element={<SuccessPage />} /> 
       </Routes>
     </div>
   );

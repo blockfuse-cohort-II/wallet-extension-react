@@ -11,6 +11,7 @@ const Transactions = () => {
         <Search />
         <div></div>
         <input
+          type="search"
           placeholder="Search..."
           className="text-white/50 bg-transparent outline-0 border-0"
         />
