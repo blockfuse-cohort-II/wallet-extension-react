@@ -3,6 +3,7 @@ import { getPrivateKey, sendEther } from "../utils/utils";
 import { RiCloseLine } from "react-icons/ri";
 import { IoIosArrowDown } from "react-icons/io";
 import AccountIcon from "../assets/Account icon.png";
+import ethIcon from "../assets/ETH stroke icon.png";
 
 interface SendModalProps {
   isOpen: boolean;
@@ -18,10 +19,12 @@ const SendModal: React.FC<SendModalProps> = ({
   console.log(walletAddress, "walletAddress"); //for now we are just testing with one walletAddress, we have to use this to store privatekeys
   const [recipient, setRecipient] = useState("");
   const [amount, setAmount] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false); // not used!
+  const [message, setMessage] = useState(""); // not used!
+  const [activeTab, setActiveTa] = useState("account");
 
-  const handleSend = async () => {
+  const handleSend = async () =>  {
+    // not used!
     if (!recipient || !amount) {
       setMessage("Recipient address and amount are required.");
       return;
@@ -64,6 +67,11 @@ const SendModal: React.FC<SendModalProps> = ({
       );
       setMessage(`Transaction successful! Hash: ${transaction.hash}`);
     } catch (error) {
+      console.error(error);
+      console.error(setRecipient);
+      console.error(setAmount);
+      console.error(loading);
+      console.error(message);
       setMessage("Failed to send transaction. Please try again.");
     } finally {
       setLoading(false);
@@ -73,52 +81,129 @@ const SendModal: React.FC<SendModalProps> = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className=" w-[90%] md:w-[400px] p-6 rounded shadow-md">
-        <div className="flex items-center mb-4">
+    <div className="text-sm fixed inset-0 flex items-center justify-center z-50 backdrop-blur-md">
+      <div className=" w-[90%] md:w-[400px] p-6 rounded">
+        <div className="flex items-center mb-6">
           <RiCloseLine
             className="cursor-pointer text-xl  bg-[#D9D9D9] rounded-full mr-3"
             onClick={onClose}
           />
-          <h2 className="text-xl  text-white font-bold">Send</h2>
+          <h2 className="text-lg text-white font-bold">Send</h2>
         </div>
-        <div className="">
-          <h2>From</h2>
-          <div className="flex justify-between bg-[#363636] p-2">
+        <div className="text-white">
+          <h2 className="mb-2">From</h2>
+          <div className="flex rounded-lg justify-between bg-[#363636] p-2">
             <img
               src={AccountIcon}
               alt="homeicon"
               className="w-10 h-10 rounded-full "
             />
 
-            <div className="text-white">
+            <div className="text-white mr-24">
               <p>Account 1</p>
-              <p>0xfdkda823dsddsdd323</p>
+              <p className="text-[13px]">0xfdk2....dds323</p>
             </div>
-            <IoIosArrowDown className="font-bold text-base text-white ml-2" />
+            <IoIosArrowDown className="font-bold cursor-pointer text-base text-white ml-2" />
           </div>
         </div>
-        <div>
-          <h2>To</h2>
+        <div className="text-white mt-8 ">
+          <h2 className="mb-2">To</h2>
           <div>
             <input
               type="text"
               placeholder="Enter public address (0x) or domain name"
-              className="bg-transparent border p-3 rounded-md border-border"
+              className="bg-transparent border p-2 rounded-md border-border w-full placeholder:text-sm"
             />
           </div>
         </div>
-        
 
-        
-        {message && <p className="text-red-500 text-sm">{message}</p>}
-        <div className="flex justify-end mt-4">
-          <button
-            onClick={handleSend}
-            disabled={loading}
-            className="bg-blue-500 text-white px-4 py-2 rounded disabled:opacity-50"
-          >
-            {loading ? "Sending..." : "Send"}
+        <div className="mt-4">
+          <header className="flex gap-6 cursor-pointer mb-3">
+            <p
+              className={`${
+                activeTab === "account"
+                  ? "text-violet-500 border-b-2 border-violet-500"
+                  : "text-white"
+              } px-3 pb-1.5`}
+              onClick={() => setActiveTa("account")}
+            >
+              Your account
+            </p>
+            <p
+              className={`${
+                activeTab === "contact"
+                  ? "text-violet-500 border-b-2 border-violet-500 "
+                  : "text-white"
+              } px-3 pb-1.5`}
+              onClick={() => setActiveTa("contact")}
+            >
+              {" "}
+              Contacts
+            </p>
+          </header>
+          {activeTab === "account" && (
+            <div className="flex flex-col gap-2">
+              <div className="flex rounded-lg justify-around p-2 hover:border hover:bg-gray-800">
+                <div className="flex gap-3">
+                  <img
+                    src={AccountIcon}
+                    alt="homeicon"
+                    className="w-10 h-10 rounded-full "
+                  />
+
+                  <div className="text-white mr-24">
+                    <p>Account 1</p>
+                    <p className="text-[13px]">0xfdk2....dds323</p>
+                  </div>
+                </div>
+
+                <div className="text-white flex flex-col gap-1">
+                  <div className="flex gap-1">
+                    <div className="">$0.00</div>{" "}
+                    <div className="text-[10px] mt-[3px]">USD</div>
+                  </div>
+                  <div className="flex gap-1">
+                    <img src={ethIcon} alt="" className="h-[20px] w-[10px]" />{" "}
+                    <div className="text-sm">0 ETH</div>
+                  </div>
+                </div>
+              </div>
+              <div className="flex rounded-lg justify-around p-2 hover:border hover:bg-gray-800">
+                <div className="flex gap-3">
+                  <img
+                    src={AccountIcon}
+                    alt="homeicon"
+                    className="w-10 h-10 rounded-full "
+                  />
+
+                  <div className="text-white mr-24">
+                    <p>Account 1</p>
+                    <p className="text-[13px]">0xfdk2....dds323</p>
+                  </div>
+                </div>
+
+                <div className="text-white flex flex-col gap-1">
+                  <div className="flex gap-1">
+                    <div className="">$0.00</div>{" "}
+                    <div className="text-[10px] mt-[3px]">USD</div>
+                  </div>
+                  <div className="flex gap-1">
+                    <img src={ethIcon} alt="" className="h-[20px] w-[10px]" />{" "}
+                    <div className="text-sm">0 ETH</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+          {activeTab === "contact" && <div>Contacts here</div>}
+        </div>
+
+        <div className="mt-10 flex justify-around">
+          <button className="text-violet-500 border border-border rounded-full p-3 px-11 hover:bg-[#363636]">
+            Cancel
+          </button>
+          <button className="text-violet-500 border border-border rounded-full p-3 px-11 bg-[#363636]">
+            Continue
           </button>
         </div>
       </div>
