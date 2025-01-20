@@ -14,7 +14,6 @@ const SuccessPage = () => {
       // Save password in local storage
       savePassword(password);
       (() => navigate(`/view-balance?address=${walletAddress}`))();
-      return;
     }
   }
 

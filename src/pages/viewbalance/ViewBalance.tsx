@@ -51,10 +51,10 @@ const ViewBalance = () => {
           localStorage.getItem("accounts") ?? "[]"
         );
         console.log("storedAccounts", storedAccounts);
-        const selectedAddress = storedAccounts[selectedAccountIndex];
-        console.log("selectedAddress", selectedAddress);
+        // const selectedAddress = storedAccounts[selectedAccountIndex];
+        // console.log("selectedAddress", selectedAddress);
         const ethBalance = await getBalance(
-          selectedAddress,
+          address,
           networks[currentNetwork].chainId,
           networks[currentNetwork].rpcUrl
         );
@@ -78,7 +78,7 @@ const ViewBalance = () => {
       }
     };
     fetchBalanceAndConvert();
-  }, [address, currentNetwork, selectedAccountIndex]);
+  }, [address, currentNetwork, selectedAccountIndex, balance, usdBalance]);
 
   const handleOpenSendModal = () => {
     setIsSendModalOpen(true);
