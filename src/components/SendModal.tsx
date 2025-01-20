@@ -3,11 +3,6 @@ import { getContacts, getPrivateKey, sendEther } from "../utils/utils";
 import { RiCloseLine } from "react-icons/ri";
 import AccountIcon from "../assets/Account icon.png";
 import ethIcon from "../assets/ETH stroke icon.png";
-<<<<<<< HEAD
-import { useNavigate } from "react-router-dom";
-import { toast } from "sonner";
-=======
->>>>>>> 6f510628e9a28292ec5fbf85f08c729cff8e3d6d
 
 interface SendModalProps {
   isOpen: boolean;
@@ -20,13 +15,6 @@ const SendModal: React.FC<SendModalProps> = ({
   onClose,
   walletAddress,
 }) => {
-<<<<<<< HEAD
-
-  const navigate = useNavigate();
-
-  console.log(walletAddress, "walletAddress"); //for now we are just testing with one walletAddress, we have to use this to store privatekeys
-=======
->>>>>>> 6f510628e9a28292ec5fbf85f08c729cff8e3d6d
   const [recipient, setRecipient] = useState("");
   const [amount, setAmount] = useState("");
   const [token, setToken] = useState("ETH"); // Default token
