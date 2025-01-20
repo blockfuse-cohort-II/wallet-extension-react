@@ -177,7 +177,7 @@ const SendModal: React.FC<SendModalProps> = ({
                   />
 
                   <div className="text-white mr-24">
-                    <p>Account 1</p>
+                    <p>Account 2</p>
                     <p className="text-[13px]">0xfdk2....dds323</p>
                   </div>
                 </div>
