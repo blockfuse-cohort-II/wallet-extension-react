@@ -10,7 +10,7 @@ const WelcomePage = () => {
     const walletAddress = getDecryptedWalletAddress();
     if (walletAddress) {
       navigate(`/view-balance?address=${walletAddress}`);
-    }
+    } 
   });
   return (
     <div className="relative p-5 h-full w-full flex flex-col items-center justify-center text-white">
