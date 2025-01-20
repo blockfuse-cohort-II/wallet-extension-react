@@ -45,7 +45,6 @@ console.log(mnemonic)
         <div className="mt-3 border grow w-full h-auto rounded-lg border-gray-500">
           {/* {mnemonic.wordlist} */}
         </div>
-
         <Link to="/verify-seed">
           <button className="w-full mt-3 p-3 bg-[#E6E6E6] rounded-full text-[#1A1A1A] font-poppins">
             Ok, I saved it somewhere safe

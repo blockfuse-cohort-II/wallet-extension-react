@@ -8,7 +8,7 @@ import Search from "../../components/icons/Search";
 const Transactions = () => {
     return (
       <div className="text-white/50 p-10">
-          <div className="flex gap-2 bg-white/5 px-4 py-2 rounded-lg"><Search /><div></div><input type="search" placeholder="Search..." className="text-white/50 bg-transparent outline-0 border-0"/></div>
+          <div className="flex gap-2 bg-white/5 px-4 py-2 rounded-lg"><Search /><div></div><input type="" placeholder="Search..." className="text-white/50 bg-transparent outline-0 border-0"/></div>
           <div>
             <h3 className="py-3">November</h3>
   

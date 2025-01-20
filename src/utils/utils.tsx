@@ -163,3 +163,27 @@ export const persistEncryptedWalletAddress = (address: string) => {
 export const clearEncryptedWallletAddress = () => {
   localStorage.clear();
 };
+
+export const savePrivateKey = async (privateKey: string) => {
+  localStorage.setItem("privateKey", privateKey);
+}
+
+export const getPrivateKey = async () => {
+  const privateKey = localStorage.getItem("privateKey");
+  if (privateKey) {
+    return privateKey;
+  }
+  return '';
+}
+
+export const saveMnemonic = async (mnemonic: string) => {
+  localStorage.setItem("mnemonic", mnemonic);
+}
+
+export const getMnemonic = async () => {
+  const mnemonic = localStorage.getItem("mnemonic");
+  if (mnemonic) {
+    return mnemonic;
+  }
+  return '';
+}
