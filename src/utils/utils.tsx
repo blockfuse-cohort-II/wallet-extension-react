@@ -1,5 +1,6 @@
 import { ethers, TransactionResponse ,Mnemonic} from "ethers";
 import { HDNode } from "@ethersproject/hdnode";
+import { Alchemy, Network } from "alchemy-sdk";
 
 interface Contact {
   name: string;
@@ -204,6 +205,36 @@ export const getTokens = async (network_name: string) => {
       console.log("----------------------------------");
     }
     return results;
+}
+
+export const getNfts = async (network_name: string) => {
+  const config = {
+    apiKey: "alcht_bOZV7tenTgYPT9vyuBsOdSiE0WsuiL",
+    network: alchemyNetworks[network_name],
+  };
+  const alchemy = new Alchemy(config);
+
+  // Wallet address -- replace with your desired address
+  let address = getDecryptedWalletAddress();
+  if (!address) {
+    throw new Error("Wallet address not found");
+  }
+
+  // Get all NFTs
+  const nfts = await alchemy.nft.getNftsForOwner(address);
+
+  // Parse output
+  const numNfts = nfts["totalCount"];
+  const nftList = nfts["ownedNfts"];
+
+  console.log(`Total NFTs owned by ${address}: ${numNfts} \n`);
+
+  let i = 1;
+
+  for (let nft of nftList) {
+    console.log(`${i}. ${nft}`);
+    i++;
+  }
 }
 
 export const getMnemonic = () => {
