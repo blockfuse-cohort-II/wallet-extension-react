@@ -44,7 +44,7 @@ const GenerateSeed = () => {
           ))}
         </div>
 
-          <Link to=''>
+          <Link to='/success-page'>
         <button className="w-full mt-3 p-3 bg-[#E6E6E6] rounded-full text-[#1A1A1A] font-poppins">
           Ok, I saved it somewhere safe
         </button>
