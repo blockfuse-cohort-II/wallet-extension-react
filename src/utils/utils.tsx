@@ -17,11 +17,11 @@ export function validatePassword(password: string): boolean {
   return localStorage.getItem("password") === password;
 }
 
-export function generateSeedPhrase(): string {
+/*export function generateSeedPhrase(): string {
   const wallet = ethers.Wallet.createRandom();
   if (!wallet.mnemonic) throw new Error("Failed to generate mnemonic");
   return wallet.mnemonic.phrase;
-}
+}*/
 
 export function getAddressFromSeedPhrase(seedPhrase: string): string {
   const wallet = ethers.Wallet.fromPhrase(seedPhrase);
@@ -261,3 +261,56 @@ export const deleteContact = (address: string): void => {
   const contacts = getContacts().filter((c) => c.address !== address);
   localStorage.setItem("contacts", JSON.stringify(contacts));
 };
+
+export function createHDWallet(
+  seedPhrase: string,
+  path: string = "m/44'/60'/0'/0/0"
+): ethers.Wallet {
+  const isValid = Mnemonic.isValidMnemonic(seedPhrase)
+  if (!isValid){
+    throw  Error('Not a valid seed phrase')
+  }
+  const hdNode = HDNode.fromMnemonic(seedPhrase, path);
+  const derivedNode = hdNode.derivePath(path);
+  return new ethers.Wallet(derivedNode.privateKey);
+}
+export function createAccountFromHDNode(
+  seedPhrase: string,
+  accountIndex: number
+): ethers.Wallet {
+  const path = `m/44'/60'/0'/0/${accountIndex}`;
+  return createHDWallet(seedPhrase, path);
+}
+export function getWalletFromSeedPhrase(seedPhrase: string): {
+  address: string;
+  privateKey: string;
+} {
+  const wallet = ethers.Wallet.fromPhrase(seedPhrase);
+  return wallet;
+}
+export function getAddressFromPrivateKey(privateKey: string): ethers.Wallet {
+  const wallet = new ethers.Wallet(privateKey);
+  return wallet;
+}
+
+export function generateSeedPhrase(): ethers.Mnemonic {
+  const wallet = ethers.Wallet.createRandom();
+  if (!wallet.mnemonic) throw new Error("Failed to generate mnemonic");
+  return wallet.mnemonic;
+}
+
+export const saveMnemonic = async (mnemonic: string) => {
+  localStorage.setItem("mnemonic", mnemonic);
+}
+
+export const savePrivateKey = async (privateKey: string) => {
+  localStorage.setItem("privateKey", privateKey);
+}
+
+export const getPrivateKey = async () => {
+  const privateKey = localStorage.getItem("privateKey");
+  if (privateKey) {
+    return privateKey;
+  }
+  return '';
+}
