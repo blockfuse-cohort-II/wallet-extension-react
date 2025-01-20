@@ -1,7 +1,7 @@
 import { useState } from "react";
-import BackArrow from "../../components/icons/BackArrow";
 import { useNavigate } from "react-router-dom";
 import { getDecryptedWalletAddress, validatePassword } from "../../utils/utils";
+import { toast } from "sonner";
 
 const Login = () => {
   const [password, setPassword] = useState("");
@@ -13,6 +13,9 @@ const Login = () => {
     if (validatePassword(password)) {
       (() => navigate(`/view-balance?address=${walletAddress}`))();
       return;
+    }
+    else {
+      toast.info("Incorrect password.");
     }
   }
   return (
