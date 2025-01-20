@@ -1,10 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BsEye, BsEyeSlash } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import { generateSeedPhrase } from '../../../utils/utils';
 
 const GenerateSeed = () => {
-  const mnemonic = generateSeedPhrase();
+  const [seedPhrase, setSeedPhrase] = useState<string[]>();
   const [visibility, setVisibility] = useState(
     Array.from({ length: 12 }, () => false)
   );
@@ -15,7 +15,13 @@ const GenerateSeed = () => {
       return newVisibility;
     });
   };
-console.log(mnemonic) 
+
+  useEffect(() => {
+    if(seedPhrase?.length === 12) return;
+    const mnemonic = generateSeedPhrase();
+    setSeedPhrase(mnemonic.phrase.split(' '));
+  }, [seedPhrase]);
+
   return (
     <div className="h-full overflow-auto no-scrollbar  py-4 px-4">
       <header className="flex items-center font-medium font-poppins gap-3 text-white">
@@ -43,8 +49,24 @@ console.log(mnemonic)
         </p>
 
         <div className="mt-3 border grow w-full h-auto rounded-lg border-gray-500">
-          {/* {mnemonic.wordlist} */}
+          {seedPhrase?.map((value, index) => (
+            <div
+              className={`p-3 ${
+                index < 11 && "border-b"
+              }  border-b-gray-500 w-full flex justify-between items-center font-poppins`}
+              key={value + index}
+            >
+              <div className="inline-flex gap-2">
+                <p>{index + 1}.</p>
+                <p>{visibility[index] ? value : "******"}</p>
+              </div>
+              <button onClick={() => toggleVisibility(index)}>
+                {visibility[index] ?  <BsEye /> : <BsEyeSlash />}
+              </button>
+            </div>
+          ))}
         </div>
+
         <Link to="/verify-seed">
           <button className="w-full mt-3 p-3 bg-[#E6E6E6] rounded-full text-[#1A1A1A] font-poppins">
             Ok, I saved it somewhere safe

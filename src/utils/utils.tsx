@@ -24,15 +24,6 @@ export function createHDWallet(
   return new ethers.Wallet(derivedNode.privateKey);
 }
 
-export function generateHDWallet(): {
-  seedPhrase: string;
-  wallet: ethers.Wallet;
-} {
-  const seedPhrase = generateSeedPhrase();
-  const wallet = createHDWallet(seedPhrase.phrase);
-  return { seedPhrase: seedPhrase.phrase, wallet };
-}
-
 export function createAccountFromHDNode(
   seedPhrase: string,
   accountIndex: number
