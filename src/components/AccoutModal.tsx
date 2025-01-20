@@ -9,6 +9,7 @@ import {
   getMnemonic,
   getBalance,
 } from "../utils/utils";
+import { useNavigate } from "react-router-dom";
 
 interface PropsSelectNetwork {
   isOpen: boolean;
@@ -21,10 +22,11 @@ const AccountModal: React.FC<PropsSelectNetwork> = ({
   address,
   setIsAccountModalOpen,
 }) => {
+  const navigate = useNavigate();
   const [accounts, setAccounts] = useState<string[]>([]);
   const [accountBalances, setAccountBalances] = useState<{
     [key: number]: string;
-  }>({}); // Store balances per account
+  }>({});
   const [accountsIndex, setAccountsIndex] = useState<number>(() => {
     return parseInt(localStorage.getItem("selectedAccountIndex") ?? "0");
   });
@@ -57,9 +59,10 @@ const AccountModal: React.FC<PropsSelectNetwork> = ({
     setIsAccountModalOpen(!isOpen);
   };
 
-  const handleAccountSelect = (index: number) => {
+  const handleAccountSelect = (index: number, account: string) => {
     setAccountsIndex(index);
     localStorage.setItem("selectedAccountIndex", index.toString());
+    navigate(`/view-balance?address=${account}`);
   };
 
   const handleAddAccount = () => {
@@ -127,7 +130,7 @@ const AccountModal: React.FC<PropsSelectNetwork> = ({
               className={`flex flex-row items-center h-15 px-2 py-2 rounded-sm justify-between ${
                 index === accountsIndex ? "bg-gray-700" : ""
               }`}
-              onClick={() => handleAccountSelect(index)}
+              onClick={() => handleAccountSelect(index, account)}
             >
               <div className="flex flex-row items-center">
                 {/* Account image */}
@@ -154,7 +157,7 @@ const AccountModal: React.FC<PropsSelectNetwork> = ({
               <div className="flex">
                 <div className="flex flex-col items-end mr-2">
                   <p className="font-poppins text-base">{`$ ${parseFloat(
-                    accountBalances[index] || "0"
+                   "0"
                   ).toFixed(2)} USD`}</p>
                   <div className="flex flex-row items-center justify-between">
                     <img
