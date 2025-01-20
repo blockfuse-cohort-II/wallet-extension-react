@@ -7,6 +7,7 @@ import SuccessPage from "./pages/onboarding/succes-page";
 import VerifySeed from "./pages/onboarding/verify-seed";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Toaster } from "sonner";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="/success-page" element={<SuccessPage />} /> 
       </Routes>
       <ToastContainer />
+      <Toaster position="top-center" richColors />
     </div>
   );
 }

@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import { BsEye, BsEyeSlash } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import { generateSeedPhrase } from "../../../utils/utils";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
+// import { toast } from "react-toastify";
 
 const GenerateSeed = () => {
   const [seedPhrase, setSeedPhrase] = useState<string[]>();
@@ -85,16 +86,13 @@ const GenerateSeed = () => {
           className="w-full mt-3 p-3 bg-violet-500 rounded-full text-white font-poppins"
           onClick={() => {
             navigator.clipboard.writeText(seedPhrase?.join(" ") as string);
-            toast.success("Seed phrase copied to clipboard", {
-              position: "top-center",
-              autoClose: 1500,
-            });
+            toast.success("Seed phrase copied to clipboard");
           }}
         >
           Copy To Clipboard
         </button>
         <Link to="/verify-seed">
-          <button className="w-full mt-8 p-3 bg-[#E6E6E6] rounded-full text-[#1A1A1A] font-poppins">
+          <button className="w-full mt-2 p-3 bg-[#E6E6E6] rounded-full text-[#1A1A1A] font-poppins">
             Ok, I saved it somewhere safe
           </button>
         </Link>

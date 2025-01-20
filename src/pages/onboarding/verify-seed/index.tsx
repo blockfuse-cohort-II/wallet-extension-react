@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { BsEye, BsEyeSlash } from "react-icons/bs";
-import { toast } from "react-toastify";
+// import { toast } from "react-toastify";
 import {
   createHDWallet,
   getWalletFromSeedPhrase,
@@ -8,6 +8,7 @@ import {
   saveMnemonic,
 } from "../../../utils/utils";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import { toast } from "sonner";
 
 const VerifySeed = () => {
   const navigate = useNavigate();
@@ -42,10 +43,7 @@ const VerifySeed = () => {
     if (words.length === 12) {
       setSeedPhrase(words);
     } else {
-      toast.info("Please paste exactly 12 words separated by spaces.", {
-        position: "top-center",
-        autoClose: 1500,
-      });
+      toast.info("Please paste exactly 12 words separated by spaces.");
     }
   };
   const [searchParams] = useSearchParams();
@@ -83,8 +81,7 @@ const VerifySeed = () => {
           {!isImported ? "Verify" : "Input"} Recovery Phrase
         </h2>
         <p className="font-inter text-gray-400">
-          Please verify each word carefully and
-          store it securely.
+          Please verify each word carefully and store it securely.
         </p>
       </div>
 
@@ -119,7 +116,7 @@ const VerifySeed = () => {
             if (!isImported) {
               const wallet = createHDWallet(seedPhrase.join(" "));
               if (wallet.address) {
-                persistEncryptedWalletAddress(wallet.address)
+                persistEncryptedWalletAddress(wallet.address);
                 saveMnemonic(seedPhrase.join(" "));
                 navigate("/success-page");
               }
@@ -127,13 +124,10 @@ const VerifySeed = () => {
             }
             const wallet = getWalletFromSeedPhrase(seedPhrase.join(" "));
             if (!wallet.address) {
-              toast.error("invalid seed phrase", {
-                autoClose: 1500,
-                position: "top-center",
-              });
+              toast.error("invalid seed phrase");
             }
-            persistEncryptedWalletAddress(wallet.address)
-            saveMnemonic(seedPhrase.join(' '))
+            persistEncryptedWalletAddress(wallet.address);
+            saveMnemonic(seedPhrase.join(" "));
             navigate("/success-page");
           } catch (error) {
             toast.error((error as Error).message);
