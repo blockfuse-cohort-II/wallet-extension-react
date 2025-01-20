@@ -99,30 +99,35 @@ export interface NetworkConfig {
   symbol?: string;
 }
 
-const defaultNetworks: Record<string, NetworkConfig & { symbol: string }> = {
+const defaultNetworks: Record<string, NetworkConfig & { symbol: string; ticker: string }> = {
   mainnet: {
     name: "Ethereum Mainnet",
     rpcUrl: "https://mainnet.infura.io/v3/1cef973dff844ba09dea342050cd5967",
     chainId: 1,
     symbol: "\u039E",
+    ticker: "USD",
   },
   polygon: {
     name: "Polygon Mainnet",
     rpcUrl: "https://polygon-rpc.com",
     chainId: 137,
     symbol: "\u039E",
+    ticker: "USD",
+
   },
   bsc: {
     name: "Binance Smart Chain",
     rpcUrl: "https://bsc-dataseed.binance.org/",
     chainId: 56,
     symbol: "\u0024",
+    ticker: "ETH",
   },
   sepolia: {
     name: "Sepolia Testnet",
     rpcUrl: "https://sepolia.infura.io/v3/1cef973dff844ba09dea342050cd5967",
     chainId: 11155111,
     symbol: "\u039E",
+    ticker: "SepoliaETH",
   },
 };
 
@@ -138,6 +143,7 @@ export function addCustomNetwork(
     rpcUrl,
     chainId,
     symbol: "\u039E",
+    ticker: "ETH",
   };
 }
 
@@ -157,7 +163,7 @@ export const persistEncryptedWalletAddress = (address: string) => {
   localStorage.setItem("encryptedWalletAddress", address);
 };
 
-export const clearEncryptedWallletAddress = () => {
+export const clearStore = () => {
   localStorage.clear();
 };
 
@@ -177,7 +183,7 @@ export const saveMnemonic = async (mnemonic: string) => {
   localStorage.setItem("mnemonic", mnemonic);
 }
 
-export const getMnemonic = async () => {
+export const getMnemonic = () => {
   const mnemonic = localStorage.getItem("mnemonic");
   if (mnemonic) {
     return mnemonic;

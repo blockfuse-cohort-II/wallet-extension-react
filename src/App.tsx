@@ -4,7 +4,7 @@ import ViewBalance from "./pages/viewbalance/ViewBalance";
 import GenerateSeed from "./pages/onboarding/generate-seed";
 import Transactions from "./pages/transactions";
 import SuccessPage from "./pages/onboarding/succes-page";
-import VerifySeed from "./pages/onboarding/verify-seed";
+import VerifySeed from "./pages/verify-seed";
 import Login from "./pages/login";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
