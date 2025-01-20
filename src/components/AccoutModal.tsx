@@ -177,7 +177,6 @@ const AccountModal: React.FC<PropsSelectNetwork> = ({
                     </h2>
                   </div>
                 </div>
-                <IoMdMore className="font-bold text-xl" />
               </div>
             </button>
           ))}
