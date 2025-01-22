@@ -3,6 +3,7 @@ import { IoCopy } from "react-icons/io5";
 import logo from "../assets/logo2.png";
 import AccountIcon from "../assets/Account icon.png";
 import { useState } from "react";
+import { getSelectedAccountPrivateKey } from "../utils/utils";
 
 interface AccountDetailsProps {
   isOpen: boolean;
@@ -17,9 +18,8 @@ const AccountDetails: React.FC<AccountDetailsProps> = ({
   walletAddress,
   index,
 }: AccountDetailsProps) => {
+  const privateKey = getSelectedAccountPrivateKey();
   const [showKey, setShowKey] = useState(false);
-  const keys = JSON.parse(localStorage.getItem("privateKey") ?? "[]");
-  const privateKey = keys[index - 1];
   if (!isOpen) return null;
   return (
     <div className="fixed text-sm inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 backdrop-blur-md">

@@ -4,7 +4,7 @@ import { IoIosArrowDown, IoMdMore } from "react-icons/io";
 import { BiCopy } from "react-icons/bi";
 import { LuCopyCheck } from "react-icons/lu";
 import { useNavigate } from "react-router-dom";
-import {  getNetwork, getSelectedNetwork } from "../utils/utils";
+import {  getNetwork, getSelectedNetwork, retrieveData } from "../utils/utils";
 import useOutsideClick from "../hooks/use-outside-click";
 import AccountDetails from "./AccountDetails";
 
@@ -29,12 +29,12 @@ const Header: React.FC<PropsSelectNetwork> = ({
   const dropdownRef = useOutsideClick(() => setShowMenu(false));
 
   useEffect(() => {
-    const storedAccounts = JSON.parse(localStorage.getItem("accounts") ?? "[]");
+    const storedAccounts = retrieveData('accounts');
     const selectedIndex = parseInt(
       localStorage.getItem("selectedAccountIndex") ?? "0"
     );
     if (storedAccounts.length > 0) {
-      setCurrentAccount(storedAccounts[selectedIndex]);
+      setCurrentAccount(storedAccounts[selectedIndex].address);
     }
   }, [isAccountModalOpen]);
 

@@ -10,8 +10,6 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Toaster } from "sonner";
 import Contacts from "./pages/contacts";
-// import SendModal from "./components/SendModalTwo";
-// import SendModalTwo from "./components/SendModalTwo";
 
 function App() {
   return (
@@ -25,7 +23,6 @@ function App() {
         <Route path="/success-page" element={<SuccessPage />} /> 
         <Route path="/login" element={<Login />} /> 
         <Route path="/contacts" element={<Contacts />} />
-        {/* <Route path="/send-modal2" element={<SendModalTwo/>} /> */}
       </Routes>
       <ToastContainer />
       <Toaster position="top-center" richColors />

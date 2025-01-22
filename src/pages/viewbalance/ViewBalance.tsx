@@ -8,7 +8,7 @@ import { useSearchParams } from "react-router-dom";
 import AccountModal from "../../components/AccoutModal";
 import {
   getBalance,
-  getDecryptedWalletAddress,
+  retrieveData,
   getSelectedNetwork,
   networks,
   getTokens,
@@ -16,27 +16,18 @@ import {
 import { RiLoader2Line } from "react-icons/ri";
 import SendModal from "../../components/SendModal";
 import ReceiveModal from "../../components/ReceiveModal";
-import SendModalTwo from "../../components/SendModalTwo";
+import { Assets } from "../../interfaces/interfaces";
 
 const ViewBalance = () => {
   const [searchParams] = useSearchParams();
-  const address =
-    searchParams.get("address") ?? getDecryptedWalletAddress() ?? "";
+  const address = searchParams.get("address") ?? "";
   const [isOpenNetworkTap, setIsOpenNetworkTap] = useState(false);
   const [priceChange, setPriceChange] = useState("0.00");
   const [balance, setBalance] = useState("0.00");
   const [loading, setLoading] = useState(false);
   const [isSendModalOpen, setIsSendModalOpen] = useState(false);
-  const [isSendModal2Open, setIsSendModal2Open] = useState(false);
   const [isReceiveModalOpen, setIsReceiveModalOpen] = useState(false);
-  interface Asset {
-    name: string;
-    quantity: number;
-    price: string;
-    change: number;
-  }
-
-  const [assets, setAssets] = useState<Asset[]>([]);
+  const [assets, setAssets] = useState<Assets[]>([]);
   const [isAccountModalOpen, setIsAccountModalOpen] = useState(false);
   const [selectedAccountIndex] = useState<number>(
     parseInt(localStorage.getItem("selectedAccountIndex") ?? "0")
@@ -50,9 +41,7 @@ const ViewBalance = () => {
       try {
         const tokens = await getTokens();
         setAssets(tokens);
-        const storedAccounts = JSON.parse(
-          localStorage.getItem("accounts") ?? "[]"
-        );
+        const storedAccounts = retrieveData("accounts");
         console.log("storedAccounts", storedAccounts);
         const ethBalance = await getBalance(
           address,
@@ -60,7 +49,6 @@ const ViewBalance = () => {
           networks[currentNetwork].rpcUrl
         );
         console.log("ethBalance", ethBalance);
-        console.log("balance1", balance);
         setBalance(parseFloat(ethBalance).toFixed(4));
         console.log("balance2", balance);
         const response = await fetch(
@@ -72,7 +60,7 @@ const ViewBalance = () => {
         const change = data.ethereum.usd_24h_change.toFixed(2);
         console.log("rate", rate);
         setUsdBalance((parseFloat(ethBalance) * rate).toFixed(2));
-        setPriceChange(change)
+        setPriceChange(change);
         console.log("usdBalance", usdBalance);
       } catch (error) {
         console.error("Error fetching balance:", error);
@@ -89,7 +77,6 @@ const ViewBalance = () => {
 
   const handleCloseSendModal = () => {
     setIsSendModalOpen(false);
-    setIsSendModal2Open(true)
   };
 
   const handleOpenReceiveModal = () => {
@@ -252,8 +239,6 @@ const ViewBalance = () => {
             address={address}
           />
         )}
-
-        <SendModalTwo isOpen={isSendModal2Open} onClose={() => setIsSendModal2Open(false)} walletAddress={address} />
       </div>
     </div>
   );
