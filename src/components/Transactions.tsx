@@ -1,12 +1,13 @@
-import ArrowDown from "../../components/icons/ArrowDown";
-import ArrowUp from "../../components/icons/ArrowUp";
-import Minus from "../../components/icons/Minus";
-import Plus from "../../components/icons/Plus";
-import Search from "../../components/icons/Search";
+import ArrowDown from "./icons/ArrowDown";
+import ArrowUp from "./icons/ArrowUp";
+import Minus from "./icons/Minus";
+import Plus from "./icons/Plus";
+import Search from "./icons/Search";
 
 const Transactions = () => {
   return (
     <div className="text-white/50 p-10">
+      <h3>Transactions</h3>
       <div className="flex gap-2 bg-white/5 px-4 py-2 rounded-lg">
         <Search />
         <div></div>

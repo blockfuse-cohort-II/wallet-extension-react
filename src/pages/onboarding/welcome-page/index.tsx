@@ -25,7 +25,7 @@ const WelcomePage = () => {
       </div>
 
       <div className="flex flex-col gap-3 w-full mt-auto">
-        <Link to="/create-wallet">
+        <Link to="/NFT">
           <button className="w-full p-3 bg-violet-500 rounded-full text-white font-poppins">
             Create a new wallet
           </button>
