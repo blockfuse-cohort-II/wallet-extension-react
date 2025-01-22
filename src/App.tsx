@@ -10,13 +10,13 @@ import "react-toastify/dist/ReactToastify.css";
 import { Toaster } from "sonner";
 import Contacts from "./pages/contacts";
 import ImportStrategy from "./pages/import-type";
-import PrivateKey from "./pages/import-type/PrivateKey";
+// import PrivateKey from "./pages/import-type/PrivateKey";
 // import SendModal from "./components/SendModalTwo";
 // import SendModalTwo from "./components/SendModalTwo";
 
 function App() {
   return (
-    <div className="h-full w-[375px] md:w-full">
+    <div className="h-full  overflow-auto no-scrollbar w-[375px] md:w-full">
       <Routes>
         <Route path="/" element={<WelcomePage />} />
         <Route path="/create-wallet" element={<GenerateSeed />} />
@@ -26,9 +26,6 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/contacts" element={<Contacts />} />
         <Route path="/import-wallet" element={<ImportStrategy />} />
-        <Route path="/private-key" element={<PrivateKey />} />
-
-        {/* <Route path="/send-modal2" element={<SendModalTwo/>} /> */}
       </Routes>
       <ToastContainer />
       <Toaster position="top-center" richColors />

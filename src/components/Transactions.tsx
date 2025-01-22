@@ -2,12 +2,12 @@ import ArrowDown from "./icons/ArrowDown";
 import ArrowUp from "./icons/ArrowUp";
 import Minus from "./icons/Minus";
 import Plus from "./icons/Plus";
-import Search from "./icons/Search";
+// import Search from "./icons/Search";
 
 const Transactions = () => {
   return (
-    <div className="text-white/50 p-10">
-      <h3>Transactions</h3>
+    <div className="text-white/50 h-full overflow-y-">
+      {/* <h3>Transactions</h3>
       <div className="flex gap-2 bg-white/5 px-4 py-2 rounded-lg">
         <Search />
         <div></div>
@@ -16,7 +16,7 @@ const Transactions = () => {
           placeholder="Search..."
           className="text-white/50 bg-transparent outline-0 border-0"
         />
-      </div>
+      </div> */}
       <div>
         <h3 className="py-3">November</h3>
 
