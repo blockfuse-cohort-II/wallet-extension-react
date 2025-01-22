@@ -24,7 +24,7 @@ const SendModal: React.FC<SendModalProps> = ({
   const handleSend = async () => {
     if (!recipient || !amount) {
       setMessage("Please enter recipient address and amount.");
-      return;
+      return;w
     }
 
     setLoading(true);
