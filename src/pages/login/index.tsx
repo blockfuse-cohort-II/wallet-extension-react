@@ -2,6 +2,9 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getDecryptedWalletAddress, validatePassword } from "../../utils/utils";
 import { toast } from "sonner";
+import { Link } from "react-router-dom";
+import logo from "../../assets/logo2.png"
+import { clearStore } from "../../utils/utils";
 
 const Login = () => {
   const [password, setPassword] = useState("");
@@ -18,10 +21,17 @@ const Login = () => {
       toast.info("Incorrect password.");
     }
   }
+
+  
+  const forgotPassword = () =>{
+    clearStore();
+    navigate("/verify-seed?type=import")
+  }
+
   return (
     <div className="p-6">
       <div className="flex gap-2">
-      <svg
+        <svg
           width="20"
           height="20"
           viewBox="0 0 20 20"
@@ -39,28 +49,34 @@ const Login = () => {
         </svg>
         <p className="text-white font-semibold text-lg"></p>
       </div>
-      <h2 className="text-xl mb-2 mt-4 text-white font-poppins">Log in to your account</h2>
       <div className="min-h">
-      <form action="" className="items-center">
-        <div className="flex flex-col gap-2">
-          <label htmlFor="" className="text-white font-poppins pt-32">Password</label>
-          <input 
-            type="password" 
-            className="text-white/50 bg-white/5 outline-0 border-0 py-3 px-2 rounded-full"
-            value={password}
-            onChange={(e) =>
-              setPassword(e.target.value)
-            }/>
+        <div className="items-center">
+          <div className="mt-20"> <Link to="/"><img src={logo} width={40} height={40} alt="" className="m-auto" /></Link></div>
+          <h2 className="text-xl mt-4 text-white font-poppins text-center font-bold ">Unlock</h2>
+          <form action="" className="">
+            <div className="flex flex-col gap-2">
+              <label htmlFor="" className="text-white font-poppins pt-20">Password</label>
+              <input
+                type="password"
+                className="text-white/50 bg-white/5 outline-0 border-0 py-3 px-2 rounded-full"
+                value={password}
+                onChange={(e) =>
+                  setPassword(e.target.value)
+                } />
+            </div>
+
+            <button
+              className="w-full p-3 mt-8 bg-violet-500 rounded-full text-white font-poppins"
+              onClick={verifyPassword}>Unlock</button>
+          </form>
         </div>
 
-        <button 
-        className="w-full p-3 mt-8 bg-violet-500 rounded-full text-white font-poppins"
-        onClick={verifyPassword}>Continue</button>
-      </form>
       </div>
-     
+
+      <div className="text-xs font-poppins mt-10 text-center text-white hover:text-violet-500"><button onClick={forgotPassword}>Forgot password?</button></div>
+
     </div>
   )
 }
 
-export default Login
+export default Login;
