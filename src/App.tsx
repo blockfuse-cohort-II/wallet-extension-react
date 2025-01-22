@@ -10,6 +10,8 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Toaster } from "sonner";
 import Contacts from "./pages/contacts";
+import ImportStrategy from "./pages/import-type";
+import PrivateKey from "./pages/import-type/PrivateKey";
 // import SendModal from "./components/SendModalTwo";
 // import SendModalTwo from "./components/SendModalTwo";
 
@@ -21,10 +23,13 @@ function App() {
         <Route path="/create-wallet" element={<GenerateSeed />} />
         <Route path="/view-balance" element={<ViewBalance />} />
         <Route path="/verify-seed" element={<VerifySeed />} />
-        <Route path="/transactions" element={<Transactions />} /> 
-        <Route path="/success-page" element={<SuccessPage />} /> 
-        <Route path="/login" element={<Login />} /> 
+        <Route path="/transactions" element={<Transactions />} />
+        <Route path="/success-page" element={<SuccessPage />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/contacts" element={<Contacts />} />
+        <Route path="/import-wallet" element={<ImportStrategy />} />
+        <Route path="/private-key" element={<PrivateKey />} />
+
         {/* <Route path="/send-modal2" element={<SendModalTwo/>} /> */}
       </Routes>
       <ToastContainer />
