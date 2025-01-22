@@ -4,7 +4,7 @@ import { IoIosArrowDown, IoMdMore } from "react-icons/io";
 import { BiCopy } from "react-icons/bi";
 import { LuCopyCheck } from "react-icons/lu";
 import { useNavigate } from "react-router-dom";
-import {  getNetwork, getSelectedNetwork, retrieveData } from "../utils/utils";
+import { getNetwork, getSelectedNetwork, retrieveData } from "../utils/utils";
 import useOutsideClick from "../hooks/use-outside-click";
 import AccountDetails from "./AccountDetails";
 
@@ -29,7 +29,7 @@ const Header: React.FC<PropsSelectNetwork> = ({
   const dropdownRef = useOutsideClick(() => setShowMenu(false));
 
   useEffect(() => {
-    const storedAccounts = retrieveData('accounts');
+    const storedAccounts = retrieveData("accounts");
     const selectedIndex = parseInt(
       localStorage.getItem("selectedAccountIndex") ?? "0"
     );
@@ -47,13 +47,6 @@ const Header: React.FC<PropsSelectNetwork> = ({
       setIsCopied(true);
       setTimeout(() => setIsCopied(false), 2000);
     });
-  };
-
-  const handleLogout = () => {
-    // const password = localStorage.getItem("password");
-    // clearStore();
-    // localStorage.setItem("password", password ?? "");
-    navigate("/login");
   };
 
   const handleOpenAccountModal = () => {
@@ -133,12 +126,18 @@ const Header: React.FC<PropsSelectNetwork> = ({
           } absolute top-[100%] right-0 w-[120px] py-4 border bg-background  shadow-lg border-gray-600 rounded-md flex flex-col text-white px-3 cursor-pointer  `}
           ref={dropdownRef as React.RefObject<HTMLDivElement>}
         >
-          <span onClick={() => setAccountDetailsModalOpen(true)} className="font-poppins hover:text-violet-500 transition-all duration-200 ease-linear">
+          <span
+            onClick={() => setAccountDetailsModalOpen(true)}
+            className="font-poppins hover:text-violet-500 transition-all duration-200 ease-linear"
+          >
             Account Details
           </span>
 
-          <span onClick={handleLogout} className="mt-2 font-poppins hover:text-violet-500 transition-all duration-200 ease-linear">
-            Logout
+          <span
+            onClick={() => navigate("/login")}
+            className="mt-2 font-poppins hover:text-violet-500 transition-all duration-200 ease-linear"
+          >
+            Lock Wallet
           </span>
         </div>
       </div>
@@ -146,7 +145,9 @@ const Header: React.FC<PropsSelectNetwork> = ({
       <AccountDetails
         isOpen={accountDetailsModalOpen}
         onClose={() => setAccountDetailsModalOpen(false)}
-        index={parseInt(localStorage.getItem("selectedAccountIndex") ?? "0") + 1}
+        index={
+          parseInt(localStorage.getItem("selectedAccountIndex") ?? "0") + 1
+        }
         walletAddress={currentAccount}
       />
     </div>
