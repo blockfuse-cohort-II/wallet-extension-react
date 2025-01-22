@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getContacts, getPrivateKey, sendEther } from "../utils/utils";
+import { getContacts, getPrivateKey, getSelectedNetworkConfig, sendEther } from "../utils/utils";
 import { RiCloseLine } from "react-icons/ri";
 import AccountIcon from "../assets/Account icon.png";
 import ethIcon from "../assets/ETH stroke icon.png";
@@ -30,22 +30,25 @@ const SendModal: React.FC<SendModalProps> = ({
     setLoading(true);
     setMessage("");
     try {
-      const selectedNetwork =
-        localStorage.getItem("selectedNetwork") ?? "sepolia";
-      const networks: { [key: string]: { rpcUrl: string; chainId: number } } = {
-        sepolia: {
-          rpcUrl:
-            "https://sepolia.infura.io/v3/1cef973dff844ba09dea342050cd5967",
-          chainId: 11155111,
-        },
-      };
-      const network = networks[selectedNetwork as keyof typeof networks];
+      console.log('we got here')
+      // const selectedNetwork =
+      //   localStorage.getItem("selectedNetwork") ?? "sepolia";
+      // const networks: { [key: string]: { rpcUrl: string; chainId: number } } = {
+      //   sepolia: {
+      //     rpcUrl:
+      //       "https://sepolia.infura.io/v3/1cef973dff844ba09dea342050cd5967",
+      //     chainId: 11155111,
+      //   },
+      // };
+      const network = getSelectedNetworkConfig();
       if (!network) throw new Error("Network configuration missing!");
 
       const providerUrl = network.rpcUrl;
       const chainId = network.chainId;
+      console.log(providerUrl, chainId, "providerUrl, chainId");
 
       const privateKey = await getPrivateKey();
+      console.log(privateKey, "tis good")
 
       const transaction = await sendEther(
         privateKey,

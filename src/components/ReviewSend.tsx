@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getContacts, getPrivateKey, sendEther } from "../utils/utils";
+import { getContacts, getPrivateKey, getSelectedNetworkConfig, sendEther } from "../utils/utils";
 import { RiCloseLine } from "react-icons/ri";
 import AccountIcon from "../assets/Account icon.png";
 import ethIcon from "../assets/ETH stroke icon.png";
@@ -41,6 +41,9 @@ const SendModal: React.FC<SendModalProps> = ({
     setContacts(contactsList);
   }, []);
 
+
+  const network = getSelectedNetworkConfig();
+
   const handleSend = async () => {
     console.log(recipient, amount, "recipient, amount");
     if (!recipient || !amount) {
@@ -54,24 +57,27 @@ const SendModal: React.FC<SendModalProps> = ({
       const selectedNetwork =
         localStorage.getItem("selectedNetwork") ?? "sepolia";
       console.log(selectedNetwork, "selectednet");
-      const networks: { [key: string]: { rpcUrl: string; chainId: number } } = {
-        // mainnet: {
-        //   rpcUrl: "https://mainnet.infura.io/v3/1cef973dff844ba09dea342050cd5967",
-        //   chainId: 1,
-        // },
-        sepolia: {
-          rpcUrl:
-            "https://sepolia.infura.io/v3/1cef973dff844ba09dea342050cd5967",
-          chainId: 11155111,
-        },
-        // Add other networks here...
-      };
-      const network = networks[selectedNetwork as keyof typeof networks];
-      console.log(network, "network");
+      // const networks: { [key: string]: { rpcUrl: string; chainId: number } } = {
+      //   // mainnet: {
+      //   //   rpcUrl: "https://mainnet.infura.io/v3/1cef973dff844ba09dea342050cd5967",
+      //   //   chainId: 1,
+      //   // },
+      //   sepolia: {
+      //     rpcUrl:
+      //       "https://sepolia.infura.io/v3/1cef973dff844ba09dea342050cd5967",
+      //     chainId: 11155111,
+      //   },
+      //   // Add other networks here...
+      // };
+      // const network = networks[selectedNetwork as keyof typeof networks];
+      // console.log(network, "network");
+      const { rpcUrl, chainId, explorer } = network;
+      console.log(`Using network: ${network.name}, RPC: ${rpcUrl}, Explorer: ${explorer}`);
+
       if (!network) throw new Error("Network configuration missing!");
 
       const providerUrl = network.rpcUrl;
-      const chainId = network.chainId;
+      // const chainId = network.chainId;
 
       // Retrieve the encrypted private key from storage and decrypt it
       const privateKey = await getPrivateKey();
