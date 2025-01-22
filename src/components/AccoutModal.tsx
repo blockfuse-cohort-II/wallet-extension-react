@@ -12,6 +12,7 @@ import {
   persistData,
   generateSeedPhrase,
   createHDWallet,
+  saveMnemonic,
 } from "../utils/utils";
 import { useNavigate } from "react-router-dom";
 
@@ -79,6 +80,7 @@ const AccountModal: React.FC<PropsSelectNetwork> = ({
       );
     } else {
       const data = generateSeedPhrase();
+      saveMnemonic(data.phrase)
       newAccount = createHDWallet(data.phrase);
     }
 
