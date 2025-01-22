@@ -28,6 +28,16 @@ const ViewBalance = () => {
   const [isSendModalOpen, setIsSendModalOpen] = useState(false);
   const [isReceiveModalOpen, setIsReceiveModalOpen] = useState(false);
   const [assets, setAssets] = useState<Assets[]>([]);
+  interface Asset {
+    name: string;
+    quantity: number;
+    price: string;
+    change: number;
+  }
+
+  const [activeTab, setActiveTab] = useState("Tokens");
+
+  const [assets, setAssets] = useState<Asset[]>([]);
   const [isAccountModalOpen, setIsAccountModalOpen] = useState(false);
   const [selectedAccountIndex] = useState<number>(
     parseInt(localStorage.getItem("selectedAccountIndex") ?? "0")
@@ -77,6 +87,7 @@ const ViewBalance = () => {
 
   const handleCloseSendModal = () => {
     setIsSendModalOpen(false);
+    setIsSendModal2Open(true);
   };
 
   const handleOpenReceiveModal = () => {
@@ -143,65 +154,84 @@ const ViewBalance = () => {
             </div>
           </div>
 
+          <div></div>
           {/* Assets Section */}
           <div className="flex flex-col w-full px-4 mt-6">
-            <h2 className="font-karla  text-white text-lg font-semibold">
-              Assets
-            </h2>
+            <div className="w-full flex justify-between items-center text-[15px] cursor-pointer">
+              {["Tokens", "NFTs", "History"].map((tab, index) => (
+                <h2
+                  className={`${
+                    tab === activeTab
+                      ? "border-b-2 border-violet-500 text-violet-500"
+                      : "text-gray-200"
+                  } font-poppins pb-1 px-2`}
+                  key={index}
+                  onClick={() => setActiveTab(tab)}
+                >
+                  {tab}
+                </h2>
+              ))}
+            </div>
 
-            <div className="mt-4">
-              {assets.length > 0 ? (
-                assets.map(
-                  (
-                    asset: {
-                      name: string;
-                      quantity: number;
-                      price: string;
-                      change: number;
-                    },
-                    index: number
-                  ) => (
-                    <div
-                      key={asset?.name + index}
-                      className="flex flex-row justify-between items-center w-full h-[77px] bg-[#1d1c1c]  rounded px-2 mb-3"
-                    >
-                      <div className="flex flex-row items-center">
-                        {/* Asset Icon */}
-                        <div className="w-10 h-10">
-                          <img
-                            src={EthIcon}
-                            alt="assetIcon"
-                            className="object-contain w-full h-full bg-white rounded-full"
-                          />
+            {activeTab === "Tokens" && (
+              <div className="mt-4">
+                {assets.length > 0 ? (
+                  assets.map(
+                    (
+                      asset: {
+                        name: string;
+                        quantity: number;
+                        price: string;
+                        change: number;
+                      },
+                      index: number
+                    ) => (
+                      <div
+                        key={asset?.name + index}
+                        className="flex flex-row justify-between items-center w-full h-[77px] bg-[#1d1c1c]  rounded px-2 mb-3"
+                      >
+                        <div className="flex flex-row items-center">
+                          {/* Asset Icon */}
+                          <div className="w-10 h-10">
+                            <img
+                              src={EthIcon}
+                              alt="assetIcon"
+                              className="object-contain w-full h-full bg-white rounded-full"
+                            />
+                          </div>
+                          {/* Asset Name and Quantity */}
+                          <div className="flex flex-col items-start ml-4 text-white">
+                            <h2 className="font-karla font-bold leading-6">
+                              {asset.name}
+                            </h2>
+                            <p className="font-karla font-medium text-green-400">
+                              +98.02%
+                            </p>
+                          </div>
                         </div>
-                        {/* Asset Name and Quantity */}
-                        <div className="flex flex-col items-start ml-4 text-white">
-                          <h2 className="font-karla font-bold leading-6">
-                            {asset.name}
+                        {/* Asset Price */}
+                        <div className="flex flex-col items-end text-white">
+                          <h2 className="font-karla text-base font-bold leading-6">
+                            $0.13
                           </h2>
-                          <p className="font-karla font-medium text-green-400">
-                            +98.02%
+                          <p className="font-medium font-karla text-white">
+                            0.0004 Eth
                           </p>
                         </div>
                       </div>
-                      {/* Asset Price */}
-                      <div className="flex flex-col items-end text-white">
-                        <h2 className="font-karla text-base font-bold leading-6">
-                          $0.13
-                        </h2>
-                        <p className="font-medium font-karla text-white">
-                          0.0004 Eth
-                        </p>
-                      </div>
-                    </div>
+                    )
                   )
-                )
-              ) : (
-                <p className="font-poppins h-screen text-center mt-4 text-gray-500">
-                  No assets available.
-                </p>
-              )}
-            </div>
+                ) : (
+                  <p className="font-poppins h-screen text-center mt-4 text-gray-500">
+                    No assets available.
+                  </p>
+                )}
+              </div>
+            )}
+
+            {activeTab === "NFTs" && <div></div>}
+
+            {activeTab === "History" && <div></div>}
           </div>
         </div>
 
@@ -239,6 +269,12 @@ const ViewBalance = () => {
             address={address}
           />
         )}
+
+        <SendModalTwo
+          isOpen={isSendModal2Open}
+          onClose={() => setIsSendModal2Open(false)}
+          walletAddress={address}
+        />
       </div>
     </div>
   );
