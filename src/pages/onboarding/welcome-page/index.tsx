@@ -10,7 +10,7 @@ const WelcomePage = () => {
     const walletAddress = getDecryptedWalletAddress();
     if (walletAddress) {
       navigate(`/view-balance?address=${walletAddress}`);
-    } 
+    }
   });
   return (
     <div className="relative p-5 h-full w-full flex flex-col items-center justify-center text-white">
@@ -35,7 +35,7 @@ const WelcomePage = () => {
             Login
           </button>
         </Link>*/}
-        <Link to="/verify-seed?type=import">
+        <Link to="/import-wallet">
           <button className="w-full p-3 bg-[#4D4D4D] rounded-full text-white font-poppins">
             I already have a wallet
           </button>
