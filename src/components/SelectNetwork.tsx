@@ -113,7 +113,7 @@ const SelectNetwork: React.FC<PropsSelectNetwork> = ({
               return (
                 <button
                   key={network}
-                  className="flex flex-row items-center justify-between hover:border h-14 hover:bg-gray-400 px-2 w-full"
+                  className="flex flex-row items-center justify-between rounded h-14 hover:bg-violet-500 px-2 w-full"
                   onClick={() => {
                     persistSelectedNetwork(network);
                     setIsOpenNetworkTab(false);
@@ -139,7 +139,7 @@ const SelectNetwork: React.FC<PropsSelectNetwork> = ({
             </h2>
             {/* networks */}
             <div>
-              <div className="flex flex-row items-center justify-between h-14  px-2 w-full">
+              <div className="flex flex-row items-center justify-between h-14  pr-2 w-full">
                 <div className="flex flex-row items-center">
                   <img src={EthIcon} alt="networkicon" className="w-5 h-4" />
                   <h2 className="font-karla ml-4 font-bold">OP Mainnet</h2>
@@ -148,7 +148,7 @@ const SelectNetwork: React.FC<PropsSelectNetwork> = ({
                   Add
                 </button>
               </div>
-              <div className="flex flex-row items-center justify-between h-14  px-2 w-full">
+              <div className="flex flex-row items-center justify-between h-14 pr-2  w-full">
                 <div className="flex flex-row items-center">
                   <img src={EthIcon} alt="networkicon" className="w-5 h-4" />
                   <h2 className="font-karla ml-4 font-bold">Polygon Mainnet</h2>
@@ -157,7 +157,7 @@ const SelectNetwork: React.FC<PropsSelectNetwork> = ({
                   Add
                 </button>
               </div>
-              <div className="flex flex-row items-center justify-between h-14  px-2 w-full">
+              <div className="flex flex-row items-center justify-between h-14 pr-2 w-full">
                 <div className="flex flex-row items-center">
                   <img src={EthIcon} alt="networkicon" className="w-5 h-4" />
                   <h2 className="font-karla ml-4 font-bold">Polygon Mainnet</h2>
@@ -166,7 +166,7 @@ const SelectNetwork: React.FC<PropsSelectNetwork> = ({
                   Add
                 </button>
               </div>
-              <div className="flex flex-row items-center justify-between h-14  px-2 w-full">
+              <div className="flex flex-row items-center justify-between h-14 pr-2 w-full">
                 <div className="flex flex-row items-center">
                   <img src={EthIcon} alt="networkicon" className="w-5 h-4" />
                   <h2 className="font-karla ml-4 font-bold">Polygon Mainnet</h2>
@@ -175,7 +175,7 @@ const SelectNetwork: React.FC<PropsSelectNetwork> = ({
                   Add
                 </button>
               </div>
-              <div className="flex flex-row items-center justify-between h-14  px-2 w-full">
+              <div className="flex flex-row items-center justify-between h-14 pr-2  w-full">
                 <div className="flex flex-row items-center">
                   <img src={EthIcon} alt="networkicon" className="w-5 h-4" />
                   <h2 className="font-karla ml-4 font-bold">Polygon Mainnet</h2>
@@ -190,10 +190,10 @@ const SelectNetwork: React.FC<PropsSelectNetwork> = ({
 
         {/* custom network  */}
         
-        <button className="absolute bottom-[20%] w-[80%] h-8 bg-white text-black rounded-full mt-3 flex flex-row items-center justify-center font-poppins "
+        <button  className="w-full mt-3 p-3 bg-violet-500 rounded-full text-white font-poppins flex flex-row items-center justify-center"
         onClick={handleOpenModal}>
           <IoMdAdd className="text-2xl font-bold mr-3" />
-          Add custom Network
+          Add custom Network 
         </button>
         {isModalOpen && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
