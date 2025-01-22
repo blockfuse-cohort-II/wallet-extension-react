@@ -139,7 +139,7 @@ const SelectNetwork: React.FC<PropsSelectNetwork> = ({
             </h2>
             {/* networks */}
             <div>
-              <div className="flex flex-row items-center justify-between h-10 px-2">
+              <div className="flex flex-row items-center justify-between h-14  px-2 w-full">
                 <div className="flex flex-row items-center">
                   <img src={EthIcon} alt="networkicon" className="w-5 h-4" />
                   <h2 className="font-karla ml-4 font-bold">OP Mainnet</h2>
@@ -148,7 +148,7 @@ const SelectNetwork: React.FC<PropsSelectNetwork> = ({
                   Add
                 </button>
               </div>
-              <div className="flex flex-row items-center justify-between h-10 px-2">
+              <div className="flex flex-row items-center justify-between h-14  px-2 w-full">
                 <div className="flex flex-row items-center">
                   <img src={EthIcon} alt="networkicon" className="w-5 h-4" />
                   <h2 className="font-karla ml-4 font-bold">Polygon Mainnet</h2>
@@ -157,7 +157,7 @@ const SelectNetwork: React.FC<PropsSelectNetwork> = ({
                   Add
                 </button>
               </div>
-              <div className="flex flex-row items-center justify-between h-10 px-2">
+              <div className="flex flex-row items-center justify-between h-14  px-2 w-full">
                 <div className="flex flex-row items-center">
                   <img src={EthIcon} alt="networkicon" className="w-5 h-4" />
                   <h2 className="font-karla ml-4 font-bold">Polygon Mainnet</h2>
@@ -166,7 +166,7 @@ const SelectNetwork: React.FC<PropsSelectNetwork> = ({
                   Add
                 </button>
               </div>
-              <div className="flex flex-row items-center justify-between h-10 px-2">
+              <div className="flex flex-row items-center justify-between h-14  px-2 w-full">
                 <div className="flex flex-row items-center">
                   <img src={EthIcon} alt="networkicon" className="w-5 h-4" />
                   <h2 className="font-karla ml-4 font-bold">Polygon Mainnet</h2>
@@ -175,7 +175,7 @@ const SelectNetwork: React.FC<PropsSelectNetwork> = ({
                   Add
                 </button>
               </div>
-              <div className="flex flex-row items-center justify-between h-10 px-2">
+              <div className="flex flex-row items-center justify-between h-14  px-2 w-full">
                 <div className="flex flex-row items-center">
                   <img src={EthIcon} alt="networkicon" className="w-5 h-4" />
                   <h2 className="font-karla ml-4 font-bold">Polygon Mainnet</h2>
