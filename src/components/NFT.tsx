@@ -61,7 +61,7 @@ const Dropdown: React.FC<DropdownProps> = ({ items, onSelect }) => {
 };
 
 
-const App: React.FC = () => {
+const NFT: React.FC = () => {
   const items = [
     { id: '2', imageSrc: nftImage1 },
   ];
@@ -77,4 +77,4 @@ const App: React.FC = () => {
   );
 };
 
-export default App;
+export default NFT;

@@ -17,6 +17,8 @@ import {
 import { RiLoader2Line } from "react-icons/ri";
 import SendModal from "../../components/SendModal";
 import ReceiveModal from "../../components/ReceiveModal";
+import NFT from "../../components/NFT";
+import Transactions from "../../components/Transactions";
 // import SendModalTwo from "../../components/SendModalTwo";
 
 const ViewBalance = () => {
@@ -238,9 +240,9 @@ const ViewBalance = () => {
               </div>
             )}
 
-            {activeTab === "NFTs" && <div></div>}
+            {activeTab === "NFTs" && <NFT />}
 
-            {activeTab === "History" && <div></div>}
+            {activeTab === "History" && <Transactions />}
           </div>
         </div>
 
