@@ -10,6 +10,8 @@ import {
   getBalance,
   retrieveData,
   persistData,
+  generateSeedPhrase,
+  createHDWallet,
 } from "../utils/utils";
 import { useNavigate } from "react-router-dom";
 
@@ -26,7 +28,7 @@ const AccountModal: React.FC<PropsSelectNetwork> = ({
 }) => {
   const navigate = useNavigate();
   const [accounts, setAccounts] = useState<
-    { address: string; privateKey: string }[]
+    { address: string; privateKey: string; isKeyImported?: boolean }[]
   >([]);
   const [accountBalances, setAccountBalances] = useState<{
     [key: number]: string;
@@ -67,7 +69,18 @@ const AccountModal: React.FC<PropsSelectNetwork> = ({
   };
 
   const handleAddAccount = () => {
-    const newAccount = createAccountFromHDNode(getMnemonic(), accounts.length);
+    const mnemonic = getMnemonic();
+    let newAccount;
+
+    if (mnemonic && mnemonic.trim() !== "") {
+      newAccount = createAccountFromHDNode(
+        mnemonic,
+        accounts.filter((item) => item.isKeyImported !== true).length
+      );
+    } else {
+      const data = generateSeedPhrase();
+      newAccount = createHDWallet(data.phrase);
+    }
 
     const updatedAccounts = [
       ...accounts,

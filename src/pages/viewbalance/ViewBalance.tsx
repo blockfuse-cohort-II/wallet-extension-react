@@ -28,16 +28,9 @@ const ViewBalance = () => {
   const [isSendModalOpen, setIsSendModalOpen] = useState(false);
   const [isReceiveModalOpen, setIsReceiveModalOpen] = useState(false);
   const [assets, setAssets] = useState<Assets[]>([]);
-  interface Asset {
-    name: string;
-    quantity: number;
-    price: string;
-    change: number;
-  }
 
   const [activeTab, setActiveTab] = useState("Tokens");
 
-  const [assets, setAssets] = useState<Asset[]>([]);
   const [isAccountModalOpen, setIsAccountModalOpen] = useState(false);
   const [selectedAccountIndex] = useState<number>(
     parseInt(localStorage.getItem("selectedAccountIndex") ?? "0")
@@ -87,7 +80,6 @@ const ViewBalance = () => {
 
   const handleCloseSendModal = () => {
     setIsSendModalOpen(false);
-    setIsSendModal2Open(true);
   };
 
   const handleOpenReceiveModal = () => {
@@ -269,12 +261,6 @@ const ViewBalance = () => {
             address={address}
           />
         )}
-
-        <SendModalTwo
-          isOpen={isSendModal2Open}
-          onClose={() => setIsSendModal2Open(false)}
-          walletAddress={address}
-        />
       </div>
     </div>
   );
