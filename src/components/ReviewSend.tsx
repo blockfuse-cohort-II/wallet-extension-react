@@ -52,7 +52,7 @@ const SendModal: React.FC<SendModalProps> = ({
     setMessage("");
     try {
       const selectedNetwork =
-        localStorage.getItem("selectedNetwork") ?? "mainnet";
+        localStorage.getItem("selectedNetwork") ?? "sepolia";
       console.log(selectedNetwork, "selectednet");
       const networks: { [key: string]: { rpcUrl: string; chainId: number } } = {
         // mainnet: {
@@ -75,6 +75,8 @@ const SendModal: React.FC<SendModalProps> = ({
 
       // Retrieve the encrypted private key from storage and decrypt it
       const privateKey = await getPrivateKey();
+      console.log(privateKey,"this is the pk")
+      // const senderPrivateKey = JSON.parse(await getPrivateKey())[0];
 
       const transaction = await sendEther(
         privateKey, // Replace with private key in backend for security
@@ -92,25 +94,25 @@ const SendModal: React.FC<SendModalProps> = ({
     }
   };
 
-  const handleAddContact = () => {
-    if (!newContact.name || !newContact.address) {
-      alert("Please fill in both name and address fields.");
-      return;
-    }
-    if (
-      !newContact.address.startsWith("0x") ||
-      newContact.address.length !== 42
-    ) {
-      alert("Please enter a valid public address.");
-      return;
-    }
+  // const handleAddContact = () => {
+  //   if (!newContact.name || !newContact.address) {
+  //     alert("Please fill in both name and address fields.");
+  //     return;
+  //   }
+  //   if (
+  //     !newContact.address.startsWith("0x") ||
+  //     newContact.address.length !== 42
+  //   ) {
+  //     alert("Please enter a valid public address.");
+  //     return;
+  //   }
 
-    const updatedContacts = [...contacts, newContact];
-    setContacts(updatedContacts);
-    localStorage.setItem("contacts", JSON.stringify(updatedContacts)); // Save to localStorage
-    setNewContact({ name: "", address: "" }); // Reset input fields
-    setIsAddContactModalOpen(false); // Close modal
-  };
+  //   const updatedContacts = [...contacts, newContact];
+  //   setContacts(updatedContacts);
+  //   localStorage.setItem("contacts", JSON.stringify(updatedContacts)); // Save to localStorage
+  //   setNewContact({ name: "", address: "" }); // Reset input fields
+  //   setIsAddContactModalOpen(false); // Close modal
+  // };
 
   if (!isOpen) return null;
 

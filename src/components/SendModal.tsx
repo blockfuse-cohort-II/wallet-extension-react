@@ -31,7 +31,7 @@ const SendModal: React.FC<SendModalProps> = ({
     setMessage("");
     try {
       const selectedNetwork =
-        localStorage.getItem("selectedNetwork") ?? "mainnet";
+        localStorage.getItem("selectedNetwork") ?? "sepolia";
       const networks: { [key: string]: { rpcUrl: string; chainId: number } } = {
         sepolia: {
           rpcUrl:
@@ -46,7 +46,6 @@ const SendModal: React.FC<SendModalProps> = ({
       const chainId = network.chainId;
 
       const privateKey = await getPrivateKey();
-      console.log(privateKey, "privateKey");
 
       const transaction = await sendEther(
         privateKey,

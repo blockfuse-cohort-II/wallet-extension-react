@@ -310,9 +310,14 @@ export const savePrivateKey = async (privateKey: string) => {
 }
 
 export const getPrivateKey = async () => {
-  const privateKey = localStorage.getItem("privateKey");
+  
+  const privateKey = JSON.parse(localStorage.getItem("privateKey") ?? "[]");
+  console.log(privateKey, "privateKeyutils");
+  const accountIndex = localStorage.getItem("selectedAccountIndex") || 0
+  
   if (privateKey) {
-    return privateKey;
+    
+    return privateKey[accountIndex];
   }
   return '';
 }
