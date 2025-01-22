@@ -21,7 +21,7 @@ const SendModalTwo: React.FC<SendModalProps> = ({
   const [amount, setAmount] = useState("");
   const [loading, setLoading] = useState(false); // not used!
   const [message, setMessage] = useState(""); // not used!
-  const [activeTab, setActiveTa] = useState("account");
+  // const [activeTab, setActiveTa] = useState("account");
   const [contacts, setContacts] = useState<{ name: string; address: string }[]>(
     []
   );
