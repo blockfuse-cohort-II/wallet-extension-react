@@ -74,7 +74,9 @@ export interface NetworkConfig {
   name: string;
   rpcUrl: string;
   chainId: number;
-  symbol?: string; // Ξ (Ethereum)
+  symbol?: string; // Symbol for the network currency
+  ticker?: string; // Ticker symbol
+  explorer?: string; // Explorer URL for the network
 }
 
 const alchemyNetworks: Record<string, Network> = {
@@ -84,35 +86,38 @@ const alchemyNetworks: Record<string, Network> = {
   sepolia: Network.ETH_SEPOLIA,
 };
 
-const defaultNetworks: Record<string, NetworkConfig & { symbol: string; ticker: string }> = {
+const defaultNetworks: Record<string, NetworkConfig> = {
   mainnet: {
     name: "Ethereum Mainnet",
     rpcUrl: "https://mainnet.infura.io/v3/1cef973dff844ba09dea342050cd5967",
     chainId: 1,
-    symbol: "\u039E",
-    ticker: "USD",
+    symbol: "Ξ",
+    ticker: "ETH",
+    explorer: "https://etherscan.io",
   },
   polygon: {
     name: "Polygon Mainnet",
     rpcUrl: "https://polygon-rpc.com",
     chainId: 137,
-    symbol: "\u039E",
-    ticker: "USD",
-
+    symbol: "MATIC",
+    ticker: "MATIC",
+    explorer: "https://polygonscan.com",
   },
   bsc: {
     name: "Binance Smart Chain",
     rpcUrl: "https://bsc-dataseed.binance.org/",
     chainId: 56,
-    symbol: "\u0024",
-    ticker: "ETH",
+    symbol: "BNB",
+    ticker: "BNB",
+    explorer: "https://bscscan.com",
   },
   sepolia: {
     name: "Sepolia Testnet",
     rpcUrl: "https://sepolia.infura.io/v3/1cef973dff844ba09dea342050cd5967",
     chainId: 11155111,
-    symbol: "\u039E",
+    symbol: "Ξ",
     ticker: "SepoliaETH",
+    explorer: "https://sepolia.etherscan.io",
   },
 };
 
@@ -121,19 +126,32 @@ export const networks = { ...defaultNetworks };
 export function addCustomNetwork(
   name: string,
   rpcUrl: string,
-  chainId: number
+  chainId: number,
+  explorer: string
 ) {
   networks[name] = {
     name,
     rpcUrl,
     chainId,
-    symbol: "\u039E",
-    ticker: "ETH",
+    symbol: "Ξ",
+    ticker: "CustomETH",
+    explorer,
   };
 }
 
 export function getNetwork(name: string): NetworkConfig | undefined {
+  console.log("getNetwork", networks[name]);
   return networks[name];
+}
+
+// Get the selected network from localStorage
+export function getSelectedNetworkConfig(): NetworkConfig {
+  console.log("getSelectedNetworkConfig");
+  const selectedNetwork = localStorage.getItem("selectedNetwork") || "sepolia";
+  console.log(selectedNetwork, "selectedNetwork");
+  const network = getNetwork(selectedNetwork);
+  if (!network) throw new Error(`Network configuration missing for ${selectedNetwork}`);
+  return network;
 }
 
 export const getDecryptedWalletAddress = (): string | null => {
