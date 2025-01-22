@@ -1,9 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { getContacts, getPrivateKey, sendEther } from "../utils/utils";
+import React, { useState } from "react";
 import { RiCloseLine } from "react-icons/ri";
-import { IoIosArrowDown } from "react-icons/io";
 import AccountIcon from "../assets/Account icon.png";
-// import ethIcon from "../assets/ETH stroke icon.png";
+import { getPrivateKey, sendEther } from "../utils/utils";
 
 interface SendModalProps {
   isOpen: boolean;
@@ -21,11 +19,36 @@ const SendModal: React.FC<SendModalProps> = ({
   const [token, setToken] = useState("ETH");
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
-  const [activeTab, setActiveTab] = useState<"account" | "contact">("account");
+  const [activeTab, setActiveTab] = useState("contact");
   const [contacts, setContacts] = useState([
     { name: "Contact 1", address: "0x123...abc" },
-    { name: "Contact 2", address: "0x456...def" },
   ]);
+
+  const handleAddContact = () => {
+    const name = prompt("Enter contact name:", "New Contact");
+    const address = prompt("Enter contact address:", "0x456...def");
+
+    if (!name || !address) {
+      alert("Name and address are required.");
+      return;
+    }
+
+    // Check if the Ethereum address is valid
+    if (!/^0x[a-fA-F0-9]{40}$/.test(address)) {
+      alert("Invalid Ethereum address.");
+      return;
+    }
+
+    const newContact = { name, address };
+
+    setContacts((prevContacts) => {
+      // Replace placeholder if it exists
+      if (prevContacts[0]?.name === "Contact 1") {
+        return [newContact, ...prevContacts.slice(1)];
+      }
+      return [...prevContacts, newContact];
+    });
+  };
 
   const handleSend = async () => {
     if (!recipient || !amount) {
@@ -48,17 +71,13 @@ const SendModal: React.FC<SendModalProps> = ({
       const network = networks[selectedNetwork as keyof typeof networks];
       if (!network) throw new Error("Network configuration missing!");
 
-      const providerUrl = network.rpcUrl;
-      const chainId = network.chainId;
-
       const privateKey = await getPrivateKey();
-
       const transaction = await sendEther(
         privateKey,
         recipient,
         amount,
-        chainId,
-        providerUrl
+        network.chainId,
+        network.rpcUrl
       );
       setMessage(`Transaction successful! Hash: ${transaction.hash}`);
     } catch (error) {
@@ -72,8 +91,8 @@ const SendModal: React.FC<SendModalProps> = ({
   if (!isOpen) return null;
 
   return (
-    <div className="text-sm fixed inset-0 flex items-center justify-center z-50 backdrop-blur-lg">
-      <div className="w-[90%] md:w-[400px] p-6 rounded">
+    <div className="fixed inset-0 flex items-center justify-center z-50 backdrop-blur-lg">
+      <div className="w-[90%] md:w-[400px] p-6 rounded bg-[#1f1f1f]">
         <div className="flex items-center mb-6">
           <RiCloseLine
             className="cursor-pointer text-xl bg-[#D9D9D9] rounded-full mr-3"
@@ -97,7 +116,7 @@ const SendModal: React.FC<SendModalProps> = ({
             <p
               className={`${
                 activeTab === "contact"
-                  ? "text-violet-500 border-b-2 border-violet-500 "
+                  ? "text-violet-500 border-b-2 border-violet-500"
                   : "text-white"
               } px-3 pb-1.5`}
               onClick={() => setActiveTab("contact")}
@@ -105,6 +124,7 @@ const SendModal: React.FC<SendModalProps> = ({
               Contacts
             </p>
           </header>
+
           {activeTab === "account" && (
             <div className="text-white">
               <h2 className="mb-2">From</h2>
@@ -116,16 +136,16 @@ const SendModal: React.FC<SendModalProps> = ({
                 />
                 <div className="text-white flex flex-col items-start px-4">
                   <p>Account</p>
-                  <p className="">{`${walletAddress.slice(
-                    0,
-                    6
-                  )}....${walletAddress.slice(-4)}`}</p>
+                  <p>{`${walletAddress.slice(0, 6)}....${walletAddress.slice(
+                    -4
+                  )}`}</p>
                 </div>
               </div>
             </div>
           )}
+
           {activeTab === "contact" && (
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-2 max-h-48 overflow-y-auto">
               {contacts.length > 0 ? (
                 contacts.map((contact) => (
                   <div
@@ -146,8 +166,8 @@ const SendModal: React.FC<SendModalProps> = ({
                 <p className="text-gray-400">No contacts available.</p>
               )}
               <button
-                className="bg-blue-500 text-white px-3 py-1 rounded mt-4"
-                onClick={() => alert("Add contact modal coming soon!")}
+                className="bg-violet-500 text-white px-3 py-1 rounded mt-4"
+                onClick={handleAddContact}
               >
                 Add Contact
               </button>
@@ -160,21 +180,10 @@ const SendModal: React.FC<SendModalProps> = ({
           <input
             type="text"
             placeholder="Enter recipient address (0x...)"
-            className="bg-transparent border p-2 rounded-md border-border w-full placeholder:text-sm"
+            className="bg-transparent border p-2 rounded-md w-full placeholder:text-sm"
             value={recipient}
             onChange={(e) => setRecipient(e.target.value)}
           />
-        </div>
-
-        <div className="text-white mt-4">
-          <h2 className="mb-2">Token</h2>
-          <select
-            className="bg-transparent border p-2 rounded-md border-border w-full text-white"
-            value={token}
-            onChange={(e) => setToken(e.target.value)}
-          >
-            <option value="ETH">ETH</option>
-          </select>
         </div>
 
         <div className="text-white mt-4">
@@ -182,7 +191,7 @@ const SendModal: React.FC<SendModalProps> = ({
           <input
             type="number"
             placeholder="Enter amount"
-            className="bg-transparent border p-2 rounded-md border-border w-full placeholder:text-sm"
+            className="bg-transparent border p-2 rounded-md w-full placeholder:text-sm"
             value={amount}
             onChange={(e) => setAmount(e.target.value)}
           />
@@ -192,13 +201,13 @@ const SendModal: React.FC<SendModalProps> = ({
 
         <div className="mt-10 flex justify-around">
           <button
-            className="text-violet-500 border border-border rounded-full p-3 px-11 hover:bg-[#363636]"
+            className="text-violet-500 border rounded-full p-3 px-11 hover:bg-[#363636]"
             onClick={onClose}
           >
             Cancel
           </button>
           <button
-            className={`text-violet-500 border border-border rounded-full p-3 px-11 ${
+            className={`text-violet-500 border rounded-full p-3 px-11 ${
               loading
                 ? "bg-gray-600 cursor-not-allowed"
                 : "bg-[#363636] hover:bg-gray-700"
