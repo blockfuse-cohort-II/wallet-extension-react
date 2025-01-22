@@ -1,17 +1,7 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import logo from "./../../../assets/logo2.png";
-import { getDecryptedWalletAddress } from "../../../utils/utils";
-import { useEffect } from "react";
 
 const WelcomePage = () => {
-  const navigate = useNavigate();
-  useEffect(() => {
-    localStorage.removeItem("seedPhrase");
-    const walletAddress = getDecryptedWalletAddress();
-    if (walletAddress) {
-      navigate(`/view-balance?address=${walletAddress}`);
-    }
-  });
   return (
     <div className="relative p-5 h-full w-full flex flex-col items-center justify-center text-white">
       <div className="flex h-full flex-col gap-1 justify-center items-center text-center">
@@ -20,7 +10,8 @@ const WelcomePage = () => {
           Welcome to Katera
         </h1>
         <p className="font-inter text-gray-400 text-sm ">
-          A boring Ethereum wallet built just for you
+        Your secure gateway to Ethereum. Manage, send, and receive crypto with 
+        confidence using our simple and intuitive katera.
         </p>
       </div>
 
@@ -30,11 +21,7 @@ const WelcomePage = () => {
             Create a new wallet
           </button>
         </Link>
-        {/*<Link to="/login?type=import">
-          <button className="w-full p-3 bg-[#4D4D4D] rounded-full text-white font-poppins">
-            Login
-          </button>
-        </Link>*/}
+  
         <Link to="/import-wallet">
           <button className="w-full p-3 bg-[#4D4D4D] rounded-full text-white font-poppins">
             I already have a wallet

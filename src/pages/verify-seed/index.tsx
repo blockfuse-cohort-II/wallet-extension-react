@@ -3,8 +3,8 @@ import { BsEye, BsEyeSlash } from "react-icons/bs";
 import {
   createHDWallet,
   getWalletFromSeedPhrase,
-  persistEncryptedWalletAddress,
   saveMnemonic,
+  persistData,
 } from "../../utils/utils";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { toast } from "sonner";
@@ -126,11 +126,10 @@ const VerifySeed = () => {
             if (!isImported) {
               const wallet = createHDWallet(seedPhrase.join(" "));
               if (wallet.address) {
-                localStorage.setItem(
-                  "privateKey",
-                  JSON.stringify([wallet.privateKey])
-                );
-                persistEncryptedWalletAddress(wallet.address);
+                persistData("accounts", [
+                  { address: wallet.address, privateKey: wallet.privateKey },
+                ]);
+                localStorage.setItem("selectedAccountIndex", "0");
                 saveMnemonic(seedPhrase.join(" "));
                 navigate("/success-page");
               }
@@ -140,11 +139,10 @@ const VerifySeed = () => {
             if (!wallet.address) {
               toast.error("invalid seed phrase");
             }
-            localStorage.setItem(
-              "privateKey",
-              JSON.stringify([wallet.privateKey])
-            );
-            persistEncryptedWalletAddress(wallet.address);
+            persistData("accounts", [
+              { address: wallet.address, privateKey: wallet.privateKey },
+            ]);
+            localStorage.setItem("selectedAccountIndex", "0");
             saveMnemonic(seedPhrase.join(" "));
             navigate("/success-page");
           } catch (error) {

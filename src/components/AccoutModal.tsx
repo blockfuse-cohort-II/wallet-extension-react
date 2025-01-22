@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { IoMdMore, IoMdClose, IoMdAdd } from "react-icons/io";
+import { IoMdClose, IoMdAdd } from "react-icons/io";
 import AccountIcon from "../assets/Account icon.png";
 import { CiSearch } from "react-icons/ci";
 import {
@@ -8,6 +8,10 @@ import {
   createAccountFromHDNode,
   getMnemonic,
   getBalance,
+  retrieveData,
+  persistData,
+  generateSeedPhrase,
+  createHDWallet,
 } from "../utils/utils";
 import { useNavigate } from "react-router-dom";
 
@@ -23,25 +27,24 @@ const AccountModal: React.FC<PropsSelectNetwork> = ({
   setIsAccountModalOpen,
 }) => {
   const navigate = useNavigate();
-  const [accounts, setAccounts] = useState<string[]>([]);
+  const [accounts, setAccounts] = useState<
+    { address: string; privateKey: string; isKeyImported?: boolean }[]
+  >([]);
   const [accountBalances, setAccountBalances] = useState<{
     [key: number]: string;
   }>({});
-  const [accountsIndex, setAccountsIndex] = useState<number>(() => {
-    return parseInt(localStorage.getItem("selectedAccountIndex") ?? "0");
-  });
 
   useEffect(() => {
-    const storedAccounts = JSON.parse(localStorage.getItem("accounts") ?? "[]");
+    const storedAccounts = retrieveData("accounts");
     if (storedAccounts.length === 0) {
-      storedAccounts.push(address);
+      console.log(storedAccounts);
     }
     setAccounts(storedAccounts);
 
     const fetchBalances = async () => {
       const newBalances: { [key: number]: string } = {};
       for (let i = 0; i < storedAccounts.length; i++) {
-        const account = storedAccounts[i];
+        const account = storedAccounts[i].address;
         const balance = await getBalance(
           account,
           networks[getSelectedNetwork() as keyof typeof networks].chainId,
@@ -60,24 +63,35 @@ const AccountModal: React.FC<PropsSelectNetwork> = ({
   };
 
   const handleAccountSelect = (index: number, account: string) => {
-    setAccountsIndex(index);
     localStorage.setItem("selectedAccountIndex", index.toString());
     setIsAccountModalOpen(!isOpen);
     navigate(`/view-balance?address=${account}`);
   };
 
   const handleAddAccount = () => {
-    const newAccount = createAccountFromHDNode(getMnemonic(), accounts.length);
-    const existing = JSON.parse(localStorage.getItem("privateKey") ?? "[]");
-    const keys = [...existing, newAccount.privateKey];
-    const updatedAccounts = [...accounts, newAccount.address];
+    const mnemonic = getMnemonic();
+    let newAccount;
+
+    if (mnemonic && mnemonic.trim() !== "") {
+      newAccount = createAccountFromHDNode(
+        mnemonic,
+        accounts.filter((item) => item.isKeyImported !== true).length
+      );
+    } else {
+      const data = generateSeedPhrase();
+      newAccount = createHDWallet(data.phrase);
+    }
+
+    const updatedAccounts = [
+      ...accounts,
+      { address: newAccount.address, privateKey: newAccount.privateKey },
+    ];
     setAccounts(updatedAccounts);
-    localStorage.setItem("accounts", JSON.stringify(updatedAccounts));
+    persistData("accounts", updatedAccounts);
     localStorage.setItem(
       "selectedAccountIndex",
       (updatedAccounts.length - 1).toString()
     );
-    localStorage.setItem("privateKey", JSON.stringify(keys));
 
     const fetchBalance = async () => {
       const newBalance = await getBalance(
@@ -130,11 +144,14 @@ const AccountModal: React.FC<PropsSelectNetwork> = ({
           {/* Accounts */}
           {accounts.map((account, index) => (
             <button
-              key={index + account}
+              key={index + account.address}
               className={`flex flex-row w-full text-sm items-center h-15 mt-3 px-2 py-2 rounded-sm justify-between ${
-                index === accountsIndex ? "bg-gray-700" : ""
+                index ===
+                parseInt(localStorage.getItem("selectedAccountIndex") ?? "0")
+                  ? "bg-gray-700"
+                  : ""
               }`}
-              onClick={() => handleAccountSelect(index, account)}
+              onClick={() => handleAccountSelect(index, account.address)}
             >
               <div className="flex flex-row items-center">
                 {/* Account image */}
@@ -152,7 +169,7 @@ const AccountModal: React.FC<PropsSelectNetwork> = ({
                     {`Account ${index + 1}`}
                   </h2>
                   <span className="font-poppins text-sm font-normal">
-                    {account.slice(0, 10)}...
+                    {account.address.slice(0, 7)}***{account.address.slice(-4)}
                   </span>
                 </div>
               </div>
