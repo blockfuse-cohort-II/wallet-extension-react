@@ -139,22 +139,52 @@ const ViewBalance = () => {
           </div>
 
           {/* Send and Deposit */}
-          <div className="flex flex-row items-center justify-between w-[200px] mt-4">
-            <div className="flex flex-row items-center justify-between w-[200px] mt-6 text-white">
+          <div className="flex flex-row items-center justify-between mt-4 cursor-pointer">
+            <div className="flex flex-row items-center justify-center gap-8 mt-4 text-white">
+              <div className="flex flex-col items-center gap-1 text-base font-karla" onClick={handleOpenSendModal}>
+                <div className="h-10 w-10 bg-violet-500 rounded-full flex items-center justify-center">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="size-4"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25"
+                    />
+                  </svg>
+                </div>
+                Send
+              </div>
+
+              <div className="flex flex-col  items-center gap-1 text-base font-karla" onClick={handleOpenSendModal}>
+                <div className="h-10 w-10 bg-violet-500 rounded-full flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-4">
+  <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 4.5-15 15m0 0h11.25m-11.25 0V8.25" />
+</svg>
+
+                </div>
+                Recieve
+              </div>
+{/* 
               <button
                 className="flex flex-row items-center border border-gray-400 px-4 py-2 rounded-lg hover:bg-violet-500 mr-4"
                 onClick={handleOpenSendModal}
               >
                 <IoIosSend />
                 <h2 className="font-karla text-base font-bold ml-1">Send</h2>
-              </button>
-              <button
+              </button> */}
+              {/* <button
                 className="flex flex-row items-center border border-gray-400 px-4 py-2 rounded-lg hover:bg-violet-500 "
                 onClick={handleOpenReceiveModal}
               >
                 <PiHandDepositFill />
                 <h2 className="font-karla text-base font-bold ml-1">Receive</h2>
-              </button>
+              </button> */}
             </div>
           </div>
 
