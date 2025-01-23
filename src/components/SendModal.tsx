@@ -40,6 +40,7 @@ const SendModal: React.FC<SendModalProps> = ({
 
       const providerUrl = network.rpcUrl;
       const chainId = network.chainId;
+      console.log(providerUrl, chainId, "providerUrl, chainId");
 
       const privateKey = await getSelectedAccountPrivateKey();
 

@@ -8,10 +8,8 @@ import { useSearchParams } from "react-router-dom";
 import AccountModal from "../../components/AccoutModal";
 import {
   getBalance,
-  retrieveData,
   getSelectedNetwork,
   networks,
-  getTokens,
 } from "../../utils/utils";
 import { RiLoader2Line } from "react-icons/ri";
 import SendModal from "../../components/SendModal";
@@ -22,57 +20,66 @@ const ViewBalance = () => {
   const [searchParams] = useSearchParams();
   const address = searchParams.get("address") ?? "";
   const [isOpenNetworkTap, setIsOpenNetworkTap] = useState(false);
-  const [priceChange, setPriceChange] = useState("0.00");
+  const [priceChange] = useState("0.00");
   const [balance, setBalance] = useState("0.00");
-  const [loading, setLoading] = useState(false);
+  const [loading] = useState(false);
   const [isSendModalOpen, setIsSendModalOpen] = useState(false);
   const [isReceiveModalOpen, setIsReceiveModalOpen] = useState(false);
-  const [assets, setAssets] = useState<Assets[]>([]);
+  const [assets] = useState<Assets[]>([]);
 
   const [activeTab, setActiveTab] = useState("Tokens");
 
   const [isAccountModalOpen, setIsAccountModalOpen] = useState(false);
-  const [selectedAccountIndex] = useState<number>(
-    parseInt(localStorage.getItem("selectedAccountIndex") ?? "0")
-  );
+
   const currentNetwork = getSelectedNetwork() as keyof typeof networks;
-  const [usdBalance, setUsdBalance] = useState("0.00");
+  const [usdBalance] = useState("0.00");
+
+  // useEffect(() => {
+  //   const fetchBalanceAndConvert = async () => {
+  //     setLoading(true);
+  //     try {
+  //       const tokens = await getTokens();
+  //       setAssets(tokens);
+  //       const storedAccounts = retrieveData("accounts");
+  //       console.log("storedAccounts", storedAccounts);
+  //       const ethBalance = await getBalance(
+  //         address,
+  //         networks[currentNetwork].chainId,
+  //         networks[currentNetwork].rpcUrl
+  //       );
+  //       console.log("ethBalance", ethBalance);
+  //       setBalance(parseFloat(ethBalance).toFixed(4));
+
+  //       const response = await fetch(
+  //         "https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd"
+  //       );
+  //       const data = await response.json();
+  //       console.log(data, "data");
+  //       const rate = data.ethereum.usd;
+  //       const change = data.ethereum.usd_24h_change.toFixed(2);
+  //       setUsdBalance((parseFloat(ethBalance) * rate).toFixed(2));
+  //       setPriceChange(change);
+  //       console.log("usdBalance", usdBalance);
+  //     } catch (error) {
+  //       console.error("Error fetching balance:", error);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+  //   fetchBalanceAndConvert();
+  // }, [address, currentNetwork, selectedAccountIndex]); // Removed balance and usdBalance
 
   useEffect(() => {
-    const fetchBalanceAndConvert = async () => {
-      setLoading(true);
-      try {
-        const tokens = await getTokens();
-        setAssets(tokens);
-        const storedAccounts = retrieveData("accounts");
-        console.log("storedAccounts", storedAccounts);
-        const ethBalance = await getBalance(
-          address,
-          networks[currentNetwork].chainId,
-          networks[currentNetwork].rpcUrl
-        );
-        console.log("ethBalance", ethBalance);
-        setBalance(parseFloat(ethBalance).toFixed(4));
-        console.log("balance2", balance);
-        const response = await fetch(
-          "https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd"
-        );
-        const data = await response.json();
-        console.log("data", data);
-        const rate = data.ethereum.usd;
-        const change = data.ethereum.usd_24h_change.toFixed(2);
-        console.log("rate", rate);
-        setUsdBalance((parseFloat(ethBalance) * rate).toFixed(2));
-        setPriceChange(change);
-        console.log("usdBalance", usdBalance);
-      } catch (error) {
-        console.error("Error fetching balance:", error);
-      } finally {
-        setLoading(false);
-      }
+    const fetchData = async () => {
+      const ethBalance = await getBalance(
+        address,
+        networks[currentNetwork].chainId,
+        networks[currentNetwork].rpcUrl
+      );
+      setBalance(parseFloat(ethBalance).toFixed(4));
     };
-    fetchBalanceAndConvert();
-  }, [address, currentNetwork, selectedAccountIndex, balance, usdBalance]);
+    fetchData();
+  }, [address, currentNetwork]);
 
   const handleOpenSendModal = () => {
     setIsSendModalOpen(true);
@@ -108,19 +115,17 @@ const ViewBalance = () => {
             <p className="font-karla font-semibold text-lg leading-6">
               Total Asset Value
             </p>
-            <div className="font-karla font-bold  text-2xl my-2">
+            <div className="font-karla font-bold text-2xl my-2">
               {loading ? (
                 <RiLoader2Line className="animate-spin" />
               ) : (
-                (() => {
-                  return `${displayBalance} ${networks[currentNetwork].ticker}`;
-                })()
+                `${displayBalance} ${networks[currentNetwork].ticker}`
               )}
             </div>
+
             <h3
-              className={`font-karla font-bold text-lg leading-5 ${
-                priceChange.startsWith("-") ? "text-red-500" : "text-[#5CE677]"
-              }`}
+              className={`font-karla font-bold text-lg leading-5 ${priceChange.startsWith("-") ? "text-red-500" : "text-[#5CE677]"
+                }`}
             >
               {priceChange}% (24h)
             </h3>
