@@ -11,6 +11,8 @@ import {
   getSelectedNetwork,
   networks,
   getTokens,
+  getNfts,
+  getTransactionHistory
 } from "../../utils/utils";
 import { RiLoader2Line } from "react-icons/ri";
 import SendModal from "../../components/SendModal";
