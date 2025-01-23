@@ -8,75 +8,66 @@ import { useSearchParams } from "react-router-dom";
 import AccountModal from "../../components/AccoutModal";
 import {
   getBalance,
-  getDecryptedWalletAddress,
   getSelectedNetwork,
   networks,
-  getTokens,
 } from "../../utils/utils";
 import { RiLoader2Line } from "react-icons/ri";
 import SendModal from "../../components/SendModal";
 import ReceiveModal from "../../components/ReceiveModal";
-import SendModalTwo from "../../components/SendModalTwo";
+import { Assets } from "../../interfaces/interfaces";
 
 const ViewBalance = () => {
   const [searchParams] = useSearchParams();
-  const address =
-    searchParams.get("address") ?? getDecryptedWalletAddress() ?? "";
+  const address = searchParams.get("address") ?? "";
   const [isOpenNetworkTap, setIsOpenNetworkTap] = useState(false);
-  const [priceChange, setPriceChange] = useState("0.00");
+  const [priceChange] = useState("0.00");
   const [balance, setBalance] = useState("0.00");
-  const [loading, setLoading] = useState(false);
+  const [loading] = useState(false);
   const [isSendModalOpen, setIsSendModalOpen] = useState(false);
-  const [isSendModal2Open, setIsSendModal2Open] = useState(false);
   const [isReceiveModalOpen, setIsReceiveModalOpen] = useState(false);
-  interface Asset {
-    name: string;
-    quantity: number;
-    price: string;
-    change: number;
-  }
+  const [assets] = useState<Assets[]>([]);
 
   const [activeTab, setActiveTab] = useState("Tokens");
 
-  const [assets, setAssets] = useState<Asset[]>([]);
   const [isAccountModalOpen, setIsAccountModalOpen] = useState(false);
-  const [selectedAccountIndex] = useState<number>(
-    parseInt(localStorage.getItem("selectedAccountIndex") ?? "0")
-  );
+
   const currentNetwork = getSelectedNetwork() as keyof typeof networks;
-  const [usdBalance, setUsdBalance] = useState("0.00");
+  const [usdBalance] = useState("0.00");
 
-  useEffect(() => {
-    const fetchBalanceAndConvert = async () => {
-      setLoading(true);
-      try {
-        const tokens = await getTokens();
-        setAssets(tokens);
-        const ethBalance = await getBalance(
-          address,
-          networks[currentNetwork].chainId,
-          networks[currentNetwork].rpcUrl
-        );
-        setBalance(parseFloat(ethBalance).toFixed(4));
+  // useEffect(() => {
+  //   const fetchBalanceAndConvert = async () => {
+  //     setLoading(true);
+  //     try {
+  //       const tokens = await getTokens();
+  //       setAssets(tokens);
+  //       const storedAccounts = retrieveData("accounts");
+  //       console.log("storedAccounts", storedAccounts);
+  //       const ethBalance = await getBalance(
+  //         address,
+  //         networks[currentNetwork].chainId,
+  //         networks[currentNetwork].rpcUrl
+  //       );
+  //       console.log("ethBalance", ethBalance);
+  //       setBalance(parseFloat(ethBalance).toFixed(4));
 
-        const response = await fetch(
-          "https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd"
-        );
-        const data = await response.json();
-        console.log(data, "data");
-        const rate = data.ethereum.usd;
-        const change = data.ethereum.usd_24h_change.toFixed(2);
-        setUsdBalance((parseFloat(ethBalance) * rate).toFixed(2));
-        setPriceChange(change);
-        console.log("usdBalance", usdBalance);
-      } catch (error) {
-        console.error("Error fetching balance:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchBalanceAndConvert();
-  }, [address, currentNetwork, selectedAccountIndex]); // Removed balance and usdBalance
+  //       const response = await fetch(
+  //         "https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd"
+  //       );
+  //       const data = await response.json();
+  //       console.log(data, "data");
+  //       const rate = data.ethereum.usd;
+  //       const change = data.ethereum.usd_24h_change.toFixed(2);
+  //       setUsdBalance((parseFloat(ethBalance) * rate).toFixed(2));
+  //       setPriceChange(change);
+  //       console.log("usdBalance", usdBalance);
+  //     } catch (error) {
+  //       console.error("Error fetching balance:", error);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+  //   fetchBalanceAndConvert();
+  // }, [address, currentNetwork, selectedAccountIndex]); // Removed balance and usdBalance
 
   useEffect(() => {
     const fetchData = async () => {
@@ -88,7 +79,7 @@ const ViewBalance = () => {
       setBalance(parseFloat(ethBalance).toFixed(4));
     };
     fetchData();
-  }, [currentNetwork]);
+  }, [address, currentNetwork]);
 
   const handleOpenSendModal = () => {
     setIsSendModalOpen(true);
@@ -96,7 +87,6 @@ const ViewBalance = () => {
 
   const handleCloseSendModal = () => {
     setIsSendModalOpen(false);
-    setIsSendModal2Open(true);
   };
 
   const handleOpenReceiveModal = () => {
@@ -276,12 +266,6 @@ const ViewBalance = () => {
             address={address}
           />
         )}
-
-        <SendModalTwo
-          isOpen={isSendModal2Open}
-          onClose={() => setIsSendModal2Open(false)}
-          walletAddress={address}
-        />
       </div>
     </div>
   );

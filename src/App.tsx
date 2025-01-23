@@ -12,8 +12,6 @@ import { Toaster } from "sonner";
 import Contacts from "./pages/contacts";
 import ImportStrategy from "./pages/import-type";
 import PrivateKey from "./pages/import-type/PrivateKey";
-// import SendModal from "./components/SendModalTwo";
-// import SendModalTwo from "./components/SendModalTwo";
 
 function App() {
   return (
@@ -30,7 +28,6 @@ function App() {
         <Route path="/import-wallet" element={<ImportStrategy />} />
         <Route path="/private-key" element={<PrivateKey />} />
 
-        {/* <Route path="/send-modal2" element={<SendModalTwo/>} /> */}
       </Routes>
       <ToastContainer />
       <Toaster position="top-center" richColors />

@@ -1,10 +1,22 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import { getAddressFromPrivateKey, persistData } from "../../utils/utils";
+import { useNavigate } from "react-router-dom";
 
 const PrivateKey = () => {
-  const [password, setPassword] = useState("");
-
-  const [passwordHidden, setPasswordHidden] = useState(true);
-
+  const [privateKey, setPrivateKey] = useState("");
+  const navigate = useNavigate();
+  const [privateKeyHidden, setPrivateKeyHidden] = useState(true);
+  const handleAddWallet = () => {
+    const wallet = getAddressFromPrivateKey(privateKey);
+    persistData("accounts", [
+      {
+        address: wallet.address,
+        privateKey: wallet.privateKey,
+        isKeyImported: true,
+      },
+    ]);
+    navigate("/success-page");
+  };
   return (
     <div className="h-full  py-6 px-4">
       <header className="flex items-center font-medium font-poppins gap-3 text-white cursor-pointer">
@@ -16,7 +28,6 @@ const PrivateKey = () => {
           xmlns="http://www.w3.org/2000/svg"
           onClick={() => {
             window.history.back();
-            localStorage.removeItem("seedPhrase");
           }}
         >
           <path
@@ -42,17 +53,17 @@ const PrivateKey = () => {
 
             <div className="w-full relative">
               <input
-                type={`${passwordHidden ? "password" : "text"}`}
+                type={`${privateKeyHidden ? "privateKey" : "text"}`}
                 className="text-white/50 bg-white/5 w-full outline-0 border-0 py-3 rounded-full px-4"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                value={privateKey}
+                onChange={(e) => setPrivateKey(e.target.value)}
               />
 
               <span
                 className="absolute right-4 top-3 cursor-pointer "
-                onClick={() => setPasswordHidden(!passwordHidden)}
+                onClick={() => setPrivateKeyHidden(!privateKeyHidden)}
               >
-                {passwordHidden ? (
+                {privateKeyHidden ? (
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
@@ -94,7 +105,7 @@ const PrivateKey = () => {
 
           <button
             className="w-full p-3 mt-3 bg-violet-500 rounded-full text-white font-poppins"
-            // onClick={verifyPassword}
+            onClick={handleAddWallet}
           >
             Continue
           </button>

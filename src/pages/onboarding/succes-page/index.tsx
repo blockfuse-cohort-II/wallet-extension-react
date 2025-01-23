@@ -1,7 +1,7 @@
 import { useState } from "react";
 import BackArrow from "../../../components/icons/BackArrow";
 import { useNavigate } from "react-router-dom";
-import { getDecryptedWalletAddress, savePassword } from "../../../utils/utils";
+import { retrieveData, savePassword } from "../../../utils/utils";
 import { BsEye, BsEyeSlash } from "react-icons/bs";
 import { toast } from "sonner";
 
@@ -12,7 +12,7 @@ const SuccessPage = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const navigate = useNavigate();
-  const walletAddress = getDecryptedWalletAddress();
+  const walletAddress = retrieveData("accounts")[0].address;
 
   const verifyPassword = () => {
     if (password.length < 8) {
