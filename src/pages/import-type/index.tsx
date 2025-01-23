@@ -35,8 +35,6 @@ const ImportStrategy = () => {
             fillOpacity="0.5"
           />
         </svg>
-
-        <p>Import Strategy</p>
       </header>
 
       <div className="mt-8 text-white flex flex-col gap-1">
