@@ -400,5 +400,11 @@ export const getSelectedAccountPrivateKey = () => {
   if (privateKey) {
     return privateKey[accountIndex]?.privateKey;
   }
-  return "";
-};
+  return '';
+}
+
+// export const getAssets = async () => {
+//   const provider =  new ethers.providers.JsonRpcProvide
+
+// // await provider.lis
+// }

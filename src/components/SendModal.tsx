@@ -65,7 +65,7 @@ const SendModal: React.FC<SendModalProps> = ({
 
   return (
     <div className="text-sm fixed inset-0 flex items-center justify-center z-50 backdrop-blur-md">
-      <div className="w-[90%] md:w-[400px] p-6 rounded bg-[#252525]">
+      <div className="w-[90%] md:w-[400px] p-6 rounded">
         <div className="flex items-center mb-6">
           <RiCloseLine
             className="cursor-pointer text-xl bg-[#D9D9D9] rounded-full mr-3"
@@ -75,7 +75,7 @@ const SendModal: React.FC<SendModalProps> = ({
         </div>
         <div className="text-white">
           <h2 className="mb-2">From</h2>
-          <div className="flex rounded-lg justify-between bg-[#363636] p-2">
+          <div className="flex rounded-lg gap-2 bg-[#363636] p-2">
             <img
               src={AccountIcon}
               alt="homeicon"
@@ -83,7 +83,9 @@ const SendModal: React.FC<SendModalProps> = ({
             />
             <div className="text-white mr-24">
               <p>Account</p>
-              <p className="text-[13px] truncate">{walletAddress}</p>
+              <p>{`${walletAddress.slice(0, 6)}....${walletAddress.slice(
+                -4
+              )}`}</p>
             </div>
           </div>
         </div>
@@ -149,3 +151,6 @@ const SendModal: React.FC<SendModalProps> = ({
 };
 
 export default SendModal;
+
+
+

@@ -6,66 +6,74 @@ import SelectNetwork from "../../components/SelectNetwork";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import AccountModal from "../../components/AccoutModal";
-import { getBalance, getSelectedNetwork, networks, getTokens, getNfts, getTransactionHistory } from "../../utils/utils";
+import {
+  getBalance,
+  getSelectedNetwork,
+  networks,
+  getTokens,
+} from "../../utils/utils";
 import { RiLoader2Line } from "react-icons/ri";
 import SendModal from "../../components/SendModal";
 import ReceiveModal from "../../components/ReceiveModal";
-import Transactions from "../../components/Transactions";
-import NFT from "../../components/NFT";
-import { Assets } from "../../interfaces/interfaces";
+// import SendModalTwo from "../../components/SendModalTwo";
 
 const ViewBalance = () => {
   const [searchParams] = useSearchParams();
-  const address = searchParams.get("address") ?? "";
+  const address =
+    searchParams.get("address")  ?? "";
   const [isOpenNetworkTap, setIsOpenNetworkTap] = useState(false);
-  const [priceChange] = useState("0.00");
+  const [priceChange, setPriceChange] = useState("0.00");
   const [balance, setBalance] = useState("0.00");
-  const [loading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [isSendModalOpen, setIsSendModalOpen] = useState(false);
+  // const [isSendModal2Open, setIsSendModal2Open] = useState(false);
   const [isReceiveModalOpen, setIsReceiveModalOpen] = useState(false);
-  const [assets] = useState<Assets[]>([]);
+  interface Asset {
+    name: string;
+    quantity: number;
+    price: string;
+    change: number;
+  }
 
   const [activeTab, setActiveTab] = useState("Tokens");
 
+  const [assets, setAssets] = useState<Asset[]>([]);
   const [isAccountModalOpen, setIsAccountModalOpen] = useState(false);
-
+  const [selectedAccountIndex] = useState<number>(
+    parseInt(localStorage.getItem("selectedAccountIndex") ?? "0")
+  );
   const currentNetwork = getSelectedNetwork() as keyof typeof networks;
-  const [usdBalance] = useState("0.00");
+  const [usdBalance, setUsdBalance] = useState("0.00");
 
-  // useEffect(() => {
-  //   const fetchBalanceAndConvert = async () => {
-  //     setLoading(true);
-  //     try {
-  //       const tokens = await getTokens();
-  //       setAssets(tokens);
-  //       const storedAccounts = retrieveData("accounts");
-  //       console.log("storedAccounts", storedAccounts);
-  //       const ethBalance = await getBalance(
-  //         address,
-  //         networks[currentNetwork].chainId,
-  //         networks[currentNetwork].rpcUrl
-  //       );
-  //       console.log("ethBalance", ethBalance);
-  //       setBalance(parseFloat(ethBalance).toFixed(4));
+  useEffect(() => {
+    const fetchBalanceAndConvert = async () => {
+      setLoading(true);
+      try {
+        const tokens = await getTokens();
+        setAssets(tokens);
+        const ethBalance = await getBalance(
+          address,
+          networks[currentNetwork].chainId,
+          networks[currentNetwork].rpcUrl
+        );
+        setBalance(parseFloat(ethBalance).toFixed(4));
 
-  //       const response = await fetch(
-  //         "https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd"
-  //       );
-  //       const data = await response.json();
-  //       console.log(data, "data");
-  //       const rate = data.ethereum.usd;
-  //       const change = data.ethereum.usd_24h_change.toFixed(2);
-  //       setUsdBalance((parseFloat(ethBalance) * rate).toFixed(2));
-  //       setPriceChange(change);
-  //       console.log("usdBalance", usdBalance);
-  //     } catch (error) {
-  //       console.error("Error fetching balance:", error);
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
-  //   fetchBalanceAndConvert();
-  // }, [address, currentNetwork, selectedAccountIndex]); // Removed balance and usdBalance
+        const response = await fetch(
+          "https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd"
+        );
+        const data = await response.json();
+        const rate = data.ethereum.usd;
+        const change = data.ethereum.usd_24h_change.toFixed(2);
+        setUsdBalance((parseFloat(ethBalance) * rate).toFixed(2));
+        setPriceChange(change);
+      } catch (error) {
+        console.error("Error fetching balance:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchBalanceAndConvert();
+  }, [address, currentNetwork, selectedAccountIndex]); // Removed balance and usdBalance
 
   useEffect(() => {
     const fetchData = async () => {
@@ -88,6 +96,7 @@ const ViewBalance = () => {
 
   const handleCloseSendModal = () => {
     setIsSendModalOpen(false);
+    // setIsSendModal2Open(true);
   };
 
   const handleOpenReceiveModal = () => {
@@ -101,7 +110,7 @@ const ViewBalance = () => {
     networks[currentNetwork].ticker === "USD" ? usdBalance : balance;
   console.log(balance, "balance");
   return (
-    <div className="bg-[#252525] relative w-[375px] h-full">
+    <div className="bg-[#252525] relative w-[375px]">
       <Header
         isOpen={isOpenNetworkTap}
         setIsOpenNetworkTab={setIsOpenNetworkTap}
@@ -109,7 +118,7 @@ const ViewBalance = () => {
         setIsAccountModalOpen={setIsAccountModalOpen}
       />
       {/* View account section */}
-      <div className="mt-5 h-full">
+      <div className="mt-5">
         {/* Balance section */}
         <div className="flex flex-col items-center w-[350px] md:w-full p-2 mx-2 bg-[242424]">
           <div className="w-[345px]  h-40 md:w-full flex flex-col text-white  border border-[#4D4D4D] align-middle justify-center px-3 rounded-lg">
@@ -125,83 +134,36 @@ const ViewBalance = () => {
             </div>
 
             <h3
-              className={`font-karla font-bold text-lg leading-5 ${
-                priceChange.startsWith("-") ? "text-red-500" : "text-[#5CE677]"
-              }`}
+              className={`font-karla font-bold text-lg leading-5 ${priceChange.startsWith("-") ? "text-red-500" : "text-[#5CE677]"
+                }`}
             >
               {priceChange}% (24h)
             </h3>
           </div>
 
           {/* Send and Deposit */}
-          <div className="flex flex-row items-center justify-between mt-4 cursor-pointer">
-            <div className="flex flex-row items-center justify-center gap-8 mt-4 text-white">
-              <div
-                className="flex flex-col items-center gap-1 text-base font-karla"
-                onClick={handleOpenSendModal}
-              >
-                <div className="h-10 w-10 bg-violet-500 rounded-full flex items-center justify-center">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth={1.5}
-                    stroke="currentColor"
-                    className="size-4"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25"
-                    />
-                  </svg>
-                </div>
-                Send
-              </div>
-
-              <div
-                className="flex flex-col  items-center gap-1 text-base font-karla"
-                onClick={handleOpenSendModal}
-              >
-                <div className="h-10 w-10 bg-violet-500 rounded-full flex items-center justify-center">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth={1.5}
-                    stroke="currentColor"
-                    className="size-4"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="m19.5 4.5-15 15m0 0h11.25m-11.25 0V8.25"
-                    />
-                  </svg>
-                </div>
-                Recieve
-              </div>
-              {/* 
+          <div className="flex flex-row items-center justify-between w-[200px] mt-4">
+            <div className="flex flex-row items-center justify-between w-[200px] mt-6 text-white">
               <button
                 className="flex flex-row items-center border border-gray-400 px-4 py-2 rounded-lg hover:bg-violet-500 mr-4"
                 onClick={handleOpenSendModal}
               >
                 <IoIosSend />
                 <h2 className="font-karla text-base font-bold ml-1">Send</h2>
-              </button> 
-              {/* <button
+              </button>
+              <button
                 className="flex flex-row items-center border border-gray-400 px-4 py-2 rounded-lg hover:bg-violet-500 "
                 onClick={handleOpenReceiveModal}
               >
                 <PiHandDepositFill />
                 <h2 className="font-karla text-base font-bold ml-1">Receive</h2>
-              </button> */}
+              </button>
             </div>
           </div>
 
           <div></div>
           {/* Assets Section */}
-          <div className="flex flex-col w-full px-4 mt-6 h-full">
+          <div className="flex flex-col w-full px-4 mt-6">
             <div className="w-full flex justify-between items-center text-[15px] cursor-pointer">
               {["Tokens", "NFTs", "History"].map((tab, index) => (
                 <h2
@@ -274,47 +236,46 @@ const ViewBalance = () => {
               </div>
             )}
 
-            {activeTab === "NFTs" && <NFT />}
+            {activeTab === "NFTs" && <div></div>}
 
-            {activeTab === "History" && <Transactions />}
+            {activeTab === "History" && <div></div>}
           </div>
-
-          {/* Select Network */}
-          {isOpenNetworkTap && (
-            <SelectNetwork
-              isOpen={isOpenNetworkTap}
-              setIsOpenNetworkTab={setIsOpenNetworkTap}
-              address={address}
-            />
-          )}
-          {isSendModalOpen && (
-            <SendModal
-              isOpen={isSendModalOpen}
-              onClose={handleCloseSendModal}
-              walletAddress={address}
-            />
-          )}
-
-          {isReceiveModalOpen && (
-            <ReceiveModal
-              isOpen={isReceiveModalOpen}
-              onClose={handleCloseReceiveModal}
-              walletAddress={address}
-              index={
-                parseInt(localStorage.getItem("selectedAccountIndex") ?? "0") +
-                1
-              }
-            />
-          )}
-
-          {isAccountModalOpen && (
-            <AccountModal
-              isOpen={isAccountModalOpen}
-              setIsAccountModalOpen={setIsAccountModalOpen}
-              address={address}
-            />
-          )}
         </div>
+
+        {/* Select Network */}
+        {isOpenNetworkTap && (
+          <SelectNetwork
+            isOpen={isOpenNetworkTap}
+            setIsOpenNetworkTab={setIsOpenNetworkTap}
+            address={address}
+          />
+        )}
+        {isSendModalOpen && (
+          <SendModal
+            isOpen={isSendModalOpen}
+            onClose={handleCloseSendModal}
+            walletAddress={address}
+          />
+        )}
+
+        {isReceiveModalOpen && (
+          <ReceiveModal
+            isOpen={isReceiveModalOpen}
+            onClose={handleCloseReceiveModal}
+            walletAddress={address}
+            index={
+              parseInt(localStorage.getItem("selectedAccountIndex") ?? "0") + 1
+            }
+          />
+        )}
+
+        {isAccountModalOpen && (
+          <AccountModal
+            isOpen={isAccountModalOpen}
+            setIsAccountModalOpen={setIsAccountModalOpen}
+            address={address}
+          />
+        )}
       </div>
     </div>
   );
