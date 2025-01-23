@@ -53,7 +53,7 @@ const GenerateSeed = () => {
       </header>
 
       <div className="mt-8 text-white flex flex-col gap-1">
-        <h2 className="text-2xl font-karla">Protect you wallet</h2>
+        <h2 className="text-2xl font-karla">Protect your wallet</h2>
         <p className="font-inter text-gray-400">
           Write down the following words in the correct order and keep them
           somewhere safe. This is the only way to recover your wallet if you

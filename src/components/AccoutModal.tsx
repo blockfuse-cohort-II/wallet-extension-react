@@ -116,7 +116,7 @@ const AccountModal: React.FC<PropsSelectNetwork> = ({
         <div className="flex flex-row items-center w-full justify-between px-4">
           <div className="flex justify-center flex-row items-center w-full">
             <h2 className="font-poppins font-bold text-[22px] mt-2 mb-2">
-              Select a network
+              Select a Account
             </h2>
           </div>
           <IoMdClose
@@ -131,13 +131,13 @@ const AccountModal: React.FC<PropsSelectNetwork> = ({
           <input
             type="text"
             placeholder="Search"
-            className="w-full h-full outline-none pl-2 text-white bg-transparent"
+            className="w-full h-full outline-none pl-1 text-white bg-transparent"
           />
         </div>
 
         {/* Networks */}
         <div
-          className="mt-2 h-[60%] overflow-auto px-6 w-full"
+          className="mt-2 h-[60%] overflow-auto px-3 w-full"
           style={{
             scrollbarWidth: "none" /* Firefox */,
             msOverflowStyle: "none" /* IE and Edge */,
@@ -207,7 +207,7 @@ const AccountModal: React.FC<PropsSelectNetwork> = ({
 
         {/* Add account button */}
         <button
-          className="absolute bottom-[20%] w-full h-8 bg-white text-black rounded-full mt-3 flex flex-row items-center justify-center font-poppins"
+          className="absolute bottom-[15%] w-[85%] h-10 bg-violet-500 text-white rounded-full mt-3 flex py-3 flex-row items-center justify-center font-poppins"
           onClick={handleAddAccount}
         >
           <IoMdAdd className="text-2xl font-bold mr-3" />
