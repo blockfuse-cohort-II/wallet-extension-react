@@ -6,7 +6,7 @@ import SelectNetwork from "../../components/SelectNetwork";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import AccountModal from "../../components/AccoutModal";
-import { getBalance, getSelectedNetwork, networks } from "../../utils/utils";
+import { getBalance, getSelectedNetwork, networks, getTokens, getNfts, getTransactionHistory } from "../../utils/utils";
 import { RiLoader2Line } from "react-icons/ri";
 import SendModal from "../../components/SendModal";
 import ReceiveModal from "../../components/ReceiveModal";
@@ -77,6 +77,9 @@ const ViewBalance = () => {
       setBalance(parseFloat(ethBalance).toFixed(4));
     };
     fetchData();
+    getTokens();
+    getNfts();
+    getTransactionHistory();
   }, [address, currentNetwork]);
 
   const handleOpenSendModal = () => {
