@@ -14,6 +14,9 @@ import {
 import { RiLoader2Line } from "react-icons/ri";
 import SendModal from "../../components/SendModal";
 import ReceiveModal from "../../components/ReceiveModal";
+import SendModalTwo from "../../components/SendModalTwo";
+import Transactions from "../../components/Transactions";
+import NFT from "../../components/NFT";
 import { Assets } from "../../interfaces/interfaces";
 
 const ViewBalance = () => {
@@ -100,7 +103,7 @@ const ViewBalance = () => {
     networks[currentNetwork].ticker === "USD" ? usdBalance : balance;
   console.log(balance, "balance");
   return (
-    <div className="bg-[#252525] relative w-[375px]">
+    <div className="bg-[#252525] relative w-[375px] h-full">
       <Header
         isOpen={isOpenNetworkTap}
         setIsOpenNetworkTab={setIsOpenNetworkTap}
@@ -108,7 +111,7 @@ const ViewBalance = () => {
         setIsAccountModalOpen={setIsAccountModalOpen}
       />
       {/* View account section */}
-      <div className="mt-5">
+      <div className="mt-5 h-full">
         {/* Balance section */}
         <div className="flex flex-col items-center w-[350px] md:w-full p-2 mx-2 bg-[242424]">
           <div className="w-[345px]  h-40 md:w-full flex flex-col text-white  border border-[#4D4D4D] align-middle justify-center px-3 rounded-lg">
@@ -132,6 +135,8 @@ const ViewBalance = () => {
           </div>
 
           {/* Send and Deposit */}
+          <div className="flex flex-row items-center justify-between w-[200px] mt-4 h-full">
+            <div className="flex flex-row items-center justify-between w-[200px] mt-6 text-white">
           <div className="flex flex-row items-center justify-between mt-4 cursor-pointer">
             <div className="flex flex-row items-center justify-center gap-8 mt-4 text-white">
               <div className="flex flex-col items-center gap-1 text-base font-karla" onClick={handleOpenSendModal}>
@@ -183,7 +188,7 @@ const ViewBalance = () => {
 
           <div></div>
           {/* Assets Section */}
-          <div className="flex flex-col w-full px-4 mt-6">
+          <div className="flex flex-col w-full px-4 mt-6 h-full">
             <div className="w-full flex justify-between items-center text-[15px] cursor-pointer">
               {["Tokens", "NFTs", "History"].map((tab, index) => (
                 <h2
@@ -256,9 +261,9 @@ const ViewBalance = () => {
               </div>
             )}
 
-            {activeTab === "NFTs" && <div></div>}
+            {activeTab === "NFTs" && <NFT />}
 
-            {activeTab === "History" && <div></div>}
+            {activeTab === "History" && <Transactions />}
           </div>
         </div>
 
