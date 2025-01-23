@@ -1,7 +1,7 @@
-import { ethers, TransactionResponse, Mnemonic } from "ethers";
+import { ethers, TransactionResponse, Mnemonic, id } from "ethers";
 import { HDNode } from "@ethersproject/hdnode";
-import { Alchemy, Network } from "alchemy-sdk";
-import { Assets } from "../interfaces/interfaces";
+import { Alchemy, Network, AssetTransfersCategory } from "alchemy-sdk";
+import { Assets, Nft } from "../interfaces/interfaces";
 
 interface Contact {
   name: string;
@@ -14,7 +14,7 @@ export function savePassword(password: string): void {
 }
 
 export function validatePassword(password: string): boolean {
-  console.log("password-validate", password);
+  //console.log("password-validate", password);
   return localStorage.getItem("password") === password;
 }
 
@@ -156,35 +156,44 @@ export const clearStore = () => {
 };
 
 export const getTokens = async () => {
-  const network_name: string = localStorage.getItem("selectedNetwork") ?? "";
+  console.log("getTokens");
+  const network_name: string = localStorage.getItem("selectedNetwork") ?? "sepolia";
+  console.log(network_name, "network_name");
   const config = {
-    apiKey: "alcht_bOZV7tenTgYPT9vyuBsOdSiE0WsuiL",
+    apiKey: "alcht_wOBBu92MwrW9docBRRM5vB5rw3CXMJ",
     network: alchemyNetworks[network_name],
   };
+  console.log(config, "config");
   const alchemy = new Alchemy(config);
+  console.log(alchemy, "alchemy");
 
   // Wallet address -- replace with your desired address
-  const address = retrieveData("accounts");
+  //const accounts = retrieveData("accounts");
+  //console.log(accounts, "accounts");
+  //const selectedAccountIndex = localStorage.getItem("selectedAccountIndex") ?? 0;
+  //console.log(selectedAccountIndex, "selectedAccountIndex");
+  //const address = accounts[selectedAccountIndex]?.address;
+  //console.log(address, "address");
+  const address = '0x4838B106FCe9647Bdf1E7877BF73cE8B0BAD5f97';
   if (!address) {
     throw new Error("Wallet address not found");
   }
 
   // Get token balances with API endpoint
   const balances = await alchemy.core.getTokenBalances(address);
-
+  console.log(balances, "balances");
   // Remove tokens with zero balance
-  const nonZeroBalances = balances.tokenBalances.filter((token) => {
+  /*const nonZeroBalances = balances.tokenBalances.filter((token) => {
     return token.tokenBalance !== "0";
-  });
+  });*/
 
-  console.log(`Token balances of ${address} \n`);
+  //console.log(`Token balances of ${address} \n`);
 
  
   // Counter for SNo of final output
   const results: Assets[] = [];
-
   // Loop through all tokens with non-zero balance
-  for (const token of nonZeroBalances) {
+  for (const token of balances.tokenBalances) {
     // Get balance of token
     let balance = Number(token.tokenBalance);
 
@@ -198,28 +207,29 @@ export const getTokens = async () => {
     results.push({
       name: metadata.name ?? "",
       quantity: balance,
-      price: metadata.symbol ?? "",
+      price: (metadata.symbol && metadata.symbol.length < 7)  ? (metadata.symbol || '') : (metadata.name || ''),
       change: 0,
     });
-
-    // Print name, balance, and symbol of token
-    console.log("Name:", metadata.name);
-    console.log("Balance", balance);
-    console.log("Symbol:", metadata.symbol);
-    console.log("----------------------------------");
   }
+
+  console.log("tokens", results);
   return results;
 };
 
-export const getNfts = async (network_name: string) => {
+export const getNfts = async () => {
+  console.log("getNfts");
+  const network_name: string = localStorage.getItem("selectedNetwork") ?? "sepolia";
   const config = {
-    apiKey: "alcht_bOZV7tenTgYPT9vyuBsOdSiE0WsuiL",
+    apiKey: "alcht_wOBBu92MwrW9docBRRM5vB5rw3CXMJ",
     network: alchemyNetworks[network_name],
   };
   const alchemy = new Alchemy(config);
 
   // Wallet address -- replace with your desired address
-  const address = retrieveData("accounts");
+  //const accounts = retrieveData("accounts");
+  //const selectedAccountIndex = localStorage.getItem("selectedAccountIndex") ?? 0;
+  //const address = accounts[selectedAccountIndex]?.address;
+  const address = '0x4838B106FCe9647Bdf1E7877BF73cE8B0BAD5f97';
   if (!address) {
     throw new Error("Wallet address not found");
   }
@@ -228,17 +238,93 @@ export const getNfts = async (network_name: string) => {
   const nfts = await alchemy.nft.getNftsForOwner(address);
 
   // Parse output
-  const numNfts = nfts["totalCount"];
+  //const numNfts = nfts["totalCount"];
   const nftList = nfts["ownedNfts"];
 
-  console.log(`Total NFTs owned by ${address}: ${numNfts} \n`);
-
-  let i = 1;
+  //console.log(`Total NFTs owned by ${address}: ${numNfts} \n`);
+  const results: Nft[] = [];
 
   for (const nft of nftList) {
-    console.log(`${i}. ${nft}`);
-    i++;
+    results.push({
+      name: nft.name ?? "",
+      image: nft.image.pngUrl ?? "",
+      quantity: nft.balance ?? "",
+    });
   }
+
+  console.log("nft", results);
+
+  return results;
+};
+
+export const getTransactionHistory = async () => {
+  console.log("getTransactionHistory");
+  const network_name: string = localStorage.getItem("selectedNetwork") ?? "sepolia";
+  const config = {
+    apiKey: "alcht_wOBBu92MwrW9docBRRM5vB5rw3CXMJ",
+    network: alchemyNetworks[network_name],
+  };
+  const alchemy = new Alchemy(config);
+
+  //const accounts = retrieveData("accounts");
+  //const selectedAccountIndex = localStorage.getItem("selectedAccountIndex") ?? 0;
+  //const address = accounts[selectedAccountIndex]?.address;
+  const address = '0x4838B106FCe9647Bdf1E7877BF73cE8B0BAD5f97';
+
+  if (!address) {
+    throw new Error("Wallet address not found");
+  }
+
+  const from = await alchemy.core.getAssetTransfers({
+    fromAddress: address,
+    category: [
+      AssetTransfersCategory.EXTERNAL,
+      AssetTransfersCategory.INTERNAL,
+      AssetTransfersCategory.ERC20,
+      AssetTransfersCategory.ERC721,
+      AssetTransfersCategory.ERC1155,
+    ],
+    });
+
+  const to = await alchemy.core.getAssetTransfers({
+    toAddress: address,
+    category: [
+      AssetTransfersCategory.EXTERNAL,
+      AssetTransfersCategory.INTERNAL,
+      AssetTransfersCategory.ERC20,
+      AssetTransfersCategory.ERC721,
+      AssetTransfersCategory.ERC1155,
+    ],
+  });
+
+  const sent = from.transfers.map((tx) => {
+    return {
+      id: tx.uniqueId,
+      hash: tx.hash,
+      from: tx.from,
+      to: tx.to,
+      value: tx.value,
+      currency: tx.asset,
+      txnType: 'send'
+    };
+  });
+
+  const received = to.transfers.map((tx) => {
+    return {
+      id: tx.uniqueId,
+      hash: tx.hash,
+      from: tx.from,
+      to: tx.to,
+      value: tx.value,
+      currency: tx.asset,
+      txnType: 'receive'
+    };
+  });
+
+  console.log("sent", sent);
+  console.log("received", received);
+
+  return [ ...sent, ...received ];
 };
 
 export const getMnemonic = () => {

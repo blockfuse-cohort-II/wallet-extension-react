@@ -4,3 +4,9 @@ export interface Assets {
  price: string;
  change: number;
 }
+
+export interface Nft {
+    name: string;
+    image: string;
+    quantity: string;
+}

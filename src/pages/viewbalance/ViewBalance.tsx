@@ -11,6 +11,8 @@ import {
   getSelectedNetwork,
   networks,
   getTokens,
+  getNfts,
+  getTransactionHistory
 } from "../../utils/utils";
 import { RiLoader2Line } from "react-icons/ri";
 import SendModal from "../../components/SendModal";
@@ -85,7 +87,10 @@ const ViewBalance = () => {
       setBalance(parseFloat(ethBalance).toFixed(4));
     };
     fetchData();
-  }, [currentNetwork]);
+    getTokens();
+    getNfts();
+    getTransactionHistory();
+  }, [address, currentNetwork]);
 
   const handleOpenSendModal = () => {
     setIsSendModalOpen(true);
