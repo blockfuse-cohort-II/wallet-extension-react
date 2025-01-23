@@ -121,7 +121,7 @@ export function addCustomNetwork(
   name: string,
   rpcUrl: string,
   chainId: number,
-  explorer: string
+  explorer?: string
 ) {
   networks[name] = {
     name,
