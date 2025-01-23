@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { RiCloseLine } from "react-icons/ri";
 import AccountIcon from "../assets/Account icon.png";
 import { getPrivateKey, sendEther } from "../utils/utils";
@@ -92,7 +92,7 @@ const SendModal: React.FC<SendModalProps> = ({
 
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50 backdrop-blur-lg">
-      <div className="w-[90%] md:w-[400px] p-6 rounded bg-[#1f1f1f]">
+      <div className="w-[90%] md:w-[400px] p-6 rounded">
         <div className="flex items-center mb-6">
           <RiCloseLine
             className="cursor-pointer text-xl bg-[#D9D9D9] rounded-full mr-3"
