@@ -1,12 +1,12 @@
-import { ethers, TransactionResponse ,Mnemonic} from "ethers";
+import { ethers, TransactionResponse, Mnemonic } from "ethers";
 import { HDNode } from "@ethersproject/hdnode";
 import { Alchemy, Network } from "alchemy-sdk";
+import { Assets } from "../interfaces/interfaces";
 
 interface Contact {
   name: string;
   address: string;
 }
-
 
 export function savePassword(password: string): void {
   if (!password) throw new Error("Password cannot be empty");
@@ -17,12 +17,6 @@ export function validatePassword(password: string): boolean {
   console.log("password-validate", password);
   return localStorage.getItem("password") === password;
 }
-
-/*export function generateSeedPhrase(): string {
-  const wallet = ethers.Wallet.createRandom();
-  if (!wallet.mnemonic) throw new Error("Failed to generate mnemonic");
-  return wallet.mnemonic.phrase;
-}*/
 
 export function getAddressFromSeedPhrase(seedPhrase: string): string {
   const wallet = ethers.Wallet.fromPhrase(seedPhrase);
@@ -74,7 +68,9 @@ export interface NetworkConfig {
   name: string;
   rpcUrl: string;
   chainId: number;
-  symbol?: string; // Ξ (Ethereum)
+  symbol?: string; // Symbol for the network currency
+  ticker?: string; // Ticker symbol
+  explorer?: string; // Explorer URL for the network
 }
 
 const alchemyNetworks: Record<string, Network> = {
@@ -84,35 +80,38 @@ const alchemyNetworks: Record<string, Network> = {
   sepolia: Network.ETH_SEPOLIA,
 };
 
-const defaultNetworks: Record<string, NetworkConfig & { symbol: string; ticker: string }> = {
+const defaultNetworks: Record<string, NetworkConfig> = {
   mainnet: {
     name: "Ethereum Mainnet",
     rpcUrl: "https://mainnet.infura.io/v3/1cef973dff844ba09dea342050cd5967",
     chainId: 1,
-    symbol: "\u039E",
-    ticker: "USD",
+    symbol: "Ξ",
+    ticker: "ETH",
+    explorer: "https://etherscan.io",
   },
   polygon: {
     name: "Polygon Mainnet",
     rpcUrl: "https://polygon-rpc.com",
     chainId: 137,
-    symbol: "\u039E",
-    ticker: "USD",
-
+    symbol: "MATIC",
+    ticker: "MATIC",
+    explorer: "https://polygonscan.com",
   },
   bsc: {
     name: "Binance Smart Chain",
     rpcUrl: "https://bsc-dataseed.binance.org/",
     chainId: 56,
-    symbol: "\u0024",
-    ticker: "ETH",
+    symbol: "BNB",
+    ticker: "BNB",
+    explorer: "https://bscscan.com",
   },
   sepolia: {
     name: "Sepolia Testnet",
     rpcUrl: "https://sepolia.infura.io/v3/1cef973dff844ba09dea342050cd5967",
     chainId: 11155111,
-    symbol: "\u039E",
+    symbol: "Ξ",
     ticker: "SepoliaETH",
+    explorer: "https://sepolia.etherscan.io",
   },
 };
 
@@ -121,32 +120,35 @@ export const networks = { ...defaultNetworks };
 export function addCustomNetwork(
   name: string,
   rpcUrl: string,
-  chainId: number
+  chainId: number,
+  explorer?: string
 ) {
   networks[name] = {
     name,
     rpcUrl,
     chainId,
-    symbol: "\u039E",
-    ticker: "ETH",
+    symbol: "Ξ",
+    ticker: "CustomETH",
+    explorer,
   };
 }
 
 export function getNetwork(name: string): NetworkConfig | undefined {
+  console.log("getNetwork", networks[name]);
   return networks[name];
 }
 
-export const getDecryptedWalletAddress = (): string | null => {
-  const encryptedWalletAddress = localStorage.getItem("encryptedWalletAddress");
-  if (encryptedWalletAddress) {
-    return encryptedWalletAddress;
+export const retrieveData = (key: string) => {
+  const data = JSON.parse(localStorage.getItem(`${key}`) ?? "");
+  if (data) {
+    return data;
   }
   return null;
 };
 
-
-export const persistEncryptedWalletAddress = (address: string) => {
-  localStorage.setItem("encryptedWalletAddress", address);
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const persistData = (key: string, data: any) => {
+  localStorage.setItem(`${key}`, JSON.stringify(data));
 };
 
 export const clearStore = () => {
@@ -154,7 +156,7 @@ export const clearStore = () => {
 };
 
 export const getTokens = async () => {
-  const network_name: string = localStorage.getItem('selectedNetwork') || ''
+  const network_name: string = localStorage.getItem("selectedNetwork") ?? "";
   const config = {
     apiKey: "alcht_bOZV7tenTgYPT9vyuBsOdSiE0WsuiL",
     network: alchemyNetworks[network_name],
@@ -162,52 +164,52 @@ export const getTokens = async () => {
   const alchemy = new Alchemy(config);
 
   // Wallet address -- replace with your desired address
-  const address = getDecryptedWalletAddress();
+  const address = retrieveData("accounts");
   if (!address) {
     throw new Error("Wallet address not found");
   }
 
   // Get token balances with API endpoint
   const balances = await alchemy.core.getTokenBalances(address);
-  
-    // Remove tokens with zero balance
-    const nonZeroBalances = balances.tokenBalances.filter((token) => {
-      return token.tokenBalance !== "0";
-    });
-  
-    console.log(`Token balances of ${address} \n`);
-    
-    interface assets {
-      name: string;
-      quantity: number;
-      price: string;
-      change: number;
-    }
-    // Counter for SNo of final output
-    const results: assets[] = [];
-  
-    // Loop through all tokens with non-zero balance
-    for (const token of nonZeroBalances) { 
-      // Get balance of token
-      let balance = Number(token.tokenBalance);
-  
-      // Get metadata of token with API endpoint
-      const metadata = await alchemy.core.getTokenMetadata(token.contractAddress);
-  
-      // Compute token balance in human-readable format
-      balance = balance / Math.pow(10, Number(metadata.decimals));
-      balance = Number(balance.toFixed(2));
 
-      results.push({name: (metadata.name || ''), quantity: balance, price: (metadata.symbol || ''), change: 0})
-  
-      // Print name, balance, and symbol of token
-      console.log("Name:", metadata.name);
-      console.log("Balance", balance)
-      console.log("Symbol:", metadata.symbol);
-      console.log("----------------------------------");
-    }
-    return results;
-}
+  // Remove tokens with zero balance
+  const nonZeroBalances = balances.tokenBalances.filter((token) => {
+    return token.tokenBalance !== "0";
+  });
+
+  console.log(`Token balances of ${address} \n`);
+
+ 
+  // Counter for SNo of final output
+  const results: Assets[] = [];
+
+  // Loop through all tokens with non-zero balance
+  for (const token of nonZeroBalances) {
+    // Get balance of token
+    let balance = Number(token.tokenBalance);
+
+    // Get metadata of token with API endpoint
+    const metadata = await alchemy.core.getTokenMetadata(token.contractAddress);
+
+    // Compute token balance in human-readable format
+    balance = balance / Math.pow(10, Number(metadata.decimals));
+    balance = Number(balance.toFixed(2));
+
+    results.push({
+      name: metadata.name ?? "",
+      quantity: balance,
+      price: metadata.symbol ?? "",
+      change: 0,
+    });
+
+    // Print name, balance, and symbol of token
+    console.log("Name:", metadata.name);
+    console.log("Balance", balance);
+    console.log("Symbol:", metadata.symbol);
+    console.log("----------------------------------");
+  }
+  return results;
+};
 
 export const getNfts = async (network_name: string) => {
   const config = {
@@ -217,7 +219,7 @@ export const getNfts = async (network_name: string) => {
   const alchemy = new Alchemy(config);
 
   // Wallet address -- replace with your desired address
-  const address = getDecryptedWalletAddress();
+  const address = retrieveData("accounts");
   if (!address) {
     throw new Error("Wallet address not found");
   }
@@ -237,16 +239,15 @@ export const getNfts = async (network_name: string) => {
     console.log(`${i}. ${nft}`);
     i++;
   }
-}
+};
 
 export const getMnemonic = () => {
   const mnemonic = localStorage.getItem("mnemonic");
   if (mnemonic) {
     return mnemonic;
   }
-  return '';
-}
-
+  return "";
+};
 
 export const saveContact = (contact: Contact): void => {
   const contacts = getContacts();
@@ -268,9 +269,9 @@ export function createHDWallet(
   seedPhrase: string,
   path: string = "m/44'/60'/0'/0/0"
 ): ethers.Wallet {
-  const isValid = Mnemonic.isValidMnemonic(seedPhrase)
-  if (!isValid){
-    throw  Error('Not a valid seed phrase')
+  const isValid = Mnemonic.isValidMnemonic(seedPhrase);
+  if (!isValid) {
+    throw Error("Not a valid seed phrase");
   }
   const hdNode = HDNode.fromMnemonic(seedPhrase, path);
   const derivedNode = hdNode.derivePath(path);
@@ -303,21 +304,15 @@ export function generateSeedPhrase(): ethers.Mnemonic {
 
 export const saveMnemonic = async (mnemonic: string) => {
   localStorage.setItem("mnemonic", mnemonic);
-}
+};
 
-export const savePrivateKey = async (privateKey: string) => {
-  localStorage.setItem("privateKey", privateKey);
-}
-
-export const getPrivateKey = async () => {
-  
-  const privateKey = JSON.parse(localStorage.getItem("privateKey") ?? "[]");
+export const getSelectedAccountPrivateKey = () => {
+  const privateKey = retrieveData("accounts");
   console.log(privateKey, "privateKeyutils");
-  const accountIndex = localStorage.getItem("selectedAccountIndex") || 0
-  
+  const accountIndex = localStorage.getItem("selectedAccountIndex") ?? 0;
+
   if (privateKey) {
-    
-    return privateKey[accountIndex];
+    return privateKey[accountIndex]?.privateKey;
   }
-  return '';
-}
+  return "";
+};

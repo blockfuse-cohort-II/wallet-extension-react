@@ -59,7 +59,7 @@ const Contacts = () => {
         {contacts.length > 0 ? (
           contacts.map((contact, index) => (
             <div
-              key={index}
+              key={index + 1}
               className="bg-gray-700 p-4 rounded flex justify-between items-center"
             >
               <div>

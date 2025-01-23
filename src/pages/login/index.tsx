@@ -1,32 +1,27 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { getDecryptedWalletAddress, validatePassword } from "../../utils/utils";
+import { useNavigate, Link } from "react-router-dom";
+import { retrieveData, validatePassword, clearStore } from "../../utils/utils";
 import { toast } from "sonner";
-import { Link } from "react-router-dom";
-import logo from "../../assets/logo2.png"
-import { clearStore } from "../../utils/utils";
+import logo from "../../assets/logo2.png";
 
 const Login = () => {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-  const walletAddress = getDecryptedWalletAddress();
+  const walletAddress = retrieveData("accounts")[0].address;
 
   const verifyPassword = () => {
     console.log("password", password);
     if (validatePassword(password)) {
-      (() => navigate(`/view-balance?address=${walletAddress}`))();
-      return;
-    }
-    else {
+      navigate(`/view-balance?address=${walletAddress}`);
+    } else {
       toast.info("Incorrect password.");
     }
-  }
+  };
 
-  
-  const forgotPassword = () =>{
+  const forgotPassword = () => {
     clearStore();
-    navigate("/verify-seed?type=import")
-  }
+    navigate("/verify-seed?type=import");
+  };
 
   return (
     <div className="p-6">
@@ -51,32 +46,49 @@ const Login = () => {
       </div>
       <div className="min-h">
         <div className="items-center">
-          <div className="mt-20"> <Link to="/"><img src={logo} width={40} height={40} alt="" className="m-auto" /></Link></div>
-          <h2 className="text-xl mt-4 text-white font-poppins text-center font-bold ">Unlock</h2>
+          <div className="mt-20">
+            {" "}
+            <Link to="/">
+              <img
+                src={logo}
+                width={40}
+                height={40}
+                alt=""
+                className="m-auto"
+              />
+            </Link>
+          </div>
+          <h2 className="text-xl mt-4 text-white font-poppins text-center font-bold ">
+            Unlock
+          </h2>
           <form action="" className="">
             <div className="flex flex-col gap-2">
-              <label htmlFor="" className="text-white font-poppins pt-20">Password</label>
+              <label htmlFor="" className="text-white font-poppins pt-20">
+                Password
+              </label>
               <input
                 type="password"
                 className="text-white/50 bg-white/5 outline-0 border-0 py-3 px-2 rounded-full"
                 value={password}
-                onChange={(e) =>
-                  setPassword(e.target.value)
-                } />
+                onChange={(e) => setPassword(e.target.value)}
+              />
             </div>
 
             <button
               className="w-full p-3 mt-8 bg-violet-500 rounded-full text-white font-poppins"
-              onClick={verifyPassword}>Unlock</button>
+              onClick={verifyPassword}
+            >
+              Unlock
+            </button>
           </form>
         </div>
-
       </div>
 
-      <div className="text-xs font-poppins mt-10 text-center text-white hover:text-violet-500"><button onClick={forgotPassword}>Forgot password?</button></div>
-
+      <div className="text-xs font-poppins mt-10 text-center text-white hover:text-violet-500">
+        <button onClick={forgotPassword}>Forgot password?</button>
+      </div>
     </div>
-  )
-}
+  );
+};
 
 export default Login;

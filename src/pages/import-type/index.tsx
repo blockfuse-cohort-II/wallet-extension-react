@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import CustomCheckbox from "../../components/reusables/RoundedCheckbox";
 import { useNavigate } from "react-router-dom";
 
@@ -12,8 +12,6 @@ const ImportStrategy = () => {
   const handleNextPage = () => {
     const redirect =
       isChecked === "private" ? "/private-key" : "/verify-seed?type=import";
-
-    console.log(redirect);
     navigate(redirect);
   };
 
@@ -46,7 +44,7 @@ const ImportStrategy = () => {
           Select a Method to import your wallet
         </h2>
         <p className="font-inter text-gray-400">
-          Select Prefered strategy to import your wallet
+          Select Preferred strategy to import your wallet
         </p>
       </div>
 
