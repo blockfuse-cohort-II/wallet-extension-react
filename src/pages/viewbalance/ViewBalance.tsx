@@ -14,7 +14,6 @@ import {
 import { RiLoader2Line } from "react-icons/ri";
 import SendModal from "../../components/SendModal";
 import ReceiveModal from "../../components/ReceiveModal";
-import SendModalTwo from "../../components/SendModalTwo";
 import Transactions from "../../components/Transactions";
 import NFT from "../../components/NFT";
 import { Assets } from "../../interfaces/interfaces";
@@ -137,45 +136,45 @@ const ViewBalance = () => {
           {/* Send and Deposit */}
           <div className="flex flex-row items-center justify-between w-[200px] mt-4 h-full">
             <div className="flex flex-row items-center justify-between w-[200px] mt-6 text-white">
-          <div className="flex flex-row items-center justify-between mt-4 cursor-pointer">
-            <div className="flex flex-row items-center justify-center gap-8 mt-4 text-white">
-              <div className="flex flex-col items-center gap-1 text-base font-karla" onClick={handleOpenSendModal}>
-                <div className="h-10 w-10 bg-violet-500 rounded-full flex items-center justify-center">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth={1.5}
-                    stroke="currentColor"
-                    className="size-4"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25"
-                    />
-                  </svg>
-                </div>
-                Send
-              </div>
+              <div className="flex flex-row items-center justify-between mt-4 cursor-pointer">
+                <div className="flex flex-row items-center justify-center gap-8 mt-4 text-white">
+                  <div className="flex flex-col items-center gap-1 text-base font-karla" onClick={handleOpenSendModal}>
+                    <div className="h-10 w-10 bg-violet-500 rounded-full flex items-center justify-center">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={1.5}
+                        stroke="currentColor"
+                        className="size-4"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25"
+                        />
+                      </svg>
+                    </div>
+                    Send
+                  </div>
 
-              <div className="flex flex-col  items-center gap-1 text-base font-karla" onClick={handleOpenSendModal}>
-                <div className="h-10 w-10 bg-violet-500 rounded-full flex items-center justify-center">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-4">
-  <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 4.5-15 15m0 0h11.25m-11.25 0V8.25" />
-</svg>
+                  <div className="flex flex-col  items-center gap-1 text-base font-karla" onClick={handleOpenSendModal}>
+                    <div className="h-10 w-10 bg-violet-500 rounded-full flex items-center justify-center">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-4">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 4.5-15 15m0 0h11.25m-11.25 0V8.25" />
+                      </svg>
 
-                </div>
-                Recieve
-              </div>
-{/* 
+                    </div>
+                    Recieve
+                  </div>
+                  {/* 
               <button
                 className="flex flex-row items-center border border-gray-400 px-4 py-2 rounded-lg hover:bg-violet-500 mr-4"
                 onClick={handleOpenSendModal}
               >
                 <IoIosSend />
                 <h2 className="font-karla text-base font-bold ml-1">Send</h2>
-              </button> */}
+              </button> 
               {/* <button
                 className="flex flex-row items-center border border-gray-400 px-4 py-2 rounded-lg hover:bg-violet-500 "
                 onClick={handleOpenReceiveModal}
@@ -183,124 +182,125 @@ const ViewBalance = () => {
                 <PiHandDepositFill />
                 <h2 className="font-karla text-base font-bold ml-1">Receive</h2>
               </button> */}
-            </div>
-          </div>
-
-          <div></div>
-          {/* Assets Section */}
-          <div className="flex flex-col w-full px-4 mt-6 h-full">
-            <div className="w-full flex justify-between items-center text-[15px] cursor-pointer">
-              {["Tokens", "NFTs", "History"].map((tab, index) => (
-                <h2
-                  className={`${
-                    tab === activeTab
-                      ? "border-b-2 border-violet-500 text-violet-500"
-                      : "text-gray-200"
-                  } font-poppins pb-1 px-2`}
-                  key={index}
-                  onClick={() => setActiveTab(tab)}
-                >
-                  {tab}
-                </h2>
-              ))}
-            </div>
-
-            {activeTab === "Tokens" && (
-              <div className="mt-4">
-                {assets.length > 0 ? (
-                  assets.map(
-                    (
-                      asset: {
-                        name: string;
-                        quantity: number;
-                        price: string;
-                        change: number;
-                      },
-                      index: number
-                    ) => (
-                      <div
-                        key={asset?.name + index}
-                        className="flex flex-row justify-between items-center w-full h-[77px] bg-[#1d1c1c]  rounded px-2 mb-3"
-                      >
-                        <div className="flex flex-row items-center">
-                          {/* Asset Icon */}
-                          <div className="w-10 h-10">
-                            <img
-                              src={EthIcon}
-                              alt="assetIcon"
-                              className="object-contain w-full h-full bg-white rounded-full"
-                            />
-                          </div>
-                          {/* Asset Name and Quantity */}
-                          <div className="flex flex-col items-start ml-4 text-white">
-                            <h2 className="font-karla font-bold leading-6">
-                              {asset.name}
-                            </h2>
-                            <p className="font-karla font-medium text-green-400">
-                              +98.02%
-                            </p>
-                          </div>
-                        </div>
-                        {/* Asset Price */}
-                        <div className="flex flex-col items-end text-white">
-                          <h2 className="font-karla text-base font-bold leading-6">
-                            $0.13
-                          </h2>
-                          <p className="font-medium font-karla text-white">
-                            0.0004 Eth
-                          </p>
-                        </div>
-                      </div>
-                    )
-                  )
-                ) : (
-                  <p className="font-poppins h-screen text-center mt-4 text-gray-500">
-                    No assets available.
-                  </p>
-                )}
+                </div>
               </div>
+
+              <div></div>
+              {/* Assets Section */}
+              <div className="flex flex-col w-full px-4 mt-6 h-full">
+                <div className="w-full flex justify-between items-center text-[15px] cursor-pointer">
+                  {["Tokens", "NFTs", "History"].map((tab, index) => (
+                    <h2
+                      className={`${tab === activeTab
+                          ? "border-b-2 border-violet-500 text-violet-500"
+                          : "text-gray-200"
+                        } font-poppins pb-1 px-2`}
+                      key={index}
+                      onClick={() => setActiveTab(tab)}
+                    >
+                      {tab}
+                    </h2>
+                  ))}
+                </div>
+
+                {activeTab === "Tokens" && (
+                  <div className="mt-4">
+                    {assets.length > 0 ? (
+                      assets.map(
+                        (
+                          asset: {
+                            name: string;
+                            quantity: number;
+                            price: string;
+                            change: number;
+                          },
+                          index: number
+                        ) => (
+                          <div
+                            key={asset?.name + index}
+                            className="flex flex-row justify-between items-center w-full h-[77px] bg-[#1d1c1c]  rounded px-2 mb-3"
+                          >
+                            <div className="flex flex-row items-center">
+                              {/* Asset Icon */}
+                              <div className="w-10 h-10">
+                                <img
+                                  src={EthIcon}
+                                  alt="assetIcon"
+                                  className="object-contain w-full h-full bg-white rounded-full"
+                                />
+                              </div>
+                              {/* Asset Name and Quantity */}
+                              <div className="flex flex-col items-start ml-4 text-white">
+                                <h2 className="font-karla font-bold leading-6">
+                                  {asset.name}
+                                </h2>
+                                <p className="font-karla font-medium text-green-400">
+                                  +98.02%
+                                </p>
+                              </div>
+                            </div>
+                            {/* Asset Price */}
+                            <div className="flex flex-col items-end text-white">
+                              <h2 className="font-karla text-base font-bold leading-6">
+                                $0.13
+                              </h2>
+                              <p className="font-medium font-karla text-white">
+                                0.0004 Eth
+                              </p>
+                            </div>
+                          </div>
+                        )
+                      )
+                    ) : (
+                      <p className="font-poppins h-screen text-center mt-4 text-gray-500">
+                        No assets available.
+                      </p>
+                    )}
+                  </div>
+                )}
+
+                {activeTab === "NFTs" && <NFT />}
+
+                {activeTab === "History" && <Transactions />}
+              </div>
+            </div>
+
+            {/* Select Network */}
+            {isOpenNetworkTap && (
+              <SelectNetwork
+                isOpen={isOpenNetworkTap}
+                setIsOpenNetworkTab={setIsOpenNetworkTap}
+                address={address}
+              />
+            )}
+            {isSendModalOpen && (
+              <SendModal
+                isOpen={isSendModalOpen}
+                onClose={handleCloseSendModal}
+                walletAddress={address}
+              />
             )}
 
-            {activeTab === "NFTs" && <NFT />}
+            {isReceiveModalOpen && (
+              <ReceiveModal
+                isOpen={isReceiveModalOpen}
+                onClose={handleCloseReceiveModal}
+                walletAddress={address}
+                index={
+                  parseInt(localStorage.getItem("selectedAccountIndex") ?? "0") + 1
+                }
+              />
+            )}
 
-            {activeTab === "History" && <Transactions />}
+            {isAccountModalOpen && (
+              <AccountModal
+                isOpen={isAccountModalOpen}
+                setIsAccountModalOpen={setIsAccountModalOpen}
+                address={address}
+              />
+            )}
           </div>
         </div>
-
-        {/* Select Network */}
-        {isOpenNetworkTap && (
-          <SelectNetwork
-            isOpen={isOpenNetworkTap}
-            setIsOpenNetworkTab={setIsOpenNetworkTap}
-            address={address}
-          />
-        )}
-        {isSendModalOpen && (
-          <SendModal
-            isOpen={isSendModalOpen}
-            onClose={handleCloseSendModal}
-            walletAddress={address}
-          />
-        )}
-
-        {isReceiveModalOpen && (
-          <ReceiveModal
-            isOpen={isReceiveModalOpen}
-            onClose={handleCloseReceiveModal}
-            walletAddress={address}
-            index={
-              parseInt(localStorage.getItem("selectedAccountIndex") ?? "0") + 1
-            }
-          />
-        )}
-
-        {isAccountModalOpen && (
-          <AccountModal
-            isOpen={isAccountModalOpen}
-            setIsAccountModalOpen={setIsAccountModalOpen}
-            address={address}
-          />
-        )}
       </div>
     </div>
   );
