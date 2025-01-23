@@ -26,7 +26,7 @@ const ViewBalance = () => {
   const [balance, setBalance] = useState("0.00");
   const [loading, setLoading] = useState(false);
   const [isSendModalOpen, setIsSendModalOpen] = useState(false);
-  const [isSendModal2Open, setIsSendModal2Open] = useState(false);
+  // const [isSendModal2Open, setIsSendModal2Open] = useState(false);
   const [isReceiveModalOpen, setIsReceiveModalOpen] = useState(false);
   interface Asset {
     name: string;
@@ -62,7 +62,6 @@ const ViewBalance = () => {
           "https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd"
         );
         const data = await response.json();
-        console.log(data, "data");
         const rate = data.ethereum.usd;
         const change = data.ethereum.usd_24h_change.toFixed(2);
         setUsdBalance((parseFloat(ethBalance) * rate).toFixed(2));
@@ -94,7 +93,7 @@ const ViewBalance = () => {
 
   const handleCloseSendModal = () => {
     setIsSendModalOpen(false);
-    setIsSendModal2Open(true);
+    // setIsSendModal2Open(true);
   };
 
   const handleOpenReceiveModal = () => {
@@ -274,12 +273,6 @@ const ViewBalance = () => {
             address={address}
           />
         )}
-
-        {/* <SendModalTwo
-          isOpen={isSendModal2Open}
-          onClose={() => setIsSendModal2Open(false)}
-          walletAddress={address}
-        /> */}
       </div>
     </div>
   );
