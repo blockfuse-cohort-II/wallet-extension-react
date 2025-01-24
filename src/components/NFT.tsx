@@ -6,7 +6,7 @@ import React, { useState, useRef, useEffect } from 'react';
 
 interface DropdownItem {
   id: string;
-//   label: string;
+  // label: string;
   imageSrc: string; 
 }
 
