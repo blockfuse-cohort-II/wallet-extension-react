@@ -52,7 +52,13 @@ const SendModal: React.FC<SendModalProps> = ({
         providerUrl
         // token // Pass the token type
       );
-      setMessage(`Transaction successful! Hash: ${transaction.hash}`);
+      setMessage(`Transaction successful! Hash:
+        
+        ${transaction.hash.slice(0, 6)}....${transaction.hash.slice(
+                -4
+              )}
+        
+        `);
     } catch (error) {
       console.error(error);
       setMessage("Failed to send transaction. Please try again.");
@@ -124,7 +130,7 @@ const SendModal: React.FC<SendModalProps> = ({
           />
         </div>
 
-        <div className="mt-6 text-center text-red-500">{message}</div>
+        <div className="mt-6 text-center text-green-500">{message}</div>
 
         <div className="mt-10 flex justify-around">
           <button
