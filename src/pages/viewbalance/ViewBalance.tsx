@@ -19,7 +19,6 @@ import SendModal from "../../components/SendModal";
 import ReceiveModal from "../../components/ReceiveModal";
 import NFT from "../../components/NFT";
 import Transactions from "../../components/Transactions";
-// import SendModalTwo from "../../components/SendModalTwo";
 
 const ViewBalance = () => {
   const [searchParams] = useSearchParams();
@@ -30,7 +29,6 @@ const ViewBalance = () => {
   const [balance, setBalance] = useState("0.00");
   const [loading, setLoading] = useState(false);
   const [isSendModalOpen, setIsSendModalOpen] = useState(false);
-  // const [isSendModal2Open, setIsSendModal2Open] = useState(false);
   const [isReceiveModalOpen, setIsReceiveModalOpen] = useState(false);
   interface Asset {
     name: string;

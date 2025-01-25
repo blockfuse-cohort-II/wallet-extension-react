@@ -21,7 +21,7 @@ const SuccessPage = () => {
       // Save password in local storage
       savePassword(password);
       toast.success("Password created");
-      navigate(`/view-balance?address=${walletAddress}`);
+      navigate(`/view-balance?address?${walletAddress}`);
       return;
     } else {
       toast.warning("Passwords do not match");

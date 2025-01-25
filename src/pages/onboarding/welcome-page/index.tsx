@@ -1,13 +1,18 @@
 import { Link, useNavigate } from "react-router-dom";
 import logo from "./../../../assets/logo2.png";
 import { retrieveData } from "../../../utils/utils";
+import { useEffect } from "react";
 
 const WelcomePage = () => {
     const accounts = retrieveData("accounts");
     const navigate = useNavigate();
-    if (accounts.length > 0) { 
-      navigate(`/view-balance?account=${accounts[0].address}`);
-    }
+    useEffect(() => {
+      if (accounts[0]) {
+        navigate(`/login`);
+      } 
+    });
+
+
   return (
     <div className="relative p-5 h-full w-full flex flex-col items-center justify-center text-white">
       <div className="flex h-full flex-col gap-1 justify-center items-center text-center">
@@ -17,7 +22,7 @@ const WelcomePage = () => {
         </h1>
         <p className="font-inter text-gray-400 text-sm ">
         Your secure gateway to Ethereum. Manage, send, and receive crypto with 
-        confidence using our simple and intuitive katera.
+        confidence.
         </p>
       </div>
 

@@ -85,6 +85,12 @@ const Login = () => {
       <div className="text-xs font-poppins mt-10 text-center text-white hover:text-violet-500">
         <button onClick={forgotPassword}>Forgot password?</button>
       </div>
+      {/* <div className="text-xs font-poppins mt-5 text-center text-violet-500 hover:text-white">
+        <button onClick={()=> {
+          clearStore()
+          navigate('/')
+        }}>Log Out</button>
+      </div> */}
     </div>
   );
 };

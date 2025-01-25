@@ -1,4 +1,4 @@
-import { ethers, TransactionResponse, Mnemonic, id } from "ethers";
+import { ethers, TransactionResponse, Mnemonic } from "ethers";
 import { HDNode } from "@ethersproject/hdnode";
 import { Alchemy, Network, AssetTransfersCategory } from "alchemy-sdk";
 import { Assets, Nft } from "../interfaces/interfaces";
@@ -14,7 +14,6 @@ export function savePassword(password: string): void {
 }
 
 export function validatePassword(password: string): boolean {
-  //console.log("password-validate", password);
   return localStorage.getItem("password") === password;
 }
 
@@ -266,10 +265,10 @@ export const getTransactionHistory = async () => {
   };
   const alchemy = new Alchemy(config);
 
-  //const accounts = retrieveData("accounts");
-  //const selectedAccountIndex = localStorage.getItem("selectedAccountIndex") ?? 0;
-  //const address = accounts[selectedAccountIndex]?.address;
-  const address = '0x4838B106FCe9647Bdf1E7877BF73cE8B0BAD5f97';
+  const accounts = retrieveData("accounts");
+  const selectedAccountIndex = localStorage.getItem("selectedAccountIndex") ?? 0;
+  const address = accounts[selectedAccountIndex]?.address;
+  // const address = '0x4838B106FCe9647Bdf1E7877BF73cE8B0BAD5f97';
 
   if (!address) {
     throw new Error("Wallet address not found");
@@ -403,8 +402,3 @@ export const getSelectedAccountPrivateKey = () => {
   return '';
 }
 
-// export const getAssets = async () => {
-//   const provider =  new ethers.providers.JsonRpcProvide
-
-// // await provider.lis
-// }
