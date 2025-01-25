@@ -1,4 +1,4 @@
-import { ethers, TransactionResponse, Mnemonic, id } from "ethers";
+import { ethers, TransactionResponse, Mnemonic } from "ethers";
 import { HDNode } from "@ethersproject/hdnode";
 import { Alchemy, Network, AssetTransfersCategory } from "alchemy-sdk";
 import { Assets, Nft } from "../interfaces/interfaces";
@@ -266,10 +266,10 @@ export const getTransactionHistory = async () => {
   };
   const alchemy = new Alchemy(config);
 
-  //const accounts = retrieveData("accounts");
-  //const selectedAccountIndex = localStorage.getItem("selectedAccountIndex") ?? 0;
-  //const address = accounts[selectedAccountIndex]?.address;
-  const address = '0x4838B106FCe9647Bdf1E7877BF73cE8B0BAD5f97';
+  const accounts = retrieveData("accounts");
+  const selectedAccountIndex = localStorage.getItem("selectedAccountIndex") ?? 0;
+  const address = accounts[selectedAccountIndex]?.address;
+  // const address = '0x4838B106FCe9647Bdf1E7877BF73cE8B0BAD5f97';
 
   if (!address) {
     throw new Error("Wallet address not found");
