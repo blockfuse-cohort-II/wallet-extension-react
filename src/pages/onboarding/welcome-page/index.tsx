@@ -8,7 +8,7 @@ const WelcomePage = () => {
     const navigate = useNavigate();
     useEffect(() => {
       if (accounts.length) {
-        navigate(`/view-balance?address=${accounts[0].address}`);
+        navigate(`/login`);
       } 
     });
   return (
