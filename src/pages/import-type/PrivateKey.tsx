@@ -1,21 +1,40 @@
 import { useState } from "react";
-import { getAddressFromPrivateKey, persistData } from "../../utils/utils";
-import { useNavigate } from "react-router-dom";
+import {
+  getAddressFromPrivateKey,
+  persistData,
+  retrieveData,
+} from "../../utils/utils";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 const PrivateKey = () => {
   const [privateKey, setPrivateKey] = useState("");
   const navigate = useNavigate();
   const [privateKeyHidden, setPrivateKeyHidden] = useState(true);
+  const [searchParams] = useSearchParams();
+  const isSigned = searchParams.get("isSigned") === "true";
   const handleAddWallet = () => {
     const wallet = getAddressFromPrivateKey(privateKey);
-    persistData("accounts", [
-      {
-        address: wallet.address,
-        privateKey: wallet.privateKey,
-        isKeyImported: true,
-      },
-    ]);
-    navigate("/success-page");
+    if (isSigned) {
+      const accounts = retrieveData("accounts");
+      persistData("accounts", [
+        ...accounts,
+        {
+          address: wallet.address,
+          privateKey: wallet.privateKey,
+          isKeyImported: true,
+        },
+      ]);
+      window.history.back()
+    } else {
+      persistData("accounts", [
+        {
+          address: wallet.address,
+          privateKey: wallet.privateKey,
+          isKeyImported: true,
+        },
+      ]);
+      navigate("/success-page");
+    }
   };
   return (
     <div className="h-full  py-6 px-4">

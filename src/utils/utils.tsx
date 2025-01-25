@@ -14,7 +14,6 @@ export function savePassword(password: string): void {
 }
 
 export function validatePassword(password: string): boolean {
-  //console.log("password-validate", password);
   return localStorage.getItem("password") === password;
 }
 
@@ -403,8 +402,3 @@ export const getSelectedAccountPrivateKey = () => {
   return '';
 }
 
-// export const getAssets = async () => {
-//   const provider =  new ethers.providers.JsonRpcProvide
-
-// // await provider.lis
-// }

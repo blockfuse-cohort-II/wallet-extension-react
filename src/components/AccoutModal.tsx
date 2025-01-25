@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { IoMdClose, IoMdAdd } from "react-icons/io";
+import { IoMdClose, IoMdAdd, IoMdKey } from "react-icons/io";
 import AccountIcon from "../assets/Account icon.png";
 import { CiSearch } from "react-icons/ci";
 import {
@@ -80,7 +80,7 @@ const AccountModal: React.FC<PropsSelectNetwork> = ({
       );
     } else {
       const data = generateSeedPhrase();
-      saveMnemonic(data.phrase)
+      saveMnemonic(data.phrase);
       newAccount = createHDWallet(data.phrase);
     }
 
@@ -111,7 +111,7 @@ const AccountModal: React.FC<PropsSelectNetwork> = ({
 
   return (
     <div className="absolute top-0 w-[375px] h-screen md:w-full">
-      <div className="w-[375px] md:w-full flex flex-col items-center bg-[#242424] h-full text-white">
+      <div className="relative w-[375px] md:w-full flex flex-col items-center bg-[#242424] h-full text-white">
         {/* Select network */}
         <div className="flex flex-row items-center w-full justify-between px-4">
           <div className="flex justify-center flex-row items-center w-full">
@@ -205,13 +205,26 @@ const AccountModal: React.FC<PropsSelectNetwork> = ({
           ))}
         </div>
 
-        {/* Add account button */}
         <button
-          className="absolute bottom-[15%] w-[85%] h-10 bg-violet-500 text-white rounded-full mt-3 flex py-3 flex-row items-center justify-center font-poppins"
+          className={`bottom-[1%] w-[85%] h-10 ${
+            accounts.length === 5 ? "bg-gray-400" : "bg-violet-500"
+          } text-white rounded-full mt-3 flex py-3 flex-row items-center justify-center font-poppins gap-2`}
+          disabled={accounts.length === 5}
           onClick={handleAddAccount}
         >
-          <IoMdAdd className="text-2xl font-bold mr-3" />
+          <IoMdAdd size={20} />
           Add Account
+        </button>
+
+        <button
+          className={`w-[85%] h-10 ${
+            accounts.length === 5 ? "bg-gray-400" : "bg-violet-500"
+          } text-white rounded-full mt-3 flex py-3 flex-row items-center justify-center font-poppins gap-2`}
+          disabled={accounts.length === 5}
+          onClick={()=>navigate("/private-key?isSigned=true")}
+        >
+          <IoMdKey size={20} />
+          Add Private Key
         </button>
       </div>
     </div>
