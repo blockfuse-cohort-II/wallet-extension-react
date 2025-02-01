@@ -124,7 +124,7 @@ const SendModal: React.FC<SendModalProps> = ({
           />
         </div>
 
-        <div className="mt-6 text-center text-red-500">{message}</div>
+        <div className="mt-6 text-center text-green-500">{message}</div>
 
         <div className="mt-10 flex justify-around">
           <button

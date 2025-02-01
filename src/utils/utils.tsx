@@ -138,11 +138,11 @@ export function getNetwork(name: string): NetworkConfig | undefined {
 }
 
 export const retrieveData = (key: string) => {
-  const data = JSON.parse(localStorage.getItem(`${key}`) ?? "");
+  const data = JSON.parse(localStorage.getItem(`${key}`) ?? "[]");
   if (data) {
     return data;
   }
-  return null;
+  return [];
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

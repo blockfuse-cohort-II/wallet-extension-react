@@ -21,7 +21,7 @@ const WelcomePage = () => {
           Welcome to Katera
         </h1>
         <p className="font-inter text-gray-400 text-sm ">
-        Your secure gateway to Ethereum. Manage, send, and receive crypto with 
+        Your secure gateway to Web3. Manage, send, and receive crypto with 
         confidence.
         </p>
       </div>

@@ -41,7 +41,7 @@ const Transactions: React.FC = () => {
 
   const renderTransactions = () => {
     return transactions.map((tx) => (
-      <div key={tx.hash}>
+      <div key={tx.hash} className="w-full">
           <div className=" bg-white/5 flex gap-2 px-5 py-3 rounded-lg mb-3">
             <div>
               {tx.txnType === "send" ? <ArrowUp /> : <ArrowDown />}

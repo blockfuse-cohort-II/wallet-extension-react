@@ -24,7 +24,7 @@ const PrivateKey = () => {
           isKeyImported: true,
         },
       ]);
-      window.history.back()
+      return window.history.back();
     } else {
       persistData("accounts", [
         {
